@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native';
 
-export default function PathDetails({ navigation }) {
+export default function PathDavid({ navigation }) {
   const handleProceed = () => {
-    navigation.navigate('ConfirmArtwork'); // Replace 'NextScreen' with the actual screen name
+    navigation.navigate('ConfirmArtworkDavid'); // Replace 'NextScreen' with the actual screen name
   };
 
   return (
@@ -11,7 +11,7 @@ export default function PathDetails({ navigation }) {
         {/* Header Section */}
       <View style={styles.header}>
         <Image
-          source={require('../assets/monalisa.png')} // Replace with actual image URI
+          source={require('../assets/david.png')} // Replace with actual image URI
           style={styles.headerImage}
         />
         <View style={styles.headerIcons}>
@@ -28,10 +28,10 @@ export default function PathDetails({ navigation }) {
       {/*main Content */}
       <View style={styles.content}>
       <Text style={styles.description}>
-        2 FOOTS FORWARD TO REACH THE MOST ICONIC SCULPTURE". "THE DAVID"
+        2 FOOTS FORWARD TO REACH THE MOST ICONIC SCULPTURE". "THE MONALISA"
       </Text>
       <Text style={styles.description}>
-        1 FOOTS ON THE RIGHT ONCE "THE DAVID" HAS BEEN REACHED
+        1 FOOTS ON THE RIGHT ONCE "MONALISA" HAS BEEN REACHED
       </Text>
       </View>
 

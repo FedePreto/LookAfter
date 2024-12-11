@@ -5,9 +5,18 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import CameraScreen from './components/CameraScreen.js'; // Import the CameraScreen
 import PreviewScreen from './components/PreviewScreen.js'
 import Panoramica from './components/Panoramic.js';
-import ChooseArtworkScreen from './components/ArtworkScreen.js';
+import ChooseArtworkScreen from './components/ArtworkScreenDavid.js';
 import PathDetails from './components/Path.js';
-
+import ConfirmArtwork from './components/ArrivalConfirmation.js';
+import CameraConfirmation from './components/CameraConfirmation.js';
+import PreviewConfirmation from './components/PreviewConfirmation.js';
+import ArtworkReached from './components/ArtworkReached.js';
+import ArtworkInformations from './components/ArtworkInformations.js';
+import AnotherArtworkReached from './components/AnotherArtworkReached.js';
+import ArtworkInformationsBalloon from './components/ArtworkInformationsBalloon.js';
+import LostPage from './components/LostPage.js';
+import ChooseArtworkScreenMonalisa from './components/ArtworkScreenMonalisa.js';
+import PathDavid from './components/PathDavid.js';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +46,16 @@ export default function App() {
         <Stack.Screen name="Preview" component={PreviewScreen} />
         <Stack.Screen name="ChooseArtwork" component={ChooseArtworkScreen} />
         <Stack.Screen name="PathDetails" component={PathDetails} />
+        <Stack.Screen name="ConfirmArtwork" component={ConfirmArtwork} />
+        <Stack.Screen name="CameraConfirmation" component={CameraConfirmation} />
+        <Stack.Screen name="PreviewConfirmation" component={PreviewConfirmation} />
+        <Stack.Screen name="ArtworkReached" component={ArtworkReached} />
+        <Stack.Screen name="ArtworkInformations" component={ArtworkInformations} />
+        <Stack.Screen name="AnotherArtworkReached" component={AnotherArtworkReached} />
+        <Stack.Screen name="ArtworkInformationsBalloon" component={ArtworkInformationsBalloon} />
+        <Stack.Screen name="LostPage" component={LostPage} />
+        <Stack.Screen name="ChooseArtworkMonalisa" component={ChooseArtworkScreenMonalisa} />
+        <Stack.Screen name="PathDavid" component={PathDavid} />
      </Stack.Navigator>
     </NavigationContainer>
   );
