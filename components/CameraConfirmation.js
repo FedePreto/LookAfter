@@ -60,7 +60,7 @@ export default function CameraConfirmation() {
         setCapturedImage(photo); // Store captured image
         setPreviewVisible(true); // Navigate to Preview if picture is captured
         Alert.alert('Photo Saved', 'Photo saved to your device\'s gallery.');
-        navigation.navigate('PreviewConfirmation', { images: photo.uri });
+        navigation.navigate('PreviewConfirmation', { images: photo.uri,  artworkKey});
       } catch (error) {
         console.error("Error capturing photo:", error);
         Alert.alert("Error", "Failed to capture image. Please try again.");

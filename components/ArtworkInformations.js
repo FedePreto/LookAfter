@@ -2,10 +2,56 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function ArtworkInformations({ navigation }) {
+export default function ArtworkInformations({ navigation, route }) {
+  const { artworkKey } = route.params; // Ricevi l'artworkKey come parametro
+
+  // Mappa delle informazioni delle opere d'arte
+  const artworkMap = {
+    monalisa: {
+      name: 'Mona Lisa',
+      image: require('../assets/monalisa.png'),
+      icons: [
+        'https://via.placeholder.com/30',
+        'https://via.placeholder.com/30',
+      ],
+      description: [
+        'I am Mona Lisa, painted by the master Leonardo da Vinci in the early 16th century...',
+        'Leonardo captured me with soft brushstrokes, blending light and shadow...',
+        'I sit here, composed and still, a reflection of the Renaissance ideals of beauty...',
+        'I have watched centuries unfold from my frame, carried from Florence to France...',
+      ],
+    },
+    david: {
+      name: 'David',
+      image: require('../assets/david.png'),
+      icons: [
+        'https://via.placeholder.com/30',
+        'https://via.placeholder.com/30',
+      ],
+      description: [
+        'I am David, sculpted by Michelangelo between 1501 and 1504...',
+        'Standing 17 feet tall, I represent the biblical hero, confident and ready to face Goliath...',
+        'Michelangelo captured the tension in my pose, the veins in my hands, the furrow in my brow...',
+        'I am a symbol of strength and youthful beauty, an icon of the Renaissance period...',
+      ],
+    },
+  };
+
+  // Ottieni i dati dell'opera d'arte corrispondente alla chiave
+  const artwork = artworkMap[artworkKey];
+
+  if (!artwork) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>
+          Artwork not found.
+        </Text>
+      </View>
+    );
+  }
+
   const handleChatOpen = () => {
-    // Logic to open chat can be added here
-    console.log('Chat button pressed');
+    console.log(`Chat button pressed for ${artwork.name}`);
   };
 
   return (
@@ -13,35 +59,27 @@ export default function ArtworkInformations({ navigation }) {
       {/* Header Section */}
       <View style={styles.header}>
         <Image
-          source={require('../assets/monalisa.png')} // Replace with actual image URI
+          source={artwork.image} // Usa l'immagine specifica dell'opera
           style={styles.headerImage}
         />
         <View style={styles.headerIcons}>
-          <Image
-            source={{ uri: 'https://via.placeholder.com/30' }} // Replace with actual icon URI
-            style={styles.icon}
-          />
-          <Image
-            source={{ uri: 'https://via.placeholder.com/30' }} // Replace with actual icon URI
-            style={styles.icon}
-          />
+          {artwork.icons.map((iconUri, index) => (
+            <Image
+              key={index}
+              source={{ uri: iconUri }}
+              style={styles.icon}
+            />
+          ))}
         </View>
       </View>
 
       {/* Main Content - Scrollable */}
       <ScrollView style={styles.scrollContent}>
-        <Text style={styles.description}>
-          I am Mona Lisa, painted by the master Leonardo da Vinci in the early 16th century. My face, serene and enigmatic, has sparked endless curiosity. They call my smile mysterious and soft, almost teasing, as if I hold a secret untold.
-        </Text>
-        <Text style={styles.description}>
-          Leonardo captured me with soft brushstrokes, blending light and shadow in a technique they call sfumato. Look closely at my eyes—they seem to follow you, alive with quiet intensity. The background behind me, a dreamy, distant landscape, suggests both timelessness and mystery.
-        </Text>
-        <Text style={styles.description}>
-          I sit here, composed and still, a reflection of the Renaissance ideals of beauty and intellect. My hands rest gently, symbolizing poise, while the lack of visible jewelry or adornment keeps the focus on my face, my expression.
-        </Text>
-        <Text style={styles.description}>
-          I have watched centuries unfold from my frame, carried from Florence to France, now dwelling in the Louvre. I am no longer just a portrait but a symbol of art’s enduring power to intrigue and inspire. What do you see in me?
-        </Text>
+        {artwork.description.map((paragraph, index) => (
+          <Text key={index} style={styles.description}>
+            {paragraph}
+          </Text>
+        ))}
       </ScrollView>
 
       {/* Chat Button */}
@@ -96,5 +134,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });

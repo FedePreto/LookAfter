@@ -1,15 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
+
 
 export default function PreviewConfirmation({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
+  const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
 
   const __retakePicture = () => {
     navigation.goBack(); // Go back to CameraScreen
   };
 
   const __chooseArtwork = () => {
-    navigation.navigate('ArtworkReached', { images }); 
+    navigation.navigate('ArtworkReached', { images, artworkKey }); 
     //navigation.navigate('AnotherArtworkReached', { images }); 
     //navigation.navigate('LostPage', { images });
   };
