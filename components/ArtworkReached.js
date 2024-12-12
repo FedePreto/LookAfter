@@ -12,7 +12,7 @@ export default function ArtworkReached({ navigation }) {
 
   // Mappa delle immagini in base a artworkKey
   const images = {
-    monaLisa: require('../assets/monalisa.png'),
+    monalisa: require('../assets/monalisa.png'),
     david: require('../assets/david.png'),
   };
 
