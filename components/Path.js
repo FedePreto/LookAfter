@@ -8,7 +8,7 @@ export default function PathDetails({ route, navigation }) {
       image: require('../assets/david.png'),
       description1: '2 FOOTS FORWARD TO REACH THE MOST ICONIC SCULPTURE "THE MONALISA"',
       description2: '1 FOOT ON THE RIGHT ONCE "THE MONALISA" HAS BEEN REACHED',
-      nextScreen: 'ConfirmArtworkDavid',
+      nextScreen: 'ConfirmArtwork',
     },
     monalisa: {
       image: require('../assets/monalisa.png'),
@@ -29,7 +29,7 @@ export default function PathDetails({ route, navigation }) {
   }
 
   const handleProceed = () => {
-    navigation.navigate(artwork.nextScreen);
+    navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
   };
 
   return (
