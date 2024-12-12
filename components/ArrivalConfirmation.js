@@ -8,7 +8,7 @@ const artworkDetails = {
   },
   david: {
     image: require('../assets/david.png'),
-    nextScreen: 'CameraConfirmationDavid',
+    nextScreen: 'CameraConfirmation',
   },
 };
 
@@ -25,7 +25,7 @@ export default function ConfirmArtwork({ route, navigation }) {
   }
 
   const handleProceed = () => {
-    navigation.navigate(artwork.nextScreen);
+    navigation.navigate(artwork.nextScreen, { artworkKey });
   };
 
   return (

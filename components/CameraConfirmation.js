@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform } from 'react-native';
 import { Camera,CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
-import { useNavigation } from '@react-navigation/native';
 import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
+import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
 
 
 export default function CameraConfirmation() {
@@ -19,6 +19,8 @@ export default function CameraConfirmation() {
     const navigation = useNavigation();
     const [hasPermission, setHasPermission] = useState(null);
     const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(null);
+    const route = useRoute(); // Ottieni il route
+    const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
     
   useEffect(() => {
     (async () => {
