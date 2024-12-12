@@ -6,13 +6,15 @@ const artworkDetails = {
     title: "The David",
     image: require('../assets/david.png'),
     nextScreen: 'monalisa',
-    chooseScreen: 'PathDavid',
+    backScreen: null,
+    artworkKey: 'david',
   },
   monalisa: {
     title: "The Monalisa",
     image: require('../assets/monalisa.png'),
+    nextScreen: null,
     backScreen: 'david',
-    chooseScreen: 'PathDetails',
+    artworkKey: 'monalisa',
   },
 };
 
@@ -41,9 +43,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   };
 
   const handleChoose = () => {
-    if (artwork.chooseScreen) {
-      navigation.navigate(artwork.chooseScreen);
-    }
+    navigation.navigate('PathDetails', { artworkKey: artwork.artworkKey }); // Passa il parametro
   };
 
   return (
