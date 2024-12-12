@@ -9,7 +9,7 @@ export default function PreviewScreen({ route, navigation }) {
   };
 
   const __chooseArtwork = () => {
-    navigation.navigate('ChooseArtwork', { images }); // Navigate to ChooseArtworkScreen
+    navigation.navigate('ChooseArtwork', { artworkKey: 'david' }); // Navigate to ChooseArtworkScreen
   };
   const isMultipleImages = Array.isArray(images);
 

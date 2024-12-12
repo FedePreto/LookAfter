@@ -1,38 +1,77 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
+const artworkDetails = {
+  david: {
+    title: "The David",
+    image: require('../assets/david.png'),
+    nextScreen: 'monalisa',
+    chooseScreen: 'PathDavid',
+  },
+  monalisa: {
+    title: "The Monalisa",
+    image: require('../assets/monalisa.png'),
+    backScreen: 'david',
+    chooseScreen: 'PathDetails',
+  },
+};
+
 export default function ChooseArtworkScreen({ route, navigation }) {
+  const { artworkKey } = route.params || {}; // Indica quale opera visualizzare
+  const artwork = artworkDetails[artworkKey];
+
+  if (!artwork) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Artwork not found</Text>
+      </View>
+    );
+  }
 
   const handleNext = () => {
-    navigation.navigate('ChooseArtworkMonalisa');
+    if (artwork.nextScreen) {
+      navigation.navigate('ChooseArtwork', { artworkKey: artwork.nextScreen });
+    }
+  };
+
+  const handleBack = () => {
+    if (artwork.backScreen) {
+      navigation.navigate('ChooseArtwork', { artworkKey: artwork.backScreen });
+    }
   };
 
   const handleChoose = () => {
-    navigation.navigate('PathDavid');
+    if (artwork.chooseScreen) {
+      navigation.navigate(artwork.chooseScreen);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Choose the Artwork</Text>
-      <Image
-        source={require('../assets/david.png')} // Replace with actual image URI
-        style={styles.headerImage}
-      />
+      <Image source={artwork.image} style={styles.headerImage} />
 
-      {/* Artwork Title */}
-      <Text style={styles.artworkTitle}>Title: The David</Text>
+      {/* Titolo dell'opera */}
+      <Text style={styles.artworkTitle}>Title: {artwork.title}</Text>
 
-      {/* Choose Button */}
+      {/* Pulsante "Choose" */}
       <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
         <Text style={styles.chooseButtonText}>Choose</Text>
       </TouchableOpacity>
 
-      {/* Next Button Always Fixed on the Bottom Right */}
-      
+      {/* Pulsante "Back", visibile solo se backScreen è definito */}
+      {artwork.backScreen && (
+        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+          <Text style={styles.buttonText}>Back</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* Pulsante "Next", visibile solo se nextScreen è definito */}
+      {artwork.nextScreen && (
         <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
-    
+      )}
     </View>
   );
 }
@@ -65,17 +104,27 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 150,
     alignItems: 'center',
-    marginBottom: 30, // Spacing from other elements
+    marginBottom: 30,
   },
   chooseButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
+  backButton: {
+    position: 'absolute',
+    bottom: 30,
+    left: 20,
+    backgroundColor: '#6c757d',
+    padding: 15,
+    borderRadius: 10,
+    width: 120,
+    alignItems: 'center',
+  },
   nextButton: {
     position: 'absolute',
     bottom: 30,
-    right: 20, // Always align "Next" button on the right
+    right: 20,
     backgroundColor: '#28a745',
     padding: 15,
     borderRadius: 10,
@@ -86,5 +135,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 50,
   },
 });
