@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image
 import { Camera,CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import * as MediaLibrary from 'expo-media-library';
-import * as Permissions from 'expo-permissions';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
 
 

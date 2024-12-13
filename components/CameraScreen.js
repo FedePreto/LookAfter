@@ -5,7 +5,6 @@ import { Camera,CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import { useNavigation } from '@react-navigation/native';
 import * as MediaLibrary from 'expo-media-library';
-import * as Permissions from 'expo-permissions';
 
 
 export default function CameraScreen() {

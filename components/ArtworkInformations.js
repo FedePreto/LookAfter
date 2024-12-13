@@ -52,6 +52,8 @@ export default function ArtworkInformations({ navigation, route }) {
 
   const handleChatOpen = () => {
     console.log(`Chat button pressed for ${artwork.name}`);
+    navigation.navigate('ChatScreen', { artworkKey });
+
   };
 
   return (
