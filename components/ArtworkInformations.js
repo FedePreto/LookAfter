@@ -1,38 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as Speech from 'expo-speech';
 
 export default function ArtworkInformations({ navigation, route }) {
-  const { artworkKey } = route.params; // Ricevi l'artworkKey come parametro
+  const { artworkKey } = route.params;
 
   // Mappa delle informazioni delle opere d'arte
   const artworkMap = {
     monalisa: {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
-      icons: [
-        'https://via.placeholder.com/30',
-        'https://via.placeholder.com/30',
-      ],
       description: [
-        'I am Mona Lisa, painted by the master Leonardo da Vinci in the early 16th century...',
+        'I am Mona Lisa, painted by the master Leonardo da Vinci...',
         'Leonardo captured me with soft brushstrokes, blending light and shadow...',
-        'I sit here, composed and still, a reflection of the Renaissance ideals of beauty...',
-        'I have watched centuries unfold from my frame, carried from Florence to France...',
+        'I sit here, composed and still, a reflection of the Renaissance...',
       ],
     },
     david: {
       name: 'David',
       image: require('../assets/david.png'),
-      icons: [
-        'https://via.placeholder.com/30',
-        'https://via.placeholder.com/30',
-      ],
       description: [
-        'I am David, sculpted by Michelangelo between 1501 and 1504...',
-        'Standing 17 feet tall, I represent the biblical hero, confident and ready to face Goliath...',
-        'Michelangelo captured the tension in my pose, the veins in my hands, the furrow in my brow...',
-        'I am a symbol of strength and youthful beauty, an icon of the Renaissance period...',
+        'I am David, sculpted by Michelangelo...',
+        'Standing 17 feet tall, I represent the biblical hero...',
+        'Michelangelo captured the tension in my pose...',
       ],
     },
   };
@@ -42,100 +33,125 @@ export default function ArtworkInformations({ navigation, route }) {
 
   if (!artwork) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>
-          Artwork not found.
-        </Text>
-      </View>
+        <View style={styles.container}>
+          <Text style={styles.errorText}>Artwork not found.</Text>
+        </View>
     );
   }
 
-  const handleChatOpen = () => {
-    console.log(`Chat button pressed for ${artwork.name}`);
-    navigation.navigate('ChatScreen', { artworkKey });
+  const textToRead = `This is the ${artwork.name}. ${artwork.description.join(' ')}`;
 
+  const [fadeAnim] = useState(new Animated.Value(0)); // Animazione per il testo
+
+  useEffect(() => {
+    // Esegui l'animazione di apparizione del testo
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+
+    // Avvia l'audio quando la schermata è caricata
+    Speech.speak(textToRead);
+
+    return () => {
+      Speech.stop(); // Ferma l'audio quando si lascia la schermata
+    };
+  }, [textToRead]);
+
+  const handleReplayAudio = () => {
+    Speech.stop();
+    Speech.speak(textToRead); // Riascolta l'audio
   };
 
   return (
-    <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.header}>
-        <Image
-          source={artwork.image} // Usa l'immagine specifica dell'opera
-          style={styles.headerImage}
-        />
-        <View style={styles.headerIcons}>
-          {artwork.icons.map((iconUri, index) => (
-            <Image
-              key={index}
-              source={{ uri: iconUri }}
-              style={styles.icon}
-            />
-          ))}
+      <View style={styles.container}>
+        {/* Header Section */}
+        <View style={styles.header}>
+          <Image
+              source={artwork.image} // Usa l'immagine specifica dell'opera
+              style={styles.headerImage}
+          />
+          <Text style={styles.title}>{artwork.name}</Text>
+          <TouchableOpacity onPress={handleReplayAudio} style={styles.audioButton}>
+            <Ionicons name="volume-high-outline" size={24} color="white" />
+          </TouchableOpacity>
+          <Ionicons name="mic" size={30} color="#4CAF50" style={styles.micIcon} />
         </View>
+
+        {/* Main Content - Scrollable */}
+        <ScrollView style={styles.scrollContent}>
+          {artwork.description.map((paragraph, index) => (
+              <Animated.Text key={index} style={[styles.description, { opacity: fadeAnim }]}>
+                {paragraph}
+              </Animated.Text>
+          ))}
+        </ScrollView>
+
+        {/* Chat Button */}
+        <TouchableOpacity style={styles.chatButton} onPress={() => navigation.navigate('ChatScreen', { artworkKey })}>
+          <Ionicons name="chatbubble-outline" size={24} color="white" />
+        </TouchableOpacity>
       </View>
-
-      {/* Main Content - Scrollable */}
-      <ScrollView style={styles.scrollContent}>
-        {artwork.description.map((paragraph, index) => (
-          <Text key={index} style={styles.description}>
-            {paragraph}
-          </Text>
-        ))}
-      </ScrollView>
-
-      {/* Chat Button */}
-      <TouchableOpacity onPress={handleChatOpen} style={styles.chatButton}>
-        <Ionicons name="chatbubble-outline" size={24} color="white" />
-      </TouchableOpacity>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+  container: { flex: 1, backgroundColor: '#f5f5f5' },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
-    backgroundColor: '#f8f8f8', // Optional background color for the header
+    backgroundColor: '#ffffff',
+    elevation: 2,
   },
   headerImage: {
-    width: 70,
-    height: 70,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginRight: 20,
+    borderWidth: 3,
+    borderColor: '#ddd',
   },
-  headerIcons: {
-    flexDirection: 'row',
+  title: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333',
   },
-  icon: {
-    width: 30,
-    height: 30,
-    marginLeft: 10,
+  audioButton: {
+    padding: 10,
+    backgroundColor: '#4CAF50',
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scrollContent: {
     flex: 1,
-    paddingHorizontal: 20,
-    marginBottom: 80, // Adds space to avoid overlap with the button
+    padding: 20,
   },
   description: {
     fontSize: 18,
-    color: '#333',
-    textAlign: 'center',
-    marginBottom: 20,
+    color: '#555',
+    marginBottom: 15,
+    lineHeight: 24,
+    textAlign: 'justify',
   },
   chatButton: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 20,
     right: 20,
     backgroundColor: '#d32f2f',
     padding: 15,
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  micIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   errorText: {
     fontSize: 18,

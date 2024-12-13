@@ -3,7 +3,6 @@
     "name": "LookAfter",
     "slug": "LookAfter",
     "version": "1.0.0",
-    "entryPoint": "node_modules/expo/AppEntry.js",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -42,6 +41,14 @@
     },
     "plugins": [
       [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to use the microphone.",
+          "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition.",
+          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+        }
+      ],
+      [
         "expo-camera",
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
@@ -63,7 +70,6 @@
       "eas": {
         "projectId": "e32a043f-a2bb-4480-a9c2-0c9d4d371655"
       }
-    },
-    "main": "App.js"
+    }
   }
 }

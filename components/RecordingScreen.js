@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Audio } from "expo-av"; // Assicurati di installare `expo-av`
+//import * as SpeechRecognition from "expo-speech-recognition";
 
 export default function RecordingScreen({ route, navigation }) {
   const [recording, setRecording] = useState(null);
@@ -8,6 +9,7 @@ export default function RecordingScreen({ route, navigation }) {
 
   const startRecording = async () => {
     try {
+      //const isAvailable = await SpeechRecognition.isAvaila
       const permission = await Audio.requestPermissionsAsync();
       if (permission.granted) {
         const { recording } = await Audio.Recording.createAsync(
