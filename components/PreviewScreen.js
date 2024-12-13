@@ -1,8 +1,17 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
-
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback} from 'react-native';
+import HamburgerMenu from './HamBurgerMenu';
 export default function PreviewScreen({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const __closeDropdown = () => {
+    setDropdownVisible(false);
+  };
+
+  const __toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
 
   const __retakePicture = () => {
     navigation.goBack(); // Go back to CameraScreen
@@ -11,11 +20,20 @@ export default function PreviewScreen({ route, navigation }) {
   const __chooseArtwork = () => {
     navigation.navigate('ChooseArtwork', { artworkKey: 'david' }); // Navigate to ChooseArtworkScreen
   };
+  
   const isMultipleImages = Array.isArray(images);
 
   return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+       if (dropdownVisible) __closeDropdown();
+      }}
+    >
+    
     <View style={styles.container}>
-      
+      <View style={styles.header}>
+      <HamburgerMenu navigation={navigation} onCloseDropdown={__closeDropdown} isVisible = {dropdownVisible}/>
+      </View>
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -47,6 +65,8 @@ export default function PreviewScreen({ route, navigation }) {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
+   
   );
 }
 
@@ -61,22 +81,37 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     fontWeight: 'bold',
+    marginTop: 20,
+  },
+  header: {
+    position: 'absolute',
+    top: 10,
+    right: 10, // Align to the top-right corner
+    zIndex: 10, // Ensure it's above other elements
+  },
+  menuButton: {
+    top: 0,
+    right:0,
+    padding: 10,
   },
   imageContainer: {
     flexDirection: 'row', // Arrange images horizontally
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 0,
   },
   imageWrapper: {
     width: 300, // Match image width for paging
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: -20 ,
   },
   image: {
-    width: 300,
-    height: 400,
+    width: 350,
+    height: 250,
     marginHorizontal: 10,
     borderRadius: 10,
+    marginTop: -200,
   },
   noImagesText: {
     fontSize: 18,
@@ -87,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     position: 'absolute',
-    bottom: 50,
+    bottom: 100,
   },
   button: {
     backgroundColor: '#28a745',
@@ -101,4 +136,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  
 });

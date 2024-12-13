@@ -1,8 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, Image, Alert,TouchableOpacity } from 'react-native';
+import HamburgerMenu from './HamBurgerMenu';
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const artworkDetails = {
     david: {
       image: require('../assets/david.png'),
@@ -31,6 +32,11 @@ export default function PathDetails({ route, navigation }) {
   const handleProceed = () => {
     navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
   };
+  const handleIconClick = () => {
+    Alert.alert('Icon Clicked!', 'You clicked the audio icon.');
+  };
+
+  
 
   return (
     <View style={styles.container}>
@@ -38,14 +44,15 @@ export default function PathDetails({ route, navigation }) {
       <View style={styles.header}>
         <Image source={artwork.image} style={styles.headerImage} />
         <View style={styles.headerIcons}>
+        <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
           <Image
-            source={{ uri: 'https://via.placeholder.com/30' }} // Replace with actual icon URI
+            source={require('../assets/audio_repeat.png')} // Replace with actual icon URI
             style={styles.icon}
           />
-          <Image
-            source={{ uri: 'https://via.placeholder.com/30' }} // Replace with actual icon URI
-            style={styles.icon}
-          />
+          </TouchableOpacity>
+          <View style = {styles.header}>
+            <HamburgerMenu navigation={navigation}  isVisible={dropdownVisible} />
+          </View>
         </View>
       </View>
 
@@ -82,8 +89,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   headerImage: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
+    resizeMode:'contain',
+    left: 100,
   },
   headerIcons: {
     flexDirection: 'row',
@@ -92,15 +101,17 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginLeft: 10,
+    top:10,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    bottom: 80,
   },
   proceedButton: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 50,
     right: 20,
     backgroundColor: '#d32f2f',
     paddingVertical: 15,

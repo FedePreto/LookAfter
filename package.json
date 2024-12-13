@@ -31,7 +31,8 @@
     "react-native-svg": "15.8.0",
     "react-native-web": "~0.19.13",
     "react-webcam": "^7.2.0",
-    "expo-speech": "~13.0.0"
+    "expo-speech": "~13.0.0",
+    "@expo/vector-icons": "^14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

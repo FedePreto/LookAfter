@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
+import HamburgerMenu from './HamBurgerMenu';
 export default function ArtworkReached({ navigation }) {
   const route = useRoute(); // Ottieni il route
   const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
@@ -18,16 +18,27 @@ export default function ArtworkReached({ navigation }) {
 
   // Seleziona l'immagine corretta o un'immagine predefinita
   const artworkImage = images[artworkKey] ;
-
+  const handleIconClick = () => {
+      Alert.alert('Icon Clicked!', 'You clicked the audio icon.');
+    };
   return (
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
-        <Image
-          source={artworkImage} // Usa l'immagine selezionata
-          style={styles.headerImage}
-        />
-      </View>
+              <Image source={artworkImage} style={styles.headerImage} />
+              <View style={styles.headerIcons}>
+              <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
+                <Image
+                  source={require('../assets/audio_repeat.png')} // Replace with actual icon URI
+                  style={styles.icon}
+                />
+                </TouchableOpacity>
+                </View>
+                <View style = {styles.header}>
+                  <HamburgerMenu navigation={navigation}/>
+                </View>
+              
+            </View>
       
       {/* Main Content */}
       <View style={styles.content}>
@@ -57,15 +68,29 @@ const styles = StyleSheet.create({
     marginBottom: 20, // Adds space above the button
   },
   header: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 20,
+    right:-10,
+    top:-20,
   },
   headerImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain', // Assicura che l'immagine sia proporzionata
+    width: 100,
+    height: 100,
+    resizeMode:'contain',
+    left: 70,
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    left: 50,
+    bottom: 40,
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    marginLeft: 10,
+    top:10,
   },
   content: {
     flex: 1,

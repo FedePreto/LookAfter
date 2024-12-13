@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import HamburgerMenu from './HamBurgerMenu';
 const artworkDetails = {
   monalisa: {
     image: require('../assets/monalisa.png'),
@@ -27,13 +27,28 @@ export default function ConfirmArtwork({ route, navigation }) {
   const handleProceed = () => {
     navigation.navigate(artwork.nextScreen, { artworkKey });
   };
+   const handleIconClick = () => {
+      Alert.alert('Icon Clicked!', 'You clicked the audio icon.');
+    };
 
   return (
     <View style={styles.container}>
       {/* Header Section */}
+      
       <View style={styles.header}>
-        <Image source={artwork.image} style={styles.headerImage} />
-      </View>
+              <Image source={artwork.image} style={styles.headerImage} />
+              <View style={styles.headerIcons}>
+              <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
+                <Image
+                  source={require('../assets/audio_repeat.png')} // Replace with actual icon URI
+                  style={styles.icon}
+                />
+                </TouchableOpacity>
+                <View style = {styles.header}>
+                  <HamburgerMenu navigation={navigation} />
+                </View>
+              </View>
+              </View>
 
       {/* Main Content */}
       <View style={styles.content}>
@@ -54,32 +69,45 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 40,
+    padding: 20,
   },
   description: {
     fontSize: 30,
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,
+    bottom: 30,
   },
   header: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 20,
   },
   headerImage: {
-    width: 300,
-    height: 300,
+    width: 100,
+    height: 100,
+    resizeMode:'contain',
+    left: 100,
+  },
+  headerIcons: {
+    flexDirection: 'row',
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    marginLeft: 10,
+    top:10,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    bottom:40,
   },
   proceedButton: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 70,
     right: 20,
     backgroundColor: '#d32f2f',
     paddingVertical: 15,

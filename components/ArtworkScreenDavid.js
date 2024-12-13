@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import HamburgerMenu from './HamBurgerMenu';
 const artworkDetails = {
   david: {
     title: "The David",
@@ -21,6 +21,7 @@ const artworkDetails = {
 export default function ChooseArtworkScreen({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Indica quale opera visualizzare
   const artwork = artworkDetails[artworkKey];
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   if (!artwork) {
     return (
@@ -46,8 +47,15 @@ export default function ChooseArtworkScreen({ route, navigation }) {
     navigation.navigate('PathDetails', { artworkKey: artwork.artworkKey }); // Passa il parametro
   };
 
+  
+
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={() => dropdownVisible && __closeDropdown()}>
+     <View style={styles.container}>
+      <View style = {styles.header}>
+        <HamburgerMenu navigation={navigation}  isVisible={dropdownVisible} />
+      </View>
+      
       <Text style={styles.title}>Choose the Artwork</Text>
       <Image source={artwork.image} style={styles.headerImage} />
 
@@ -73,6 +81,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
         </TouchableOpacity>
       )}
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -83,15 +92,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  header: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 10, // Ensure it is above other content
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    top: 20,
   },
   headerImage: {
     width: 300,
     height: 400,
-    marginBottom: 20,
+    marginBottom: 40,
+    top:20,
   },
   artworkTitle: {
     fontSize: 18,
