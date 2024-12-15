@@ -8,6 +8,7 @@ const artworkDetails = {
     nextScreen: 'monalisa',
     backScreen: null,
     artworkKey: 'david',
+    number: 1,
   },
   monalisa: {
     title: "The Monalisa",
@@ -15,6 +16,7 @@ const artworkDetails = {
     nextScreen: null,
     backScreen: 'david',
     artworkKey: 'monalisa',
+    number: 2,
   },
 };
 
@@ -61,7 +63,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 
       {/* Titolo dell'opera */}
       <Text style={styles.artworkTitle}>Title: {artwork.title}</Text>
-
+      <Text style={styles.artworkTitle}>Artwork number: {artwork.number}/2</Text>
       {/* Pulsante "Choose" */}
       <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
         <Text style={styles.chooseButtonText}>Choose</Text>
@@ -105,8 +107,8 @@ const styles = StyleSheet.create({
     top: 20,
   },
   headerImage: {
-    width: 300,
-    height: 400,
+    width: 250,
+    height: 350,
     marginBottom: 40,
     top:20,
   },
