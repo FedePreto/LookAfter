@@ -6,152 +6,150 @@ import * as Speech from 'expo-speech';
 export default function ArtworkInformations({ navigation, route }) {
   const { artworkKey } = route.params;
 
-  // Mappa delle informazioni delle opere d'arte
   const artworkMap = {
     monalisa: {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        'I am Mona Lisa, painted by the master Leonardo da Vinci...',
-        'Leonardo captured me with soft brushstrokes, blending light and shadow...',
-        'I sit here, composed and still, a reflection of the Renaissance...',
+        "Greetings, I am the Mona Lisa, also known as La Gioconda. I was painted by the brilliant Leonardo da Vinci between 1503 and 1506, during the golden age of the Italian Renaissance.",
+        "I am famous for my mysterious smile, a smile that has baffled and intrigued viewers for centuries. Look closely, and you’ll notice how it changes depending on the angle and your perception.",
+        "Observe my eyes. Wherever you go, they seem to follow you, a result of Leonardo’s brilliant understanding of perspective and anatomy. My gaze captures you, inviting you into my timeless world.",
+        "Today, I reside in the Louvre Museum in Paris. Millions journey from every corner of the world just to stand before me.",
       ],
     },
     david: {
       name: 'David',
       image: require('../assets/david.png'),
       description: [
-        'I am David, sculpted by Michelangelo...',
-        'Standing 17 feet tall, I represent the biblical hero...',
-        'Michelangelo captured the tension in my pose...',
+        "Hello, I am David, the masterpiece sculpted by the legendary Michelangelo between 1501 and 1504. I stand tall, a symbol of strength, courage, and youthful determination.",
+        "I represent the biblical hero David, moments before his epic battle with Goliath. Notice the tension in my pose: my muscles are taut, my gaze focused and confident.",
+        "Step closer and observe the intricate details: the veins running through my hands, the curve of my muscles, and the determination in my expression.",
+        "I am David, a story of bravery, artistry, and the triumph of the human spirit.",
       ],
     },
   };
 
-  // Ottieni i dati dell'opera d'arte corrispondente alla chiave
   const artwork = artworkMap[artworkKey];
 
   if (!artwork) {
     return (
-        <View style={styles.container}>
-          <Text style={styles.errorText}>Artwork not found.</Text>
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Artwork not found.</Text>
+      </View>
     );
   }
 
   const textToRead = `This is the ${artwork.name}. ${artwork.description.join(' ')}`;
 
-  const [fadeAnim] = useState(new Animated.Value(0)); // Animazione per il testo
+  const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    // Esegui l'animazione di apparizione del testo
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
     }).start();
 
-    // Avvia l'audio quando la schermata è caricata
     Speech.speak(textToRead);
 
     return () => {
-      Speech.stop(); // Ferma l'audio quando si lascia la schermata
+      Speech.stop();
     };
   }, [textToRead]);
 
   const handleReplayAudio = () => {
     Speech.stop();
-    Speech.speak(textToRead); // Riascolta l'audio
+    Speech.speak(textToRead);
   };
 
   return (
-      <View style={styles.container}>
-        {/* Header Section */}
-        <View style={styles.header}>
-          <Image
-              source={artwork.image} // Usa l'immagine specifica dell'opera
-              style={styles.headerImage}
-          />
-          <Text style={styles.title}>{artwork.name}</Text>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Image Section */}
+        <View style={styles.imageContainer}>
+          <Image source={artwork.image} style={styles.artworkImage} />
           <TouchableOpacity onPress={handleReplayAudio} style={styles.audioButton}>
-            <Ionicons name="volume-high-outline" size={24} color="white" />
+            <Ionicons name="volume-high-outline" size={30} color="#fff" />
           </TouchableOpacity>
-          <Ionicons name="mic" size={30} color="#4CAF50" style={styles.micIcon} />
         </View>
 
-        {/* Main Content - Scrollable */}
-        <ScrollView style={styles.scrollContent}>
-          {artwork.description.map((paragraph, index) => (
-              <Animated.Text key={index} style={[styles.description, { opacity: fadeAnim }]}>
-                {paragraph}
-              </Animated.Text>
-          ))}
-        </ScrollView>
+        {/* Title */}
+        <Text style={styles.title}>{artwork.name}</Text>
 
-        {/* Chat Button */}
-        <TouchableOpacity style={styles.chatButton} onPress={() => navigation.navigate('ChatScreen', { artworkKey })}>
-          <Ionicons name="chatbubble-outline" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+        {/* Description */}
+        {artwork.description.map((paragraph, index) => (
+          <Animated.Text key={index} style={[styles.description, { opacity: fadeAnim }]}>
+            {paragraph}
+          </Animated.Text>
+        ))}
+      </ScrollView>
+
+      {/* Chat Button */}
+      <TouchableOpacity
+        style={styles.chatButton}
+        onPress={() => navigation.navigate('ChatScreen', { artworkKey })}
+      >
+        <Ionicons name="chatbubble-outline" size={30} color="white" />
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5' },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 20,
-    backgroundColor: '#ffffff',
-    elevation: 2,
-  },
-  headerImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    marginRight: 20,
-    borderWidth: 3,
-    borderColor: '#ddd',
-  },
-  title: {
+  container: {
     flex: 1,
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  audioButton: {
-    padding: 10,
-    backgroundColor: '#4CAF50',
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
   },
   scrollContent: {
-    flex: 1,
     padding: 20,
+    paddingBottom: 120, // Spazio extra per evitare copertura del pulsante
+    alignItems: 'center',
+  },
+  imageContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+    position: 'relative',
+  },
+  artworkImage: {
+    width: 250,
+    height: 300,
+    resizeMode: 'contain',
+    borderWidth: 2,
+    borderColor: '#333',
+  },
+  audioButton: {
+    position: 'absolute',
+    bottom: -10,
+    right: 10,
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 50,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 32, // Titolo più grande
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#333',
   },
   description: {
-    fontSize: 18,
+    fontSize: 30, // Testo più grande
     color: '#555',
-    marginBottom: 15,
-    lineHeight: 24,
+    lineHeight: 30,
     textAlign: 'justify',
+    marginBottom: 15,
   },
   chatButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 20,
+    bottom: 30,
+    right: 30,
     backgroundColor: '#d32f2f',
     padding: 15,
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  micIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
+    elevation: 5,
   },
   errorText: {
     fontSize: 18,

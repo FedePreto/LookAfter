@@ -1,25 +1,37 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, Image, Alert,TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
+import * as Speech from 'expo-speech';
+
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
   const artworkDetails = {
     david: {
+      name: 'David',
       image: require('../assets/david.png'),
-      description1: '2 FOOTS FORWARD TO REACH THE MOST ICONIC SCULPTURE "THE MONALISA"',
-      description2: '1 FOOT ON THE RIGHT ONCE "THE MONALISA" HAS BEEN REACHED',
+      description: [
+       '2 foots forward to reach the most iconic sculpture the Monalisa',
+      '1 foot on the right once The Monalisa has been reached',
+      ],
       nextScreen: 'ConfirmArtwork',
     },
     monalisa: {
+      name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
-      description1: '2 FOOTS FORWARD TO REACH THE MOST ICONIC SCULPTURE "THE DAVID"',
-      description2: '1 FOOT ON THE RIGHT ONCE "THE DAVID" HAS BEEN REACHED',
+      description: [
+        '2 foots forward to reach the most iconic sculpture the david',
+        '1 foot on the right once The David has been reached',
+      ],
       nextScreen: 'ConfirmArtwork',
     },
   };
 
   const artwork = artworkDetails[artworkKey];
+
+  // Combina tutte le descrizioni in un'unica stringa
+  const textToRead = `This is the ${artwork.name}. ${artwork.description.join(' ')}`;
 
   if (!artwork) {
     return (
@@ -32,11 +44,33 @@ export default function PathDetails({ route, navigation }) {
   const handleProceed = () => {
     navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
   };
+
   const handleIconClick = () => {
-    Alert.alert('Icon Clicked!', 'You clicked the audio icon.');
+    // Ripetere l'audio
+    handleReplayAudio();
   };
 
-  
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+
+    // Inizializza la lettura dell'audio
+    Speech.speak(textToRead);
+
+    return () => {
+      Speech.stop();
+    };
+  }, [textToRead]);
+
+  const handleReplayAudio = () => {
+    Speech.stop();
+    Speech.speak(textToRead); // Ripete l'audio da zero
+  };
 
   return (
     <View style={styles.container}>
@@ -44,22 +78,21 @@ export default function PathDetails({ route, navigation }) {
       <View style={styles.header}>
         <Image source={artwork.image} style={styles.headerImage} />
         <View style={styles.headerIcons}>
-        <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
-          <Image
-            source={require('../assets/audio_repeat.png')} // Replace with actual icon URI
-            style={styles.icon}
-          />
+          <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
+            <Image
+              source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
+              style={styles.icon}
+            />
           </TouchableOpacity>
-          <View style = {styles.header}>
-            <HamburgerMenu navigation={navigation}  isVisible={dropdownVisible} />
+          <View style={styles.header}>
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
           </View>
         </View>
       </View>
 
       {/* Main Content */}
       <View style={styles.content}>
-        <Text style={styles.description}>{artwork.description1}</Text>
-        <Text style={styles.description}>{artwork.description2}</Text>
+        <Text style={styles.description}>{artwork.description.join(' ')}</Text>
       </View>
 
       {/* Process Button */}
@@ -91,7 +124,7 @@ const styles = StyleSheet.create({
   headerImage: {
     width: 100,
     height: 100,
-    resizeMode:'contain',
+    resizeMode: 'contain',
     left: 100,
   },
   headerIcons: {
@@ -101,7 +134,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginLeft: 10,
-    top:10,
+    top: 10,
   },
   content: {
     flex: 1,
