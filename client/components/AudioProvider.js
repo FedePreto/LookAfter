@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const AudioContext = createContext();
 
@@ -10,13 +10,20 @@ export const AudioProvider = ({ children }) => {
     setIsAudioOn((prev) => !prev);
   };
 
+  // Effetto per attivare l'audio quando cambia la schermata attiva
+  useEffect(() => {
+    if (activeScreen) {
+      setIsAudioOn(true); // Accendi l’audio di default
+    }
+  }, [activeScreen]);
+
   return (
     <AudioContext.Provider value={{ 
       isAudioOn, 
       setIsAudioOn, 
       toggleAudio, 
       activeScreen, 
-      setActiveScreen // Espone la funzione per impostare la schermata attiva
+      setActiveScreen 
     }}>
       {children}
     </AudioContext.Provider>

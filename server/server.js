@@ -33,7 +33,7 @@ app.post("/speech-to-text", upload.single("audio"), async (req, res) => {
 
     // Invia la richiesta a Google Speech-to-Text API
     const response = await fetch(
-      `https://speech.googleapis.com/v1/speech:recognize?key=${process.env.GOOGLE_API_KEY}`,
+      `https://speech.googleapis.com/v1/speech:recognize?key=${process.env.GOOGLE_SPEECH_TO_TEXT_API_KEY}`,
       {
         method: "POST",
         headers: {

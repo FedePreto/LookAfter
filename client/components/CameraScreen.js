@@ -8,6 +8,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import HamburgerMenu from './HamBurgerMenu.js';
+import AudioButton from './AudioButton.js';
 
 export default function CameraScreen() {
   const [startCamera, setStartCamera] = useState(false);
@@ -22,9 +23,10 @@ export default function CameraScreen() {
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(null);
 
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `Whenever you feel ready touch the Take Picture button.`;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const textToRead = `Whenever you feel ready, touch the Take Picture button.`;
 
   useEffect(() => {
     (async () => {
@@ -88,29 +90,45 @@ export default function CameraScreen() {
       <View style={styles.header}>
         <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
       </View>
-      {
-        Platform.OS === 'web' ? (
-          <View style={styles.cameraContainer}>
+      {Platform.OS === "web" ? (
+        <View style={styles.cameraContainer}>
+          <View style={styles.webCameraWrapper}>
             <Webcam
               audio={false}
               ref={webcamRef}
               screenshotFormat="image/jpeg"
-              style={styles.camera}
+              videoConstraints={{
+                width: 1280,
+                height: 720,
+                facingMode: "user",
+              }}
+              style={styles.webCamera}
             />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={__takePicture} style={styles.takePictureButton}>
-                <Text style={styles.buttonText}>Take Picture</Text>
-              </TouchableOpacity>
-            </View>
           </View>
-        ) : (
-          <CameraView style={styles.camera} type={cameraType} ref={cameraRef}>
-            <TouchableOpacity onPress={__takePicture} style={styles.takePictureButton}>
-              <Text style={styles.buttonText}>Take Picture</Text>
-            </TouchableOpacity>
-          </CameraView>
-        )
-      }
+          <TouchableOpacity
+            onPress={() => {
+              const screenshot = webcamRef.current.getScreenshot();
+              if (screenshot) {
+                navigation.navigate("Preview", { images: screenshot });
+              }
+            }}
+            style={styles.takePictureButton}
+          >
+            <Text style={styles.buttonText}>Take Picture</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <Camera
+          style={styles.camera}
+          type={cameraType}
+          ref={cameraRef}
+        >
+          <TouchableOpacity onPress={__takePicture} style={styles.takePictureButton}>
+            <Text style={styles.buttonText}>Take Picture</Text>
+          </TouchableOpacity>
+        </Camera>
+      )}
+      <AudioButton textToRead={textToRead} />
     </View>
   );
 }
@@ -118,53 +136,62 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-  camera: {
-    flex: 1,
-    width: '100%',
-  },
-  takePictureButton: {
-    position: 'absolute',
-    bottom: 40,
-    alignSelf: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 50,
-    width: 80,
-    height: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#000',
+    backgroundColor: "#fff",
   },
   header: {
-    position: 'absolute', // To position the menu above the camera view
+    position: "absolute",
     top: 0,
-    right: 10, // Adjust this value to align the menu to the right
-    zIndex: 1000, // Ensure it is above all other content
+    right: 10,
+    zIndex: 1000,
     padding: 10,
   },
   cameraContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black", // Imposta uno sfondo per evidenziare il layout
+    overflow: "hidden", // Nasconde contenuto che esce dai bordi
+    position: "relative", // Importante per posizionare correttamente il pulsante
   },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
+  webCameraWrapper: {
+    width: "100%",
+    height: "100%",
+    maxWidth: 800, // Limita la larghezza massima della webcam
+    maxHeight: 600, // Limita l'altezza massima della webcam
+    aspectRatio: 16 / 9, // Mantieni un rapporto di aspetto comune (opzionale)
+    overflow: "hidden", // Nasconde contenuto extra
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000", // Per evitare "spazi bianchi"
+  },
+  webCamera: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover", // Assicura che il video si adatti bene al contenitore
+  },
+  takePictureButton: {
+    position: "absolute",
+    bottom: 40,
+    alignSelf: "center",
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    width: 80,
+    height: 80,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+    zIndex: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#000",
+  },
+  camera: {
+    flex: 1,
+    width: "100%",
   },
 });
