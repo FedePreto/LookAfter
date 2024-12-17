@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
+import { AudioContext } from './AudioProvider';
 
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const { isAudioOn } = useContext(AudioContext); //questo è lo stato dell'audio scelto dal menù
 
   const artworkDetails = {
     david: {
@@ -60,12 +62,17 @@ export default function PathDetails({ route, navigation }) {
     }).start();
 
     // Inizializza la lettura dell'audio
-    Speech.speak(textToRead);
+    if (isAudioOn) { 
+      Speech.speak(textToRead);
+    }else{
+      Speech.stop();
+    }
+    
 
     return () => {
       Speech.stop();
     };
-  }, [textToRead]);
+  }, [textToRead, isAudioOn]);
 
   const handleReplayAudio = () => {
     Speech.stop();

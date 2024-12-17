@@ -17,7 +17,7 @@ import ArtworkInformationsBalloon from './components/ArtworkInformationsBalloon.
 import LostPage from './components/LostPage.js';
 import ChatScreen from './components/ChatScreen.js';
 import RecordingScreen from './components/RecordingScreen.js';
-
+import { AudioProvider } from './components/AudioProvider.js';
 
 const Stack = createStackNavigator();
 
@@ -40,26 +40,28 @@ function MainPage({ navigation }) {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="MainPage">
-        <Stack.Screen name="MainPage" component={MainPage} options={{ title: 'Main Page' }} />
-        <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ title: 'Camera' }} />
-        <Stack.Screen name="Preview" component={PreviewScreen} />
-        <Stack.Screen name="ChooseArtwork" component={ChooseArtworkScreen} />
-        <Stack.Screen name="PathDetails" component={PathDetails} />
-        <Stack.Screen name="ConfirmArtwork" component={ConfirmArtwork} />
-        <Stack.Screen name="CameraConfirmation" component={CameraConfirmation} />
-        <Stack.Screen name="PreviewConfirmation" component={PreviewConfirmation} />
-        <Stack.Screen name="ArtworkReached" component={ArtworkReached} />
-        <Stack.Screen name="ArtworkInformations" component={ArtworkInformations} />
-        <Stack.Screen name="AnotherArtworkReached" component={AnotherArtworkReached} />
-        <Stack.Screen name="ArtworkInformationsBalloon" component={ArtworkInformationsBalloon} />
-        <Stack.Screen name="LostPage" component={LostPage} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        <Stack.Screen name="RecordingScreen" component={RecordingScreen} />
-        
-     </Stack.Navigator>
-    </NavigationContainer>
+    <AudioProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="MainPage">
+          <Stack.Screen name="MainPage" component={MainPage} options={{ title: 'Main Page' }} />
+          <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ title: 'Camera' }} />
+          <Stack.Screen name="Preview" component={PreviewScreen} />
+          <Stack.Screen name="ChooseArtwork" component={ChooseArtworkScreen} />
+          <Stack.Screen name="PathDetails" component={PathDetails} />
+          <Stack.Screen name="ConfirmArtwork" component={ConfirmArtwork} />
+          <Stack.Screen name="CameraConfirmation" component={CameraConfirmation} />
+          <Stack.Screen name="PreviewConfirmation" component={PreviewConfirmation} />
+          <Stack.Screen name="ArtworkReached" component={ArtworkReached} />
+          <Stack.Screen name="ArtworkInformations" component={ArtworkInformations} />
+          <Stack.Screen name="AnotherArtworkReached" component={AnotherArtworkReached} />
+          <Stack.Screen name="ArtworkInformationsBalloon" component={ArtworkInformationsBalloon} />
+          <Stack.Screen name="LostPage" component={LostPage} />
+          <Stack.Screen name="ChatScreen" component={ChatScreen} />
+          <Stack.Screen name="RecordingScreen" component={RecordingScreen} />
+          
+      </Stack.Navigator>
+      </NavigationContainer>
+    </AudioProvider>
   );
 }
 
