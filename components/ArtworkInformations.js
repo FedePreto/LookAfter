@@ -82,6 +82,12 @@ export default function ArtworkInformations({ navigation, route }) {
         <View style={styles.imageContainer}>
           {/* Hamburger Menu */}
           <View style={styles.hamburgerMenuContainer}>
+          <TouchableOpacity
+            style={styles.otherArtworksButton}
+            onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })} // Aggiorna con la schermata desiderata
+          >
+            <Text style={styles.otherArtworksText}>Other Artworks</Text>
+          </TouchableOpacity>
             <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
           </View>
           {/* Artwork Image */}
@@ -180,5 +186,20 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     marginTop: 20,
+  },
+  otherArtworksButton: {
+    top: 10,
+    left: -260, // Sposta il pulsante a sinistra del menu hamburger
+    backgroundColor: 'black', // Un bel colore (blu)
+    paddingVertical: 1,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+    elevation: 5, // Effetto ombra
+  },
+  otherArtworksText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
