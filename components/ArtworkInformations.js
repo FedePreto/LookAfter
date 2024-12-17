@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
+import { AudioContext } from './AudioProvider';
+import HamburgerMenu from './HamBurgerMenu';
 
 export default function ArtworkInformations({ navigation, route }) {
   const { artworkKey } = route.params;
+  const { isAudioOn, setIsAudioOn } = useContext(AudioContext);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const artworkMap = {
     monalisa: {
@@ -50,14 +54,21 @@ export default function ArtworkInformations({ navigation, route }) {
       useNativeDriver: true,
     }).start();
 
-    Speech.speak(textToRead);
+    if (isAudioOn) { 
+      Speech.speak(textToRead);
+    } else {
+      Speech.stop();
+    }
 
     return () => {
       Speech.stop();
     };
-  }, [textToRead]);
+  }, [textToRead, isAudioOn]);
 
   const handleReplayAudio = () => {
+    if (!isAudioOn) { 
+      setIsAudioOn(true);
+    } 
     Speech.stop();
     Speech.speak(textToRead);
   };
@@ -67,6 +78,11 @@ export default function ArtworkInformations({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Image Section */}
         <View style={styles.imageContainer}>
+          {/* Hamburger Menu */}
+          <View style={styles.hamburgerMenuContainer}>
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+          </View>
+          {/* Artwork Image */}
           <Image source={artwork.image} style={styles.artworkImage} />
           <TouchableOpacity onPress={handleReplayAudio} style={styles.audioButton}>
             <Ionicons name="volume-high-outline" size={30} color="#fff" />
@@ -110,6 +126,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     position: 'relative',
   },
+  hamburgerMenuContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 210,
+    zIndex: 10, // Porta il menu sopra l'immagine
+  },
   artworkImage: {
     width: 250,
     height: 300,
@@ -127,14 +149,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   title: {
-    fontSize: 32, // Titolo più grande
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
     color: '#333',
   },
   description: {
-    fontSize: 30, // Testo più grande
+    fontSize: 30,
     color: '#555',
     lineHeight: 30,
     textAlign: 'justify',
