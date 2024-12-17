@@ -1,9 +1,36 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback} from 'react-native';
+import React, {useState, useContext, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Animated} from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech';
+
 export default function PreviewScreen({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
+  const textToRead = `This is a preview of the picture you took, please make sure that everything is clear and recognisable before proceeding.`;
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+      setActiveScreen('Preview');
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true,
+      }).start();
+  
+      if (isAudioOn && activeScreen === 'Preview') {
+        Speech.speak(textToRead);
+      } else {
+        Speech.stop();
+      }
+  
+      return () => {
+        Speech.stop();
+      };
+    }, [textToRead, isAudioOn]);
+
 
   const __closeDropdown = () => {
     setDropdownVisible(false);
