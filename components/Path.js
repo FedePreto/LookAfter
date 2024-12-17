@@ -7,7 +7,7 @@ import { AudioContext } from './AudioProvider';
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isAudioOn } = useContext(AudioContext); //questo è lo stato dell'audio scelto dal menù
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); //questo è lo stato dell'audio scelto dal menù
 
   const artworkDetails = {
     david: {
@@ -55,6 +55,8 @@ export default function PathDetails({ route, navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
+    setActiveScreen('Path');
+
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
@@ -62,7 +64,7 @@ export default function PathDetails({ route, navigation }) {
     }).start();
 
     // Inizializza la lettura dell'audio
-    if (isAudioOn) { 
+    if (isAudioOn && activeScreen === 'Path') { 
       Speech.speak(textToRead);
     }else{
       Speech.stop();

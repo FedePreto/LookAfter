@@ -7,7 +7,7 @@ import HamburgerMenu from './HamBurgerMenu';
 
 export default function ArtworkInformations({ navigation, route }) {
   const { artworkKey } = route.params;
-  const { isAudioOn, setIsAudioOn } = useContext(AudioContext);
+  const { isAudioOn, setIsAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const artworkMap = {
@@ -48,13 +48,15 @@ export default function ArtworkInformations({ navigation, route }) {
   const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
+    setActiveScreen('ArtworkInformations'); // Imposta questa schermata come attiva
+
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
     }).start();
 
-    if (isAudioOn) { 
+    if (isAudioOn && activeScreen === 'ArtworkInformations') { 
       Speech.speak(textToRead);
     } else {
       Speech.stop();
@@ -63,10 +65,10 @@ export default function ArtworkInformations({ navigation, route }) {
     return () => {
       Speech.stop();
     };
-  }, [textToRead, isAudioOn]);
+  }, [textToRead, isAudioOn, activeScreen]);
 
   const handleReplayAudio = () => {
-    if (!isAudioOn) { 
+    if (!isAudioOn && activeScreen === 'ArtworkInformations') { 
       setIsAudioOn(true);
     } 
     Speech.stop();
