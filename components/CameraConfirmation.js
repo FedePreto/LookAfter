@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform, Animated } from 'react-native';
 import { Camera,CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
-
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech';
+import HamburgerMenu from './HamBurgerMenu';
 
 export default function CameraConfirmation() {
     const [startCamera, setStartCamera] = useState(false);
@@ -20,6 +22,11 @@ export default function CameraConfirmation() {
     const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(null);
     const route = useRoute(); // Ottieni il route
     const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
+
+    const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
+    const textToRead = `Whenever you feel ready touch the Take picture button`;
+    const [fadeAnim] = useState(new Animated.Value(0));
+    const [dropdownVisible, setDropdownVisible] = useState(false);
     
   useEffect(() => {
     (async () => {
@@ -38,6 +45,25 @@ export default function CameraConfirmation() {
     setHasMediaLibraryPermission(mediaLibraryPermission === 'granted')
     })();
   }, []);
+
+  useEffect(() => {
+          setActiveScreen('ArrivalConfirmation');
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+          }).start();
+      
+          if (isAudioOn && activeScreen === 'ArrivalConfirmation') {
+            Speech.speak(textToRead);
+          } else {
+            Speech.stop();
+          }
+      
+          return () => {
+            Speech.stop();
+          };
+  }, [textToRead, isAudioOn]);
     
 
   
@@ -80,6 +106,9 @@ export default function CameraConfirmation() {
   
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+        </View>
         {
           Platform.OS === 'web' ? (
             <View style={styles.cameraContainer}>
@@ -142,6 +171,13 @@ export default function CameraConfirmation() {
     buttonText: {
         fontSize: 16,
         color: '#000',
+    },
+    header: {
+      position: 'absolute', // To position the menu above the camera view
+      top: 0,
+      right: 10, // Adjust this value to align the menu to the right
+      zIndex: 1000, // Ensure it is above all other content
+      padding: 10,
     },
 });
   
