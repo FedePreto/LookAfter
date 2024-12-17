@@ -1,6 +1,9 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import React, {useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech';
+
 const artworkDetails = {
   david: {
     title: "The David",
@@ -24,6 +27,29 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Indica quale opera visualizzare
   const artwork = artworkDetails[artworkKey];
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
+  const textToRead = `This is the ${artwork.name} and is the artwork ${artwork.number} of 2}.`;
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+        setActiveScreen('ChooseArtwork');
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }).start();
+    
+        if (isAudioOn && activeScreen === 'ChooseArtwork') {
+          Speech.speak(textToRead);
+        } else {
+          Speech.stop();
+        }
+    
+        return () => {
+          Speech.stop();
+        };
+  }, [textToRead, isAudioOn]);
 
   if (!artwork) {
     return (
