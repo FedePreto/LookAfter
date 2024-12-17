@@ -1,11 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Animated } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import HamburgerMenu from './HamBurgerMenu';
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech';
+
 export default function ArtworkReached({ navigation }) {
   const route = useRoute(); // Ottieni il route
   const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
 
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
+  const textToRead = `Congratulation you reacherd me, now touch the get info about me button!`;
+  const [fadeAnim] = useState(new Animated.Value(0));
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  useEffect(() => {
+            setActiveScreen('ArtworkReached');
+            Animated.timing(fadeAnim, {
+              toValue: 1,
+              duration: 2000,
+              useNativeDriver: true,
+            }).start();
+        
+            if (isAudioOn && activeScreen === 'ArtworkReached') {
+              Speech.speak(textToRead);
+            } else {
+              Speech.stop();
+            }
+        
+            return () => {
+              Speech.stop();
+            };
+  }, [textToRead, isAudioOn]);
+  
   const handleProceed = () => {
     navigation.navigate('ArtworkInformations', { artworkKey });
   };
