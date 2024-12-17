@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import CameraScreen from './components/CameraScreen.js'; // Import the CameraScreen
-import PreviewScreen from './components/PreviewScreen.js'
+import { Text, View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import CameraScreen from './components/CameraScreen.js'; 
+import PreviewScreen from './components/PreviewScreen.js';
 import Panoramica from './components/Panoramic.js';
 import ChooseArtworkScreen from './components/ArtworkScreenDavid.js';
 import PathDetails from './components/Path.js';
@@ -18,14 +18,45 @@ import LostPage from './components/LostPage.js';
 import ChatScreen from './components/ChatScreen.js';
 import RecordingScreen from './components/RecordingScreen.js';
 import { AudioProvider } from './components/AudioProvider.js';
+import { AudioContext } from './components/AudioProvider.js';
+import * as Speech from 'expo-speech';
+import HamburgerMenu from './components/HamBurgerMenu.js';
 
 const Stack = createStackNavigator();
 
 function MainPage({ navigation }) {
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
+  const textToRead = `Hello and welcome to Look After. Please touch the Scan button to proceed.`;
+  const [fadeAnim] = useState(new Animated.Value(0));
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  useEffect(() => {
+    setActiveScreen('App');
+
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+
+    if (isAudioOn && activeScreen === 'App') {
+      Speech.speak(textToRead);
+    } else {
+      Speech.stop();
+    }
+
+    return () => {
+      Speech.stop();
+    };
+  }, [textToRead, isAudioOn]);
+
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+      </View>
       <Text style={styles.title}>Look After</Text>
-      <Text style = {styles.description}>
+      <Text style={styles.description}>
         FEEL THE SPACE OWN YOUR PATH
       </Text>
       <TouchableOpacity
@@ -58,8 +89,7 @@ export default function App() {
           <Stack.Screen name="LostPage" component={LostPage} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
           <Stack.Screen name="RecordingScreen" component={RecordingScreen} />
-          
-      </Stack.Navigator>
+        </Stack.Navigator>
       </NavigationContainer>
     </AudioProvider>
   );
@@ -71,6 +101,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
+    position: 'relative', // Necessario per posizionamenti assoluti dei figli
+  },
+  header: {
+    position: 'absolute',
+    top: 20, // Distanza dal bordo superiore
+    right: 20, // Distanza dal bordo destro
+    zIndex: 10, // Porta il menu sopra gli altri elementi
   },
   title: {
     fontSize: 24,
