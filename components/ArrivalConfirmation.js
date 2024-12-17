@@ -1,6 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import React, {useState, useContext, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech';
+
 const artworkDetails = {
   monalisa: {
     image: require('../assets/monalisa.png'),
@@ -15,6 +18,29 @@ const artworkDetails = {
 export default function ConfirmArtwork({ route, navigation }) {
   const { artworkKey } = route.params || {}; // artworkKey per distinguere l'opera
   const artwork = artworkDetails[artworkKey];
+
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
+  const textToRead = `To confirm that you have arrived to me please take a picture of me`;
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+        setActiveScreen('ArrivalConfirmation');
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }).start();
+    
+        if (isAudioOn && activeScreen === 'ArrivalConfirmation') {
+          Speech.speak(textToRead);
+        } else {
+          Speech.stop();
+        }
+    
+        return () => {
+          Speech.stop();
+        };
+      }, [textToRead, isAudioOn]);
 
   if (!artwork) {
     return (
