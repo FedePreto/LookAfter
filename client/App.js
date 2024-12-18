@@ -73,7 +73,7 @@ export default function App() {
   return (
     <AudioProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="MainPage">
+        <Stack.Navigator initialRouteName="MainPage"  screenOptions={{headerShown: false}}>
           <Stack.Screen name="MainPage" component={MainPage} options={{ title: 'Main Page' }} />
           <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ title: 'Camera' }} />
           <Stack.Screen name="Preview" component={PreviewScreen} />

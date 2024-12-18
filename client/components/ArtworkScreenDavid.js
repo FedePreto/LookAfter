@@ -1,8 +1,11 @@
 import React, {useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
+import { SafeAreaView,StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
+
 
 const artworkDetails = {
   david: {
@@ -29,7 +32,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `This is the ${artwork.name} and is the artwork ${artwork.number} of 2}.`;
+  const textToRead = `I am ${artwork.title} the artwork${artwork.number} of 2}.`;
   const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
@@ -78,113 +81,144 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   
 
   return (
-    <TouchableWithoutFeedback onPress={() => dropdownVisible && __closeDropdown()}>
-     <View style={styles.container}>
-      <View style = {styles.header}>
-        <HamburgerMenu navigation={navigation}  isVisible={dropdownVisible} />
-      </View>
-      
-      <Text style={styles.title}>Choose the Artwork</Text>
-      <Image source={artwork.image} style={styles.headerImage} />
-
-      {/* Titolo dell'opera */}
-      <Text style={styles.artworkTitle}>Title: {artwork.title}</Text>
-      <Text style={styles.artworkTitle}>Artwork number: {artwork.number}/2</Text>
-      {/* Pulsante "Choose" */}
-      <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
-        <Text style={styles.chooseButtonText}>Choose</Text>
-      </TouchableOpacity>
-
-      {/* Pulsante "Back", visibile solo se backScreen è definito */}
-      {artwork.backScreen && (
-        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-      )}
-
-      {/* Pulsante "Next", visibile solo se nextScreen è definito */}
-      {artwork.nextScreen && (
-        <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-    </TouchableWithoutFeedback>
-  );
-}
+    <SafeAreaView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={() => dropdownVisible && __closeDropdown()}>
+        <View style={styles.container}>
+          
+          {/* Header con Hamburger Menu */}
+          <View style={styles.header}>
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+          </View>
+          
+          {/* Titolo */}
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Choose the Artwork</Text>
+          </View>
+  
+          {/* Immagine del David */}
+          <View style={styles.imageContainer}>
+            <Image source={artwork.image} style={styles.artworkImage} />
+          </View>
+  
+          {/* Informazioni sull'opera */}
+          <View style={styles.infoContainer}>
+            <Text style={styles.artworkTitle}>{artwork.title}</Text>
+            <Text style={styles.artworkSubtitle}>Artwork number: {artwork.number}/2</Text>
+          </View>
+  
+          {/* Pulsanti */}
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
+              <Text style={styles.chooseButtonText}>Choose</Text>
+            </TouchableOpacity>
+  
+            {artwork.backScreen && (
+              <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+                <Text style={styles.buttonText}>Previous</Text>
+              </TouchableOpacity>
+            )}
+  
+            {artwork.nextScreen && (
+              <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+                <Text style={styles.buttonText}>Next</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
+  );  
+}  
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    padding: 20,
+    backgroundColor: '#f9f9f9',
+    justifyContent: 'space-between', // Distribuisce i contenuti
+    alignItems: 'center', // Centra orizzontalmente
+    padding: '5%', // Spaziatura uniforme
   },
   header: {
     position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 10, // Ensure it is above other content
+    top: '5%', // Margine superiore
+    right: '5%', // Posizione del menu a destra
+    zIndex: 10,
+  },
+  titleContainer: {
+    flex: 0.2, // Occupa il 20% dello schermo
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: width * 0.07, // 7% della larghezza dello schermo
     fontWeight: 'bold',
-    marginBottom: 20,
-    top: 20,
+    textAlign: 'center',
+    color: '#333',
   },
-  headerImage: {
-    width: 250,
-    height: 350,
-    marginBottom: 40,
-    top:20,
+  imageContainer: {
+    flex: 0.4, // Occupa il 40% dello schermo
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  artworkImage: {
+    width: width * 0.9, // 60% della larghezza dello schermo
+    height: width * 0.9, // Immagine quadrata
+    resizeMode: 'contain',
+  },
+  infoContainer: {
+    flex: 0.2, // Occupa il 20% dello schermo
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   artworkTitle: {
-    fontSize: 18,
+    fontSize: width * 0.07, // 7% della larghezza dello schermo
     fontWeight: 'bold',
-    marginBottom: 20,
+    textAlign: 'center',
+    color: '#555',
+    marginBottom: height * 0.01,
+  },
+  artworkSubtitle: {
+    fontSize: width * 0.04, // 4% della larghezza dello schermo
+    textAlign: 'center',
+    color: '#777',
+  },
+  buttonsContainer: {
+    flex: 0.2, // Occupa il 20% dello schermo
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: '5%',
   },
   chooseButton: {
     backgroundColor: '#007bff',
-    padding: 15,
-    borderRadius: 10,
-    width: 150,
+    paddingVertical: height * 0.02, // 2% dell'altezza dello schermo
+    paddingHorizontal: width * 0.1, // 10% della larghezza
+    borderRadius: 15,
     alignItems: 'center',
-    marginBottom: 30,
   },
   chooseButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: width * 0.045, // 4.5% della larghezza dello schermo
     fontWeight: 'bold',
   },
   backButton: {
-    position: 'absolute',
-    bottom: 30,
-    left: 20,
     backgroundColor: '#6c757d',
-    padding: 15,
-    borderRadius: 10,
-    width: 120,
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.08,
+    borderRadius: 15,
     alignItems: 'center',
   },
   nextButton: {
-    position: 'absolute',
-    bottom: 30,
-    right: 20,
     backgroundColor: '#28a745',
-    padding: 15,
-    borderRadius: 10,
-    width: 120,
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.08,
+    borderRadius: 15,
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: width * 0.045,
     fontWeight: 'bold',
-  },
-  errorText: {
-    fontSize: 18,
-    color: 'red',
-    textAlign: 'center',
-    marginTop: 50,
   },
 });
