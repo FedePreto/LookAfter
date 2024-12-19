@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableWithoutFeedback,TouchableOpacity, Alert, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
@@ -18,7 +18,7 @@ const artworkDetails = {
 export default function ConfirmArtwork({ route, navigation }) {
   const { artworkKey } = route.params || {}; // artworkKey per distinguere l'opera
   const artwork = artworkDetails[artworkKey];
-
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `To confirm that you have arrived to me please take a picture of me`;
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -57,7 +57,18 @@ export default function ConfirmArtwork({ route, navigation }) {
       Alert.alert('Icon Clicked!', 'You clicked the audio icon.');
     };
 
+    const toggleDropdown = () => {
+      setDropdownVisible(!dropdownVisible);
+    };
+  
+    const handleOutsidePress = () => {
+      if (dropdownVisible) {
+        setDropdownVisible(false); // Close the menu if it's open
+      }
+    };
+
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       {/* Header Section */}
       
@@ -70,9 +81,9 @@ export default function ConfirmArtwork({ route, navigation }) {
                   style={styles.icon}
                 />
                 </TouchableOpacity>
-                <View style = {styles.header}>
-                  <HamburgerMenu navigation={navigation} />
-                </View>
+      
+                  <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+                
               </View>
               </View>
 
@@ -88,6 +99,7 @@ export default function ConfirmArtwork({ route, navigation }) {
         <Text style={styles.buttonText}>Take Picture</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

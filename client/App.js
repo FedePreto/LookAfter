@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Animated , TouchableWithoutFeedback} from 'react-native';
 import CameraScreen from './components/CameraScreen.js'; 
 import PreviewScreen from './components/PreviewScreen.js';
 import Panoramica from './components/Panoramic.js';
@@ -29,6 +29,7 @@ function MainPage({ navigation }) {
   const textToRead = `Hello and welcome to Look After. Please touch the Scan button to proceed.`;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  
 
   useEffect(() => {
     setActiveScreen('App');
@@ -50,10 +51,21 @@ function MainPage({ navigation }) {
     };
   }, [textToRead, isAudioOn]);
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       <View style={styles.header}>
-        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
       </View>
       <Text style={styles.title}>Look After</Text>
       <Text style={styles.description}>
@@ -66,6 +78,7 @@ function MainPage({ navigation }) {
         <Text style={styles.buttonText}>Scan</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Animated,TouchableWithoutFeedback } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
@@ -48,7 +48,18 @@ export default function ArtworkReached({ navigation }) {
   const handleIconClick = () => {
       Alert.alert('Icon Clicked!', 'You clicked the audio icon.');
     };
+
+    const toggleDropdown = () => {
+      setDropdownVisible(!dropdownVisible);
+    };
+  
+    const handleOutsidePress = () => {
+      if (dropdownVisible) {
+        setDropdownVisible(false); // Close the menu if it's open
+      }
+    };
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
@@ -61,9 +72,9 @@ export default function ArtworkReached({ navigation }) {
                 />
                 </TouchableOpacity>
                 </View>
-                <View style = {styles.header}>
-                  <HamburgerMenu navigation={navigation}/>
-                </View>
+                
+                  <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+                
               
             </View>
       
@@ -79,6 +90,7 @@ export default function ArtworkReached({ navigation }) {
         <Text style={styles.buttonText}>Get Info about me</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

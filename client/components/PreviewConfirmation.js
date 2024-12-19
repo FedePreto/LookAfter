@@ -1,12 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React , {useState}from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,TouchableWithoutFeedback } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
 
 
 export default function PreviewConfirmation({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
   const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
-
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const __retakePicture = () => {
     navigation.goBack(); // Go back to CameraScreen
   };
@@ -18,7 +18,18 @@ export default function PreviewConfirmation({ route, navigation }) {
   };
   const isMultipleImages = Array.isArray(images);
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       
       {isMultipleImages ? (
@@ -52,6 +63,7 @@ export default function PreviewConfirmation({ route, navigation }) {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

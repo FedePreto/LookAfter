@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, TouchableWithoutFeedback,TouchableOpacity, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
@@ -81,21 +81,32 @@ export default function PathDetails({ route, navigation }) {
     Speech.speak(textToRead); // Ripete l'audio da zero
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
         <Image source={artwork.image} style={styles.headerImage} />
         <View style={styles.headerIcons}>
-          <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
+          <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
             <Image
               source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
               style={styles.icon}
             />
           </TouchableOpacity>
-          <View style={styles.header}>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
-          </View>
+          
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+          
         </View>
       </View>
 
@@ -109,6 +120,7 @@ export default function PathDetails({ route, navigation }) {
         <Text style={styles.buttonText}>Proceed</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

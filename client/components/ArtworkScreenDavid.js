@@ -78,16 +78,26 @@ export default function ChooseArtworkScreen({ route, navigation }) {
     navigation.navigate('PathDetails', { artworkKey: artwork.artworkKey }); // Passa il parametro
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+
   
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={() => dropdownVisible && __closeDropdown()}>
+      <TouchableWithoutFeedback onPress={handleOutsidePress}>
         <View style={styles.container}>
           
           {/* Header con Hamburger Menu */}
           <View style={styles.header}>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
           </View>
           
           {/* Titolo */}

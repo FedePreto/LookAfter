@@ -1,23 +1,11 @@
-import React, { useState, useContext } from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  Modal,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React,  { useState,useContext } from 'react';
+import { StyleSheet, View, TouchableOpacity, Text, Modal,TouchableWithoutFeedback } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { AudioContext } from './AudioProvider'; // Importa il contesto
+import { AudioContext } from './AudioProvider';
 
-export default function HamburgerMenu({ navigation, isVisible }) {
-  const [dropdownVisible, setDropdownVisible] = useState(false); // Stato del menu a tendina
-  const [showConfirmation, setShowConfirmation] = useState(false); // Stato della conferma "Home"
-  const { isAudioOn, toggleAudio } = useContext(AudioContext); // Accedi allo stato audio globale
-
-  const __toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
+export default function HamburgerMenu({ navigation, isVisible, toggleDropdown }) {
+  const { isAudioOn, toggleAudio } = useContext(AudioContext);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const __confirmGoHome = () => {
     setShowConfirmation(true);
@@ -25,55 +13,54 @@ export default function HamburgerMenu({ navigation, isVisible }) {
 
   const __goHome = () => {
     setShowConfirmation(false);
-    navigation.navigate('MainPage'); // Vai alla schermata "Home"
+    navigation.navigate('MainPage'); // Navigate to "Home" screen
   };
 
   const __cancelGoHome = () => {
     setShowConfirmation(false);
   };
-
   return (
     <View style={styles.container}>
-      {/* Overlay per opacizzare il background */}
-      {dropdownVisible && (
-        <TouchableWithoutFeedback onPress={__toggleDropdown}>
-          <View style={styles.overlay} />
-        </TouchableWithoutFeedback>
-      )}
-  
-      {/* Bottone del menu */}
-      <TouchableOpacity onPress={__toggleDropdown} style={styles.menuButton}>
+      {/* Menu Button */}
+      <TouchableOpacity onPress={toggleDropdown} style={styles.menuButton}>
         <Ionicons name="menu" size={30} color="black" />
       </TouchableOpacity>
-  
-      {/* Dropdown menu */}
-      {dropdownVisible && (
-        <View style={styles.dropdown}>
-          {/* Bottone per attivare/disattivare l'audio */}
-          <TouchableOpacity style={styles.dropdownItem} onPress={toggleAudio}>
-            <Text style={styles.dropdownText}>Audio</Text>
-            <Ionicons
-              name={isAudioOn ? 'volume-high' : 'volume-mute'}
-              size={20}
-              color="black"
-            />
-          </TouchableOpacity>
-  
-          {/* Bottone per tornare alla schermata Home */}
-          <TouchableOpacity style={styles.dropdownItem} onPress={__confirmGoHome}>
-            <Text style={styles.dropdownText}>Home</Text>
-            <MaterialIcons name="home" size={20} color="black" />
-          </TouchableOpacity>
-        </View>
+
+      {/* Dropdown Menu and Overlay */}
+      {isVisible && (
+        <>
+          {/* Overlay */}
+          <TouchableWithoutFeedback onPress={toggleDropdown}>
+            <View style={StyleSheet.absoluteFillObject} />
+          </TouchableWithoutFeedback>
+
+          {/* Dropdown Menu */}
+          <View style={styles.dropdown}>
+            <TouchableOpacity style={styles.dropdownItem} onPress={toggleAudio}>
+              <Text style={styles.dropdownText}>Audio</Text>
+              <Ionicons
+                name={isAudioOn ? 'volume-high' : 'volume-mute'}
+                size={20}
+                color="black"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.dropdownItem}
+              onPress={__confirmGoHome}
+            >
+              <Text style={styles.dropdownText}>Home</Text>
+              <MaterialIcons name="home" size={20} color="black" />
+            </TouchableOpacity>
+          </View>
+        </>
       )}
-  
-      {/* Modal di conferma per tornare alla schermata Home */}
+
       {showConfirmation && (
         <Modal transparent={true} animationType="fade" visible={showConfirmation}>
           <View style={styles.modalBackground}>
             <View style={styles.modalContainer}>
               <Text style={styles.modalText}>
-                Are you sure to go home? You are going to lose your progress.
+                Are you sure you want to go home? You will lose your progress.
               </Text>
               <View style={styles.modalButtons}>
                 <TouchableOpacity style={styles.modalButton} onPress={__goHome}>
@@ -88,7 +75,7 @@ export default function HamburgerMenu({ navigation, isVisible }) {
         </Modal>
       )}
     </View>
-  );  
+  );
 }
 
 const styles = StyleSheet.create({
@@ -96,17 +83,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  menuButton: {
-    padding: 10,
-  },
   overlay: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Sfondo semi-trasparente
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
     zIndex: 1,
+  },
+  menuButton: {
+    padding: 10,
   },
   dropdown: {
     position: 'absolute',
@@ -121,7 +108,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     padding: 10,
     width: 150,
-    zIndex: 2, // Più alto rispetto all'overlay
+    zIndex: 2, // Ensure it's above other elements
   },
   dropdownItem: {
     flexDirection: 'row',

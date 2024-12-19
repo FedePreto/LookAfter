@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity,TouchableWithoutFeedback, Alert, ImageBackground, Image, Platform, Animated } from 'react-native';
 import { Camera, CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import { useNavigation } from '@react-navigation/native';
@@ -85,10 +85,21 @@ export default function CameraScreen() {
     }
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       <View style={styles.header}>
-        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
       </View>
       {Platform.OS === "web" ? (
         <View style={styles.cameraContainer}>
@@ -118,7 +129,7 @@ export default function CameraScreen() {
           </TouchableOpacity>
         </View>
       ) : (
-        <Camera
+        <CameraView
           style={styles.camera}
           type={cameraType}
           ref={cameraRef}
@@ -126,10 +137,11 @@ export default function CameraScreen() {
           <TouchableOpacity onPress={__takePicture} style={styles.takePictureButton}>
             <Text style={styles.buttonText}>Take Picture</Text>
           </TouchableOpacity>
-        </Camera>
+        </CameraView>
       )}
       <AudioButton textToRead={textToRead} />
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

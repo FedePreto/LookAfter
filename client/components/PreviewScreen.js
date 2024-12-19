@@ -36,8 +36,14 @@ export default function PreviewScreen({ route, navigation }) {
     setDropdownVisible(false);
   };
 
-  const __toggleDropdown = () => {
+  const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
   };
 
   const __retakePicture = () => {
@@ -59,7 +65,7 @@ export default function PreviewScreen({ route, navigation }) {
     
     <View style={styles.container}>
       <View style={styles.header}>
-      <HamburgerMenu navigation={navigation} onCloseDropdown={__closeDropdown} isVisible = {dropdownVisible}/>
+      <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
       </View>
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll

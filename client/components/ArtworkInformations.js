@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback,ScrollView, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
@@ -75,7 +75,18 @@ export default function ArtworkInformations({ navigation, route }) {
     Speech.speak(textToRead);
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Image Section */}
@@ -88,7 +99,7 @@ export default function ArtworkInformations({ navigation, route }) {
           >
             <Text style={styles.otherArtworksText}>Other Artworks</Text>
           </TouchableOpacity>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
           </View>
           {/* Artwork Image */}
           <Image source={artwork.image} style={styles.artworkImage} />
@@ -116,6 +127,7 @@ export default function ArtworkInformations({ navigation, route }) {
         <Ionicons name="chatbubble-outline" size={30} color="white" />
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

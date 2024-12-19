@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform, Animated,TouchableWithoutFeedback } from 'react-native';
 import { Camera,CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import * as MediaLibrary from 'expo-media-library';
@@ -94,20 +94,21 @@ export default function CameraConfirmation() {
       Alert.alert('Camera not initialized');
     }
   };
-  
-  
-    // if (!hasPermission && Platform.OS !== 'web') {
-    //   return <Text>Requesting camera permission...</Text>;
-    // }
-  
-    // if (!hasMediaLibraryPermission && Platform.OS !== 'web') {
-    //   return <Text>Requesting media library permission...</Text>;
-    // }
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
   
     return (
+      <TouchableWithoutFeedback onPress={handleOutsidePress}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} />
+          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
         </View>
         {Platform.OS === 'web' ? (
           <View style={styles.cameraContainer}>
@@ -141,6 +142,7 @@ export default function CameraConfirmation() {
           </CameraView>
         )}
       </View>
+      </TouchableWithoutFeedback>
     );    
   }
   
