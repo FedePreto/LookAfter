@@ -106,19 +106,22 @@ export default function PreviewScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F0FF',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 50,
   },
   text: {
     fontSize: 24,
     marginBottom: 20,
     fontWeight: 'bold',
     marginTop: 20,
+    textAlign: 'center',
   },
   header: {
     position: 'absolute',
-    top: 10,
+    top: 50,
     right: 10, // Align to the top-right corner
     zIndex: 10, // Ensure it's above other elements
   },
@@ -131,13 +134,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // Arrange images horizontally
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 0,
+    paddingTop: 20,
+    marginBottom: 20,
   },
   imageWrapper: {
-    width: 300, // Match image width for paging
+    width: 350, // Match image width for paging
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: -20 ,
   },
   image: {
     width: 350,
@@ -145,6 +148,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderRadius: 10,
     marginTop: -200,
+    shadowColor: '#000', // Subtle shadow for depth
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5, // Android shadow
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
   noImagesText: {
     fontSize: 18,
@@ -156,13 +166,20 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     bottom: 100,
+    paddingHorizontal: 0,
   },
   button: {
     backgroundColor: '#28a745',
-    padding: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
     borderRadius: 10,
     width: 120,
     alignItems: 'center',
+    shadowColor: 'black', // Shadow for depth
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 6,
   },
   textButton: {
     color: '#fff',

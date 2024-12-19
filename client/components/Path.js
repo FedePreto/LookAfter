@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, Alert, TouchableWithoutFeedback,Touchabl
 import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
@@ -96,6 +97,9 @@ export default function PathDetails({ route, navigation }) {
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={40} color="#333" />
+      </TouchableOpacity>
         <Image source={artwork.image} style={styles.headerImage} />
         <View style={styles.headerIcons}>
           <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
@@ -104,10 +108,11 @@ export default function PathDetails({ route, navigation }) {
               style={styles.icon}
             />
           </TouchableOpacity>
-          
+          </View>
+          <View  style = {styles.headerHambuerger}>
             <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
-          
-        </View>
+          </View>
+        
       </View>
 
       {/* Main Content */}
@@ -127,7 +132,7 @@ export default function PathDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F0FF',
     padding: 20,
   },
   description: {
@@ -135,21 +140,47 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,
+    top:'90',
+  },
+  backButton: {
+    padding: 8,
+    top:'5',
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+    flexDirection: 'row', // Align items horizontally
+    alignItems: 'center', // Center items vertically
+    justifyContent: 'space-between', // Space elements evenly
+    paddingHorizontal: 16, // Add padding on both sides
+    paddingVertical: 30, // Add padding on top and bottom
+    width: '100%', // Ensure it spans the full width
+    position: 'absolute', // Keep it fixed at the top
+    top: 10, // Position at the very top
+    zIndex: 10, // Ensure it stays above other content
+    backgroundColor: '#E8F0FF', // Optional: background color for header
+  },
+  headerHambuerger:{
+    position: 'absolute',
+    top: 70,
+    right: 0,
+    zIndex: 10,
   },
   headerImage: {
     width: 100,
-    height: 100,
-    resizeMode: 'contain',
-    left: 100,
+  height: 100,
+  resizeMode: 'contain',
+  borderRadius: 50,
+  borderWidth: 2,
+  borderColor: '#ddd',
+  shadowColor: '#000', // Shadow color
+  shadowOffset: { width: 0, height: 4 }, // Position of the shadow
+  shadowOpacity: 0.2, // Shadow transparency
+  shadowRadius: 6, // Spread of the shadow
+  elevation: 5, // Android-specific shadow
   },
   headerIcons: {
     flexDirection: 'row',
+    right:'50',
+    top:'10',
   },
   icon: {
     width: 30,

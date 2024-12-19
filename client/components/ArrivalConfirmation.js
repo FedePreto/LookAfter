@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableWithoutFeedback,TouchableOpacit
 import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
-
+import { Ionicons } from '@expo/vector-icons';
 const artworkDetails = {
   monalisa: {
     image: require('../assets/monalisa.png'),
@@ -67,25 +67,33 @@ export default function ConfirmArtwork({ route, navigation }) {
       }
     };
 
+    const handleReplayAudio = () => {
+        Speech.stop();
+        Speech.speak(textToRead); // Ripete l'audio da zero
+      };
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
       {/* Header Section */}
       
       <View style={styles.header}>
-              <Image source={artwork.image} style={styles.headerImage} />
-              <View style={styles.headerIcons}>
-              <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
-                <Image
-                  source={require('../assets/audio_repeat.png')} // Replace with actual icon URI
-                  style={styles.icon}
-                />
-                </TouchableOpacity>
-      
-                  <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
-                
-              </View>
-              </View>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={40} color="#333" />
+      </TouchableOpacity>
+        <Image source={artwork.image} style={styles.headerImage} />
+        <View style={styles.headerIcons}>
+          <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
+            <Image
+              source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+          </View>
+          <View  style = {styles.headerHambuerger}>
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+          </View>
+        
+      </View>
 
       {/* Main Content */}
       <View style={styles.content}>
@@ -106,7 +114,7 @@ export default function ConfirmArtwork({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F0FF',
     padding: 20,
   },
   description: {
@@ -116,26 +124,43 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     bottom: 30,
   },
+  backButton: {
+    padding: 8,
+    top:'5',
+  },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+    flexDirection: 'row', // Align items horizontally
+    alignItems: 'center', // Center items vertically
+    justifyContent: 'space-between', // Space elements evenly
+    paddingHorizontal: 16, // Add padding on both sides
+    paddingVertical: 30, // Add padding on top and bottom
+    width: '100%', // Ensure it spans the full width
+    position: 'absolute', // Keep it fixed at the top
+    top: 10, // Position at the very top
+    zIndex: 10, // Ensure it stays above other content
+    backgroundColor: '#E8F0FF', // Optional: background color for header
+  },
+  headerHambuerger:{
+    position: 'absolute',
+    top: 70,
+    right: 0,
+    zIndex: 10,
   },
   headerImage: {
     width: 100,
     height: 100,
     resizeMode:'contain',
-    left: 100,
   },
   headerIcons: {
     flexDirection: 'row',
+    right:'50',
+    top:'10',
   },
   icon: {
     width: 30,
     height: 30,
     marginLeft: 10,
-    top:10,
+    top: 10,
   },
   content: {
     flex: 1,

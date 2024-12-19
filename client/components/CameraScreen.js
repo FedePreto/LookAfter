@@ -148,11 +148,11 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "black",
   },
   header: {
     position: "absolute",
-    top: 0,
+    top: 40,
     right: 10,
     zIndex: 1000,
     padding: 10,
@@ -185,22 +185,26 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 40,
     alignSelf: "center",
-    backgroundColor: "#fff",
-    borderRadius: 50,
-    width: 80,
-    height: 80,
+    backgroundColor: "#E8F0FF",
+    borderRadius: 70,
+    width: 90,
+    height: 90,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-    zIndex: 10,
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
+    borderWidth: 3, // Add a white border for contrast
+    borderColor: "#FFF",
   },
   buttonText: {
-    fontSize: 16,
-    color: "#000",
+    fontSize: 18, // Slightly smaller font for a compact look
+    color: "black", // White text for good contrast
+    fontWeight: "bold", // Bold text for emphasis
+    textTransform: "uppercase",
+    textAlign: 'center',
   },
   camera: {
     flex: 1,

@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function ArtworkReached({ navigation }) {
   const route = useRoute(); // Ottieni il route
@@ -63,19 +64,7 @@ export default function ArtworkReached({ navigation }) {
     <View style={styles.container}>
       {/* Header Section */}
       <View style={styles.header}>
-              <Image source={artworkImage} style={styles.headerImage} />
-              <View style={styles.headerIcons}>
-              <TouchableOpacity onPress={handleIconClick} style={styles.iconWrapper}>
-                <Image
-                  source={require('../assets/audio_repeat.png')} // Replace with actual icon URI
-                  style={styles.icon}
-                />
-                </TouchableOpacity>
-                </View>
-                
-                  <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
-                
-              
+              <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
             </View>
       
       {/* Main Content */}
@@ -97,7 +86,7 @@ export default function ArtworkReached({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F0FF',
     padding: 40,
   },
   description: {
@@ -107,12 +96,10 @@ const styles = StyleSheet.create({
     marginBottom: 20, // Adds space above the button
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-    right:-10,
-    top:-20,
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 10,
   },
   headerImage: {
     width: 100,

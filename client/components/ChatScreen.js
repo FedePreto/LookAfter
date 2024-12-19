@@ -78,16 +78,84 @@ export default function ChatScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
-  chatContainer: { flex: 1, padding: 16 },
-  message: { marginBottom: 12, padding: 10, borderRadius: 8 },
-  userMessage: { alignSelf: "flex-end", backgroundColor: "#DCF8C6" },
-  botMessage: { alignSelf: "flex-start", backgroundColor: "#E8E8E8" },
-  messageText: { fontSize: 16 },
-  messageImage: { marginTop: 8, width: 200, height: 100, borderRadius: 8 },
-  inputContainer: { flexDirection: "row", padding: 8, borderTopWidth: 1, borderColor: "#ccc", alignItems: "center" },
-  input: { flex: 1, borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 8, marginRight: 8 },
-  sendButton: { backgroundColor: "#007BFF", borderRadius: 8, paddingVertical: 10, paddingHorizontal: 16 },
-  sendButtonText: { color: "#fff", fontWeight: "bold" },
-  microphoneButton: { marginRight: 8 },
+  container: { 
+    flex: 1, 
+    backgroundColor: "#F7F9FC" // Soft, neutral background color for better contrast
+  },
+  chatContainer: { 
+    flex: 1, 
+    padding: 16 
+  },
+  message: { 
+    marginBottom: 12, 
+    padding: 12, 
+    borderRadius: 16, 
+    maxWidth: "80%", // Keep messages from stretching too wide
+    shadowColor: "#000", // Add a shadow for depth
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowOpacity: 0.1, 
+    shadowRadius: 4,
+    elevation: 3, // Shadow for Android
+  },
+  userMessage: { 
+    alignSelf: "flex-end", 
+    backgroundColor: "#D1F7C4", // Light green for user messages
+    borderTopRightRadius: 0, // Differentiate sender visually
+  },
+  botMessage: { 
+    alignSelf: "flex-start", 
+    backgroundColor: "#FFFFFF", // White for bot messages
+    borderTopLeftRadius: 0, // Differentiate sender visually
+  },
+  messageText: { 
+    fontSize: 16, 
+    color: "#333", // Neutral text color for readability
+  },
+  messageImage: { 
+    marginTop: 8, 
+    width: 200, 
+    height: 150, // Slightly larger for better visibility
+    borderRadius: 12, 
+    alignSelf: "center" // Center the image in the message bubble
+  },
+  inputContainer: { 
+    flexDirection: "row", 
+    padding: 12, 
+    borderTopWidth: 1, 
+    borderColor: "#E0E0E0", // Subtle separator color
+    alignItems: "center", 
+    backgroundColor: "#FFFFFF", // White input background
+  },
+  input: { 
+    flex: 1, 
+    borderWidth: 1, 
+    borderColor: "#E0E0E0", 
+    borderRadius: 24, 
+    padding: 10, 
+    fontSize: 16, 
+    backgroundColor: "#F9F9F9", // Light gray for input background
+  },
+  sendButton: { 
+    backgroundColor: "#007BFF", // Primary blue color
+    borderRadius: 24, 
+    paddingVertical: 10, 
+    paddingHorizontal: 16, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    marginLeft: 8, // Add space between input and button
+  },
+  sendButtonText: { 
+    color: "#FFFFFF", 
+    fontWeight: "bold", 
+    fontSize: 16 
+  },
+  microphoneButton: { 
+    justifyContent: "center", 
+    alignItems: "center", 
+    backgroundColor: "#E8F0FF", // Light blue for microphone button
+    borderRadius: 24, 
+    padding: 10, 
+    marginRight: 8, // Space between mic button and input
+  },
 });
+

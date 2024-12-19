@@ -1,7 +1,7 @@
 import React , {useState}from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,TouchableWithoutFeedback } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
-
+import HamburgerMenu from './HamBurgerMenu';
 
 export default function PreviewConfirmation({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
@@ -31,7 +31,9 @@ export default function PreviewConfirmation({ route, navigation }) {
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
     <View style={styles.container}>
-      
+      <View style={styles.header}>
+              <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+            </View>
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -70,7 +72,7 @@ export default function PreviewConfirmation({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F0FF',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -117,5 +119,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  header: {
+    position: 'absolute',
+    top: 50,
+    right: 20,
+    zIndex: 10,
   },
 });

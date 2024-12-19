@@ -143,14 +143,14 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#E8F0FF',
     justifyContent: 'space-between', // Distribuisce i contenuti
     alignItems: 'center', // Centra orizzontalmente
     padding: '5%', // Spaziatura uniforme
   },
   header: {
     position: 'absolute',
-    top: '5%', // Margine superiore
+    top: '50', // Margine superiore
     right: '5%', // Posizione del menu a destra
     zIndex: 10,
   },
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#333',
+    top:'20',
   },
   imageContainer: {
     flex: 0.4, // Occupa il 40% dello schermo

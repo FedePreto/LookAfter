@@ -113,36 +113,100 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    position: 'relative', // Necessario per posizionamenti assoluti dei figli
+    backgroundColor: '#E8F0FF', // Light and modern background color
+    position: 'relative',
+    padding: 16,
   },
   header: {
     position: 'absolute',
-    top: 20, // Distanza dal bordo superiore
-    right: 20, // Distanza dal bordo destro
-    zIndex: 10, // Porta il menu sopra gli altri elementi
+    top: 50,
+    right: 20,
+    zIndex: 10,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#6200ee',
-    padding: 15,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 46,
+    fontWeight: '800',
+    color: '#2C3E50',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+    marginBottom: 16,
+    textShadowColor: '2C3E50', // Black shadow for depth
+    textShadowOffset: { width: 2, height: 2 }, // Offset the shadow
+    textShadowRadius: 4,
+    bottom: 30, 
   },
   description: {
-    fontSize: 18,
-    color: '#333',
-    fontWeight: 'bold',
+    fontSize: 32, // Increased size for readability
+    color: '#2C3E50', // Dark blue for better contrast
+    fontWeight: '600', // Medium bold for emphasis
+    textAlign: 'center', // Center alignment for focus
+    marginBottom: 20, // Space below the description
+    lineHeight: 32, // Proper spacing for multi-line text
+    letterSpacing: 1.2, // Slight letter spacing for a modern feel
+    paddingHorizontal: 16, // Padding for better alignment on smaller screens
+    backgroundColor: '#E8F0FF', // Subtle background to separate from other elements
+    borderRadius: 10, // Rounded corners for aesthetics
+    shadowColor: '#000', // Shadow for better visibility
+    shadowOffset: { width: 0, height: 4 }, // Shadow positioning
+    shadowOpacity: 0.1, // Subtle shadow opacity
+    shadowRadius: 6, // Padding for better alignment on smaller screen
+  },
+  button: {
+    backgroundColor: '#007BFF', // Vibrant blue for CTA buttons
+    paddingVertical: 25,
+    paddingHorizontal: 60,
+    borderRadius: 25, // Fully rounded corners for a modern look
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5, 
+    top:50,
+  },
+  buttonText: {
+    color: '#FFF', // White text for good contrast
+    fontSize: 40,
+    fontWeight: '700',
     textAlign: 'center',
-    marginBottom: 30,
-    lineHeight: 24,
+  },
+  hamburgerMenu: {
+    backgroundColor: '#FFF',
+    padding: 12,
+    borderRadius: 25,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  dropdown: {
+    position: 'absolute',
+    top: 60,
+    right: 10,
+    backgroundColor: '#FFF',
+    borderRadius: 12,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+    zIndex: 1000,
+  },
+  dropdownItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F1F1',
+  },
+  dropdownText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  fadeInAnimation: {
+    opacity: 1, // Used for fade-in animation
+    transition: 'opacity 0.5s ease-in-out',
   },
 });
+
