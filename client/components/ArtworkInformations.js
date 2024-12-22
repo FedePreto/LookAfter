@@ -134,7 +134,7 @@ export default function ArtworkInformations({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffffff',
   },
   scrollContent: {
     padding: 20,
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 30,
-    backgroundColor: '#d32f2f',
+    backgroundColor: '#007fbb',
     padding: 15,
     borderRadius: 50,
     alignItems: 'center',
