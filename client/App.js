@@ -1,8 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { 
+  NavigationContainer 
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View, StyleSheet, TouchableOpacity, Animated , TouchableWithoutFeedback} from 'react-native';
-import CameraScreen from './components/CameraScreen.js'; 
+import { 
+  Text, 
+  View, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Animated, 
+  TouchableWithoutFeedback, 
+  Vibration 
+} from 'react-native';
+import CameraScreen from './components/CameraScreen.js';
 import PreviewScreen from './components/PreviewScreen.js';
 import Panoramica from './components/Panoramic.js';
 import ChooseArtworkScreen from './components/ArtworkScreenDavid.js';
@@ -29,7 +39,8 @@ function MainPage({ navigation }) {
   const textToRead = `Hello and welcome to Look After. Please touch the Scan button to proceed.`;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  
+  const [buttonAnim] = useState(new Animated.Value(1));
+  const [positionAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
     setActiveScreen('App');
@@ -57,27 +68,66 @@ function MainPage({ navigation }) {
 
   const handleOutsidePress = () => {
     if (dropdownVisible) {
-      setDropdownVisible(false); // Close the menu if it's open
+      setDropdownVisible(false);
     }
+  };
+
+  const handlePress = () => {
+    Vibration.vibrate([100, 200, 100]);
+
+    Animated.parallel([
+      Animated.sequence([
+        Animated.timing(positionAnim, {
+          toValue: -10, // Move up
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(positionAnim, {
+          toValue: 0, // Move back down
+          duration: 100,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.sequence([
+        Animated.timing(buttonAnim, {
+          toValue: 1.2, // Scale up
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonAnim, {
+          toValue: 1, // Scale down
+          duration: 100,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start(() => {
+      navigation.navigate('CameraScreen');
+    });
   };
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
+        </View>
+        <Text style={styles.title}>Look After</Text>
+        <Text style={styles.description}>
+          FEEL THE SPACE OWN YOUR PATH
+        </Text>
+        <Animated.View
+          style={{
+            transform: [
+              { scale: buttonAnim }, 
+              { translateY: positionAnim }, 
+            ],
+          }}
+        >
+          <TouchableOpacity style={styles.button} onPress={handlePress}>
+            <Text style={styles.buttonText}>Scan</Text>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
-      <Text style={styles.title}>Look After</Text>
-      <Text style={styles.description}>
-        FEEL THE SPACE OWN YOUR PATH
-      </Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('CameraScreen')}
-      >
-        <Text style={styles.buttonText}>Scan</Text>
-      </TouchableOpacity>
-    </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -86,7 +136,7 @@ export default function App() {
   return (
     <AudioProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="MainPage"  screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName="MainPage" screenOptions={{ headerShown: false }}>
           <Stack.Screen name="MainPage" component={MainPage} options={{ title: 'Main Page' }} />
           <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ title: 'Camera' }} />
           <Stack.Screen name="Preview" component={PreviewScreen} />
@@ -113,8 +163,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E8F0FF', // Light and modern background color
-    position: 'relative',
+    backgroundColor: '#FFFFFF', // Main background color (white)
     padding: 16,
   },
   header: {
@@ -126,53 +175,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 46,
     fontWeight: '800',
-    color: '#2C3E50',
+    color: '#0000FF', // Secondary color (blue)
     textAlign: 'center',
-    textTransform: 'uppercase',
-    letterSpacing: 2,
     marginBottom: 16,
-    textShadowColor: '2C3E50', // Black shadow for depth
-    textShadowOffset: { width: 2, height: 2 }, // Offset the shadow
-    textShadowRadius: 4,
-    bottom: 30, 
   },
   description: {
-    fontSize: 32, // Increased size for readability
-    color: '#2C3E50', // Dark blue for better contrast
-    fontWeight: '600', // Medium bold for emphasis
-    textAlign: 'center', // Center alignment for focus
-    marginBottom: 20, // Space below the description
-    lineHeight: 32, // Proper spacing for multi-line text
-    letterSpacing: 1.2, // Slight letter spacing for a modern feel
-    paddingHorizontal: 16, // Padding for better alignment on smaller screens
-    backgroundColor: '#E8F0FF', // Subtle background to separate from other elements
-    borderRadius: 10, // Rounded corners for aesthetics
-    shadowColor: '#000', // Shadow for better visibility
-    shadowOffset: { width: 0, height: 4 }, // Shadow positioning
-    shadowOpacity: 0.1, // Subtle shadow opacity
-    shadowRadius: 6, // Padding for better alignment on smaller screen
+    fontSize: 32,
+    color: '#0000FF', // Secondary color (blue)
+    textAlign: 'center',
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: '#007BFF', // Vibrant blue for CTA buttons
+    backgroundColor: '#FFFFFF', // Main color (white)
+    borderWidth: 2,
+    borderColor: '#0000FF', // Secondary color for the border
     paddingVertical: 25,
     paddingHorizontal: 60,
-    borderRadius: 25, // Fully rounded corners for a modern look
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5, 
-    top:50,
-  },
-  buttonText: {
-    color: '#FFF', // White text for good contrast
-    fontSize: 40,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  hamburgerMenu: {
-    backgroundColor: '#FFF',
-    padding: 12,
     borderRadius: 25,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -180,33 +198,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  dropdown: {
-    position: 'absolute',
-    top: 60,
-    right: 10,
-    backgroundColor: '#FFF',
-    borderRadius: 12,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
-    zIndex: 1000,
-  },
-  dropdownItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F1F1F1',
-  },
-  dropdownText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  fadeInAnimation: {
-    opacity: 1, // Used for fade-in animation
-    transition: 'opacity 0.5s ease-in-out',
+  buttonText: {
+    color: '#0000FF', // Secondary color (blue)
+    fontSize: 40,
+    fontWeight: '700',
   },
 });
-
