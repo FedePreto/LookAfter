@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: "#0000FF", // Blue text for contrast
+    color: "#007BFF", // Blue text for contrast
     fontWeight: "bold",
     textTransform: "uppercase",
     textAlign: 'center',

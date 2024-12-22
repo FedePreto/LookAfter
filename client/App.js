@@ -175,13 +175,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 46,
     fontWeight: '800',
-    color: '#0000FF', // Secondary color (blue)
+    color: '#007BFF', // Secondary color (blue)
     textAlign: 'center',
     marginBottom: 16,
   },
   description: {
     fontSize: 32,
-    color: '#0000FF', // Secondary color (blue)
+    color: '#007BFF', // Secondary color (blue)
     textAlign: 'center',
     marginBottom: 20,
   },
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonText: {
-    color: '#0000FF', // Secondary color (blue)
+    color: '#007BFF', // Secondary color (blue)
     fontSize: 40,
     fontWeight: '700',
   },
