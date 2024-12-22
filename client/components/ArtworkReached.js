@@ -1,29 +1,67 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState, useContext } from 'react';
+import { StyleSheet, Text, View, Image, Alert, TouchableWithoutFeedback, TouchableOpacity, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
-import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
+import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function ArtworkReached({ navigation }) {
-  const route = useRoute(); // Ottieni il route
-  const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
-
-  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `Congratulations! You have reached me. Now, tap the "Get Info About Me" button!`;
-  const [fadeAnim] = useState(new Animated.Value(0));
+export default function PathDetails({ route, navigation }) {
+  const { artworkKey } = route.params || {}; // Identifica quale opera gestire
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
+
+  const artworkDetails = {
+    david: {
+      name: 'David',
+      image: require('../assets/david.png'),
+      description: [
+        'Congratulations! you reached me',
+      ],
+      nextScreen: 'ConfirmArtwork',
+    },
+    monalisa: {
+      name: 'Mona Lisa',
+      image: require('../assets/monalisa.png'),
+      description: [
+        'Congratulations! you reached me',
+      ],
+      nextScreen: 'ConfirmArtwork',
+    },
+  };
+
+  const artwork = artworkDetails[artworkKey];
+
+  const textToRead = `'Congratulations! you reached me'`;
+
+  if (!artwork) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Artwork details not found</Text>
+      </View>
+    );
+  }
+
+  const handleProceed = () => {
+    navigation.navigate('ArtworkInformations', { artworkKey });
+  };
+
+  const handleReplayAudio = () => {
+    Speech.stop();
+    Speech.speak(textToRead); // Ripete l'audio
+  };
+
+  const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    setActiveScreen('ArtworkReached');
+    setActiveScreen('Path');
+
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
     }).start();
 
-    if (isAudioOn && activeScreen === 'ArtworkReached') {
+    if (isAudioOn && activeScreen === 'Path') {
       Speech.speak(textToRead);
     } else {
       Speech.stop();
@@ -34,26 +72,13 @@ export default function ArtworkReached({ navigation }) {
     };
   }, [textToRead, isAudioOn]);
 
-  const handleProceed = () => {
-    navigation.navigate('ArtworkInformations', { artworkKey });
-  };
-
-  // Mappa delle immagini in base a artworkKey
-  const images = {
-    monalisa: require('../assets/monalisa.png'),
-    david: require('../assets/david.png'),
-  };
-
-  // Seleziona l'immagine corretta o un'immagine predefinita
-  const artworkImage = images[artworkKey];
-  
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
   const handleOutsidePress = () => {
     if (dropdownVisible) {
-      setDropdownVisible(false); // Close the menu if it's open
+      setDropdownVisible(false); // Chiude il menu se è aperto
     }
   };
 
@@ -65,30 +90,26 @@ export default function ArtworkReached({ navigation }) {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={40} color="#333" />
           </TouchableOpacity>
-          {artworkImage && (
-            <Image source={artworkImage} style={styles.headerImage} />
-          )}
+          <Image source={artwork.image} style={styles.headerImage} />
           <View style={styles.headerIcons}>
-            <TouchableOpacity onPress={() => Speech.speak(textToRead)} style={styles.iconWrapper}>
+            <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
               <Image
-                source={require('../assets/audio_repeat.png')}
+                source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
                 style={styles.icon}
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.headerHamburger}>
+          <View style={styles.headerHambuerger}>
             <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
           </View>
         </View>
 
         {/* Main Content */}
         <View style={styles.content}>
-          <Text style={styles.description}>
-            Congratulations, you reached me!
-          </Text>
+          <Text style={styles.description}>{artwork.description.join(' ')}</Text> {/* H3: 20-24 px */}
         </View>
 
-        {/* Process Button */}
+        {/* Proceed Button */}
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
           <Text style={styles.buttonText}>Get Info About Me</Text>
         </TouchableOpacity>
