@@ -81,7 +81,6 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown })
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8F0FF',
   },
   overlay: {
     position: 'absolute',

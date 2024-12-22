@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Animated} from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
@@ -31,7 +31,6 @@ export default function PreviewScreen({ route, navigation }) {
       };
     }, [textToRead, isAudioOn]);
 
-
   const __closeDropdown = () => {
     setDropdownVisible(false);
   };
@@ -62,11 +61,11 @@ export default function PreviewScreen({ route, navigation }) {
        if (dropdownVisible) __closeDropdown();
       }}
     >
-    
     <View style={styles.container}>
       <View style={styles.header}>
-      <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
       </View>
+      
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -87,6 +86,7 @@ export default function PreviewScreen({ route, navigation }) {
         // No Images
         <Text style={styles.noImagesText}>No images captured</Text>
       )}
+      
       <Text style={styles.text}>Does the image looks Good?</Text>
 
       <View style={styles.buttonContainer}>
@@ -99,14 +99,13 @@ export default function PreviewScreen({ route, navigation }) {
       </View>
     </View>
     </TouchableWithoutFeedback>
-   
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8F0FF',
+    backgroundColor: '#E8F0FF', // Blu chiaro per lo sfondo
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 16,
@@ -118,6 +117,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     textAlign: 'center',
+    color: '#444444', // Grigio scuro per i testi principali
   },
   header: {
     position: 'absolute',
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5, // Android shadow
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#ddd', // Grigio chiaro per il bordo delle immagini
   },
   noImagesText: {
     fontSize: 18,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   button: {
-    backgroundColor: '#28a745',
+    backgroundColor: '#007BFF', // blu per i bottoni
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 10,
@@ -182,9 +182,8 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   textButton: {
-    color: '#fff',
+    color: '#FFFFFF', // Bianco per il testo nei bottoni
     fontSize: 16,
     fontWeight: 'bold',
   },
-  
 });

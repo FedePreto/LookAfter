@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#FFFFFF', // Main color (white)
     borderWidth: 2,
-    borderColor: '#0000FF', // Secondary color for the border
+    borderColor: '#007BFF', // Secondary color for the border
     paddingVertical: 25,
     paddingHorizontal: 60,
     borderRadius: 25,

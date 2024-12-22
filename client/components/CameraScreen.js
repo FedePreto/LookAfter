@@ -8,7 +8,7 @@ import * as MediaLibrary from 'expo-media-library';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import HamburgerMenu from './HamBurgerMenu.js';
-import AudioButton from './AudioButton.js';
+import { Ionicons } from '@expo/vector-icons'; // Importiamo le icone
 
 export default function CameraScreen() {
   const [startCamera, setStartCamera] = useState(false);
@@ -22,7 +22,6 @@ export default function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState(null);
 
-  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -42,23 +41,12 @@ export default function CameraScreen() {
   }, []);
 
   useEffect(() => {
-    setActiveScreen('Camera1');
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
     }).start();
-
-    if (isAudioOn && activeScreen === 'Camera1') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
-    }
-
-    return () => {
-      Speech.stop();
-    };
-  }, [textToRead, isAudioOn]);
+  }, []);
 
   const __takePicture = async () => {
     if (cameraRef.current) {
@@ -117,8 +105,18 @@ export default function CameraScreen() {
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
       <View style={styles.container}>
         <View style={styles.header}>
+          {/* Tasto Indietro con Freccia */}
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Ionicons name="arrow-back" size={24} color="black" /> {/* Freccia */}
+          </TouchableOpacity>
+
+          {/* Menu Hamburger - A Destra */}
           <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
         </View>
+        
         {Platform.OS === "web" ? (
           <View style={styles.cameraContainer}>
             <View style={styles.webCameraWrapper}>
@@ -162,7 +160,6 @@ export default function CameraScreen() {
             </TouchableOpacity>
           </CameraView>
         )}
-        <AudioButton textToRead={textToRead} />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -176,9 +173,23 @@ const styles = StyleSheet.create({
   header: {
     position: "absolute",
     top: 40,
-    right: 10,
     zIndex: 1000,
+    left: 10, // Aligning the back button to the left
+    right: 10, // Aligning the hamburger menu to the right
+    flexDirection: 'row',
+    justifyContent: 'space-between', // Space between the buttons
+    width: '100%',
     padding: 10,
+  },
+  backButton: {
+    padding: 10, // Keep it simple, no background
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  munustyle:{
+    padding: 10, // Keep it simple, no background
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   cameraContainer: {
     flex: 1,
@@ -218,11 +229,9 @@ const styles = StyleSheet.create({
     borderColor: "#0000FF", // Blue border for contrast
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#007BFF", // Blue text for contrast
     fontWeight: "bold",
-    textTransform: "uppercase",
-    textAlign: 'center',
   },
   camera: {
     flex: 1,
