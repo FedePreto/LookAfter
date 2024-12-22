@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity,TouchableWithoutFeedback, Alert, ImageBackground, Image, Platform, Animated } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, Alert, ImageBackground, Image, Platform, Animated, Vibration } from 'react-native';
 import { Camera, CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import { useNavigation } from '@react-navigation/native';
@@ -85,6 +85,24 @@ export default function CameraScreen() {
     }
   };
 
+  const handleButtonPress = (callback) => {
+    Vibration.vibrate([100, 200, 100]); // Vibrate on button press
+
+    Animated.spring(fadeAnim, {
+      toValue: 1.2, // Scale up
+      friction: 3,
+      useNativeDriver: true,
+    }).start(() => {
+      Animated.spring(fadeAnim, {
+        toValue: 1, // Return to normal size
+        friction: 3,
+        useNativeDriver: true,
+      }).start();
+    });
+
+    callback(); // Execute the button's action
+  };
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -97,50 +115,55 @@ export default function CameraScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
-      </View>
-      {Platform.OS === "web" ? (
-        <View style={styles.cameraContainer}>
-          <View style={styles.webCameraWrapper}>
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              videoConstraints={{
-                width: 1280,
-                height: 720,
-                facingMode: "user",
-              }}
-              style={styles.webCamera}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              const screenshot = webcamRef.current.getScreenshot();
-              if (screenshot) {
-                navigation.navigate("Preview", { images: screenshot });
-              }
-            }}
-            style={styles.takePictureButton}
-          >
-            <Text style={styles.buttonText}>Take Picture</Text>
-          </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
         </View>
-      ) : (
-        <CameraView
-          style={styles.camera}
-          type={cameraType}
-          ref={cameraRef}
-        >
-          <TouchableOpacity onPress={__takePicture} style={styles.takePictureButton}>
-            <Text style={styles.buttonText}>Take Picture</Text>
-          </TouchableOpacity>
-        </CameraView>
-      )}
-      <AudioButton textToRead={textToRead} />
-    </View>
+        {Platform.OS === "web" ? (
+          <View style={styles.cameraContainer}>
+            <View style={styles.webCameraWrapper}>
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                videoConstraints={{
+                  width: 1280,
+                  height: 720,
+                  facingMode: "user",
+                }}
+                style={styles.webCamera}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                handleButtonPress(() => {
+                  const screenshot = webcamRef.current.getScreenshot();
+                  if (screenshot) {
+                    navigation.navigate("Preview", { images: screenshot });
+                  }
+                });
+              }}
+              style={styles.takePictureButton}
+            >
+              <Text style={styles.buttonText}>Take Picture</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <CameraView
+            style={styles.camera}
+            type={cameraType}
+            ref={cameraRef}
+          >
+            <TouchableOpacity 
+              onPress={() => handleButtonPress(__takePicture)} 
+              style={styles.takePictureButton}
+            >
+              <Text style={styles.buttonText}>Take Picture</Text>
+            </TouchableOpacity>
+          </CameraView>
+        )}
+        <AudioButton textToRead={textToRead} />
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -148,7 +171,7 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#FFFFFF", // Main background color (white)
   },
   header: {
     position: "absolute",
@@ -161,31 +184,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black", // Imposta uno sfondo per evidenziare il layout
-    overflow: "hidden", // Nasconde contenuto che esce dai bordi
-    position: "relative", // Importante per posizionare correttamente il pulsante
+    backgroundColor: "black", 
+    overflow: "hidden",
+    position: "relative",
   },
   webCameraWrapper: {
     width: "100%",
     height: "100%",
-    maxWidth: 800, // Limita la larghezza massima della webcam
-    maxHeight: 600, // Limita l'altezza massima della webcam
-    aspectRatio: 16 / 9, // Mantieni un rapporto di aspetto comune (opzionale)
-    overflow: "hidden", // Nasconde contenuto extra
+    maxWidth: 800,
+    maxHeight: 600,
+    aspectRatio: 16 / 9,
+    overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#000", // Per evitare "spazi bianchi"
+    backgroundColor: "#000", 
   },
   webCamera: {
     width: "100%",
     height: "100%",
-    objectFit: "cover", // Assicura che il video si adatti bene al contenitore
+    objectFit: "cover",
   },
   takePictureButton: {
     position: "absolute",
     bottom: 40,
     alignSelf: "center",
-    backgroundColor: "#E8F0FF",
+    backgroundColor: "#E8F0FF", 
     borderRadius: 70,
     width: 90,
     height: 90,
@@ -196,13 +219,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 8,
-    borderWidth: 3, // Add a white border for contrast
-    borderColor: "#FFF",
+    borderWidth: 3,
+    borderColor: "#0000FF", // Blue border for contrast
   },
   buttonText: {
-    fontSize: 18, // Slightly smaller font for a compact look
-    color: "black", // White text for good contrast
-    fontWeight: "bold", // Bold text for emphasis
+    fontSize: 18,
+    color: "#0000FF", // Blue text for contrast
+    fontWeight: "bold",
     textTransform: "uppercase",
     textAlign: 'center',
   },
