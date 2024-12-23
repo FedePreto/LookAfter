@@ -106,15 +106,14 @@ export default function CameraScreen() {
       <View style={styles.container}>
         <View style={styles.header}>
           {/* Tasto Indietro con Freccia */}
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons name="arrow-back" size={24} color="black" /> {/* Freccia */}
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={40} color="black" />
           </TouchableOpacity>
 
           {/* Menu Hamburger - A Destra */}
+          <View style={styles.hamburgerMenuWrapper}>
           <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
+          </View>
         </View>
         
         {Platform.OS === "web" ? (
@@ -171,18 +170,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF", // Main background color (white)
   },
   header: {
-    position: "absolute",
-    top: 40,
-    zIndex: 1000,
-    left: 10, // Aligning the back button to the left
-    right: 10, // Aligning the hamburger menu to the right
-    flexDirection: 'row',
-    justifyContent: 'space-between', // Space between the buttons
-    width: '100%',
-    padding: 10,
+    flexDirection: 'row', // Arrange items horizontally
+    justifyContent: 'space-between', // Spread items to the left and right
+    alignItems: 'center', // Align items vertically
+    width: '100%', // Full width of the header
+    paddingHorizontal: 16, // Add padding to the sides
+    paddingVertical: 10, // Add padding to the top and bottom
+    position: 'absolute',
+    top: 40, // Position the header at the top
+    zIndex: 10, // Ensure it appears above other content
   },
   backButton: {
-    padding: 10, // Keep it simple, no background
+    justifyContent: 'center',
+    alignItems: 'center', // Keep it simple, no background
+  },
+  hamburgerMenuWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
   },
