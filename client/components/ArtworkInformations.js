@@ -91,12 +91,21 @@ export default function ArtworkInformations({ navigation, route }) {
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {/* Header */}
           <View style={styles.header}>
+            {/* Pulsante "Other Artworks" */}
             <TouchableOpacity
               onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
               style={styles.otherArtworksButton}>
               <Text style={styles.otherArtworksText}>Other Artworks</Text>
             </TouchableOpacity>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
+            
+            {/* Menu Hamburger */}
+            <View style={styles.hamburgerMenuContainer}>
+              <HamburgerMenu
+                navigation={navigation}
+                isVisible={dropdownVisible}
+                toggleDropdown={toggleDropdown}
+              />
+            </View>
           </View>
 
           {/* Artwork Image */}
@@ -139,11 +148,15 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', // Distribuisce gli elementi ai lati opposti
     alignItems: 'center',
     width: '100%',
     paddingHorizontal: 10,
     paddingTop: 10,
+  },
+  hamburgerMenuContainer: {
+    position: 'absolute',
+    right: 10, // Posiziona il menu a destra
   },
   otherArtworksButton: {
     backgroundColor: '#007fbb',
