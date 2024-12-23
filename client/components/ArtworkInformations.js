@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback,ScrollView, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
@@ -48,7 +48,7 @@ export default function ArtworkInformations({ navigation, route }) {
   const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    setActiveScreen('ArtworkInformations'); // Imposta questa schermata come attiva
+    setActiveScreen('ArtworkInformations');
 
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -56,7 +56,7 @@ export default function ArtworkInformations({ navigation, route }) {
       useNativeDriver: true,
     }).start();
 
-    if (isAudioOn && activeScreen === 'ArtworkInformations') { 
+    if (isAudioOn && activeScreen === 'ArtworkInformations') {
       Speech.speak(textToRead);
     } else {
       Speech.stop();
@@ -68,9 +68,9 @@ export default function ArtworkInformations({ navigation, route }) {
   }, [textToRead, isAudioOn, activeScreen]);
 
   const handleReplayAudio = () => {
-    if (!isAudioOn && activeScreen === 'ArtworkInformations') { 
+    if (!isAudioOn && activeScreen === 'ArtworkInformations') {
       setIsAudioOn(true);
-    } 
+    }
     Speech.stop();
     Speech.speak(textToRead);
   };
@@ -81,52 +81,48 @@ export default function ArtworkInformations({ navigation, route }) {
 
   const handleOutsidePress = () => {
     if (dropdownVisible) {
-      setDropdownVisible(false); // Close the menu if it's open
+      setDropdownVisible(false);
     }
   };
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Image Section */}
-        <View style={styles.imageContainer}>
-          {/* Hamburger Menu */}
-          <View style={styles.hamburgerMenuContainer}>
-          <TouchableOpacity
-            style={styles.otherArtworksButton}
-            onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })} // Aggiorna con la schermata desiderata
-          >
-            <Text style={styles.otherArtworksText}>Other Artworks</Text>
-          </TouchableOpacity>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {/* Header */}
+          <View style={styles.header}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
+              style={styles.otherArtworksButton}>
+              <Text style={styles.otherArtworksText}>Other Artworks</Text>
+            </TouchableOpacity>
+            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
           </View>
+
           {/* Artwork Image */}
-          <Image source={artwork.image} style={styles.artworkImage} />
-          <TouchableOpacity onPress={handleReplayAudio} style={styles.audioButton}>
-            <Ionicons name="volume-high-outline" size={30} color="#fff" />
-          </TouchableOpacity>
-        </View>
+          <View style={styles.imageContainer}>
+            <Image source={artwork.image} style={styles.artworkImage} />
+            <TouchableOpacity onPress={handleReplayAudio} style={styles.audioButton}>
+              <Ionicons name="volume-high-outline" size={40} color="white" />
+            </TouchableOpacity>
+          </View>
 
-        {/* Title */}
-        <Text style={styles.title}>{artwork.name}</Text>
+          {/* Title and Description */}
+          <Text style={styles.title}>{artwork.name}</Text>
+          {artwork.description.map((paragraph, index) => (
+            <Animated.Text key={index} style={[styles.description, { opacity: fadeAnim }]}>
+              {paragraph}
+            </Animated.Text>
+          ))}
+        </ScrollView>
 
-        {/* Description */}
-        {artwork.description.map((paragraph, index) => (
-          <Animated.Text key={index} style={[styles.description, { opacity: fadeAnim }]}>
-            {paragraph}
-          </Animated.Text>
-        ))}
-      </ScrollView>
-
-      {/* Chat Button */}
-      <TouchableOpacity
-        style={styles.chatButton}
-        onPress={() => navigation.navigate('ChatScreen', { artworkKey })}
-      >
-        <Ionicons name="chatbubble-outline" size={30} color="white" />
-      </TouchableOpacity>
-    </View>
+        {/* Chat Button */}
+        <TouchableOpacity
+          style={styles.chatButton}
+          onPress={() => navigation.navigate('ChatScreen', { artworkKey })}>
+          <Ionicons name="chatbubble-outline" size={40} color="white" />
+        </TouchableOpacity>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -134,58 +130,69 @@ export default function ArtworkInformations({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#E8F0FF',
   },
   scrollContent: {
     padding: 20,
-    paddingBottom: 120, // Spazio extra per evitare copertura del pulsante
+    paddingBottom: 100,
     alignItems: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 10,
+    paddingTop: 10,
+  },
+  otherArtworksButton: {
+    backgroundColor: '#007fbb',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+  },
+  otherArtworksText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   imageContainer: {
     alignItems: 'center',
-    marginBottom: 20,
-    position: 'relative',
-  },
-  hamburgerMenuContainer: {
-    position: 'absolute',
-    top: 10,
-    left: 210,
-    zIndex: 10, // Porta il menu sopra l'immagine
+    marginVertical: 20,
   },
   artworkImage: {
-    width: 250,
-    height: 300,
+    width: 300,
+    height: 350,
     resizeMode: 'contain',
-    borderWidth: 2,
-    borderColor: '#333',
+    borderRadius: 10,
   },
   audioButton: {
     position: 'absolute',
-    bottom: -10,
-    right: 10,
-    backgroundColor: '#4CAF50',
+    bottom: -20,
+    right: 20,
+    backgroundColor: '#007fbb',
     padding: 15,
     borderRadius: 50,
     elevation: 5,
   },
   title: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
     color: '#333',
+    marginBottom: 20,
   },
   description: {
-    fontSize: 30,
+    fontSize: 20,
     color: '#555',
-    lineHeight: 30,
+    lineHeight: 28,
     textAlign: 'justify',
     marginBottom: 15,
   },
   chatButton: {
     position: 'absolute',
     bottom: 30,
-    right: 30,
+    right: 20,
     backgroundColor: '#007fbb',
     padding: 15,
     borderRadius: 50,
@@ -194,24 +201,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   errorText: {
-    fontSize: 18,
+    fontSize: 20,
     color: 'red',
     textAlign: 'center',
     marginTop: 20,
-  },
-  otherArtworksButton: {
-    top: 10,
-    left: -260, // Sposta il pulsante a sinistra del menu hamburger
-    backgroundColor: 'black', // Un bel colore (blu)
-    paddingVertical: 1,
-    paddingHorizontal: 10,
-    borderRadius: 20,
-    elevation: 5, // Effetto ombra
-  },
-  otherArtworksText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
