@@ -106,7 +106,10 @@ export default function PathDetails({ route, navigation }) {
 
         {/* Main Content */}
         <View style={styles.content}>
-          <Text style={styles.description}>{artwork.description.join(' ')}</Text> {/* H3: 20-24 px */}
+          {/* Mappiamo ogni descrizione per renderizzarla separatamente */}
+          {artwork.description.map((desc, index) => (
+            <Text key={index} style={styles.description}>{desc}</Text>
+          ))}
         </View>
 
         {/* Proceed Button */}
