@@ -1,22 +1,23 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, TouchableOpacity, Animated } from 'react-native';
-import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
+import HamburgerMenu from './HamBurgerMenu';
 
 export default function PathDetails({ route, navigation }) {
-  const { artworkKey } = route.params || {}; // Identifica quale opera gestire
+  const { artworkKey } = route.params || {};
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
 
   const artworkDetails = {
     david: {
       name: 'David',
       image: require('../assets/david.png'),
       description: [
-        '2 foots forward to reach the most iconic sculpture, the Monalisa.',
-        '1 foot on the right once The Monalisa has been reached.',
+        'Take 2 steps forward to reach the main corridor.',
+        'Turn right at the statue of Venus.',
+        'Proceed straight until you find David.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -24,18 +25,16 @@ export default function PathDetails({ route, navigation }) {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        '2 foots forward to reach the most iconic sculpture, the David.',
-        '1 foot on the right once The David has been reached.',
+        'Walk straight for 5 steps.',
+        'Turn left at the end of the corridor.',
+        'You will find Mona Lisa on your left.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
   };
 
   const artwork = artworkDetails[artworkKey];
-
-  const textToRead = artwork
-    ? `This is the ${artwork.name}. ${artwork.description.join(' ')}`
-    : 'Artwork details not found.';
+  const textToRead = `Here is the path to reach ${artwork?.name}. ${artwork?.description.join(' ')}`;
 
   if (!artwork) {
     return (
@@ -46,12 +45,12 @@ export default function PathDetails({ route, navigation }) {
   }
 
   const handleProceed = () => {
-    navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
+    navigation.navigate(artwork.nextScreen, { artworkKey });
   };
 
   const handleReplayAudio = () => {
     Speech.stop();
-    Speech.speak(textToRead); // Ripete l'audio
+    Speech.speak(textToRead);
   };
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -67,8 +66,6 @@ export default function PathDetails({ route, navigation }) {
 
     if (isAudioOn && activeScreen === 'Path') {
       Speech.speak(textToRead);
-    } else {
-      Speech.stop();
     }
 
     return () => {
@@ -82,7 +79,7 @@ export default function PathDetails({ route, navigation }) {
 
   const handleOutsidePress = () => {
     if (dropdownVisible) {
-      setDropdownVisible(false); // Chiude il menu se è aperto
+      setDropdownVisible(false);
     }
   };
 
@@ -94,20 +91,16 @@ export default function PathDetails({ route, navigation }) {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={40} color="#333" />
           </TouchableOpacity>
-          {artwork.image ? (
-            <Image source={artwork.image} style={styles.headerImage} />
-          ) : (
-            <Text style={styles.errorText}>Image not available</Text>
-          )}
+          <Image source={artwork.image} style={styles.headerImage} />
           <View style={styles.headerIcons}>
             <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
               <Image
-                source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
+                source={require('../assets/audio_repeat.png')}
                 style={styles.icon}
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.headerHamburger}>
+          <View style={styles.headerHambuerger}>
             <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
           </View>
         </View>
@@ -115,9 +108,16 @@ export default function PathDetails({ route, navigation }) {
         {/* Main Content */}
         <View style={styles.content}>
           <Text style={styles.artworkTitle}>{artwork.name}</Text>
-          <Text style={styles.description}>
-            {artwork.description ? artwork.description.join(' ') : 'No description available.'}
-          </Text>
+          <View style={styles.instructions}>
+            {artwork.description.map((step, index) => (
+              <View key={index} style={styles.stepContainer}>
+                <View style={styles.stepCircle}>
+                  <Text style={styles.stepNumber}>{index + 1}</Text>
+                </View>
+                <Text style={styles.stepText}>{step}</Text>
+              </View>
+            ))}
+          </View>
         </View>
 
         {/* Proceed Button */}
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     backgroundColor: '#E8F0FF',
   },
-  headerHamburger: {
+  headerHambuerger: {
     position: 'absolute',
     top: 70,
     right: 0,
@@ -188,17 +188,39 @@ const styles = StyleSheet.create({
     bottom: 80,
   },
   artworkTitle: {
-    fontSize: 36,
+    fontSize: 40, // H1: Enlarged for better visibility
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
     color: '#333',
   },
-  description: {
-    fontSize: 22,
+  instructions: {
+    marginTop: 20,
+    alignSelf: 'stretch',
+  },
+  stepContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  stepCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#007fbb',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  stepNumber: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  stepText: {
+    fontSize: 24, // Enlarged text
     color: '#555',
-    textAlign: 'center',
-    marginBottom: 20,
+    flex: 1,
   },
   proceedButton: {
     position: 'absolute',
