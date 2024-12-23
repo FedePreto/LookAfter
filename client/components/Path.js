@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, Text, View, Image, Alert, TouchableWithoutFeedback, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, TouchableOpacity, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
@@ -33,7 +33,9 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = `This is the ${artwork.name}. ${artwork.description.join(' ')}`;
+  const textToRead = artwork
+    ? `This is the ${artwork.name}. ${artwork.description.join(' ')}`
+    : 'Artwork details not found.';
 
   if (!artwork) {
     return (
@@ -92,7 +94,11 @@ export default function PathDetails({ route, navigation }) {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={40} color="#333" />
           </TouchableOpacity>
-          <Image source={artwork.image} style={styles.headerImage} />
+          {artwork.image ? (
+            <Image source={artwork.image} style={styles.headerImage} />
+          ) : (
+            <Text style={styles.errorText}>Image not available</Text>
+          )}
           <View style={styles.headerIcons}>
             <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
               <Image
@@ -101,15 +107,17 @@ export default function PathDetails({ route, navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.headerHambuerger}>
+          <View style={styles.headerHamburger}>
             <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
           </View>
         </View>
 
         {/* Main Content */}
         <View style={styles.content}>
-          <Text style={styles.artworkTitle}>{artwork.name}</Text> {/* H1: 32-40 px */}
-          <Text style={styles.description}>{artwork.description.join(' ')}</Text> {/* H3: 20-24 px */}
+          <Text style={styles.artworkTitle}>{artwork.name}</Text>
+          <Text style={styles.description}>
+            {artwork.description ? artwork.description.join(' ') : 'No description available.'}
+          </Text>
         </View>
 
         {/* Proceed Button */}
@@ -143,7 +151,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     backgroundColor: '#E8F0FF',
   },
-  headerHambuerger: {
+  headerHamburger: {
     position: 'absolute',
     top: 70,
     right: 0,
@@ -180,14 +188,14 @@ const styles = StyleSheet.create({
     bottom: 80,
   },
   artworkTitle: {
-    fontSize: 36, // H1: 32-40 px
+    fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
     color: '#333',
   },
   description: {
-    fontSize: 22, // H3: 20-24 px
+    fontSize: 22,
     color: '#555',
     textAlign: 'center',
     marginBottom: 20,
