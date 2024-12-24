@@ -4,6 +4,7 @@ import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const artworkDetails = {
   monalisa: {
@@ -76,25 +77,28 @@ export default function ConfirmArtwork({ route, navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {/* Header Section */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={40} color="#333" />
-          </TouchableOpacity>
-          <Image source={artwork.image} style={styles.headerImage} />
-          <View style={styles.headerIcons}>
-            <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
-              <Image
-                source={require('../assets/audio_repeat.png')}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.headerHamburger}>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-          </View>
-        </View>
+                <View style={styles.curvedBackground}></View>
+        
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Ionicons name="arrow-back" size={40} color="#333" />
+                  </TouchableOpacity>
+                  
+                  <View style={styles.headerIcons}>
+                    <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
+                      <Image
+                        source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
+                        style={styles.icon}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.headerHambuerger}>
+                    <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
+                  </View>
+                </View>
+                <Image source={artwork.image} style={styles.headerImage} />
 
         {/* Main Content */}
         <View style={styles.content}>
@@ -107,7 +111,7 @@ export default function ConfirmArtwork({ route, navigation }) {
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
           <Text style={styles.buttonText}>Take Picture</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
@@ -116,60 +120,76 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E8F0FF',
-    padding: 20,
   },
   description: {
     fontSize: 24, // H2
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,
-    bottom: 30,
+    bottom: 40,
   },
   backButton: {
-    padding: 8,
-    top: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10, 
+    top:0,
+    right: -10,
+  },
+  curvedBackground: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#0EB3EF', // Curved background color
+
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 20,
-    width: '100%',
-    position: 'absolute',
-    top: 10,
-    zIndex: 10,
-    backgroundColor: '#E8F0FF',
+    flexDirection: 'row', // Arrange items horizontally
+    justifyContent: 'space-between', // Spread items to the left and right
+    alignItems: 'center', // Align items vertically
+    width: '115%', // Full width of the header
+    height: '100%',
+    paddingHorizontal: 16, // Add padding to the sides
+    paddingVertical: 0, // Add padding to the top and bottom
+    position: 'fixed',
+    top: 0, // Position the header at the top
+    zIndex: 20,
+    // backgroundColor: '#54A8E8',
+    height: 60,
+    right: 20,
   },
-  headerHamburger: {
-    position: 'absolute',
-    top: 70,
-    right: 0,
-    zIndex: 10,
+  
+  headerHambuerger: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 20,
+    top: 0,
   },
   headerImage: {
-    width: 100,
-    height: 100,
+    width: 140,
+    height: 140,
     resizeMode: 'contain',
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: '#ddd',
-    shadowColor: '#000',
+    borderColor: '#54A8E8',
+    shadowColor: '#54A8E8',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
-    elevation: 5, // Android-specific shadow
+    elevation: 5,
+    top: 10,
+    left: 120,
+    zIndex: 30,
   },
   headerIcons: {
     flexDirection: 'row',
-    right: 50,
-    top: 10,
+    alignItems: 'center',
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     marginLeft: 10,
-    top: 10,
+    top: 0,
+    left: 80,
   },
   content: {
     flex: 1,

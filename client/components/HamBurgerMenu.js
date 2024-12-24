@@ -2,6 +2,7 @@ import React,  { useState,useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Modal,TouchableWithoutFeedback } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { AudioContext } from './AudioProvider';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HamburgerMenu({ navigation, isVisible, toggleDropdown }) {
   const { isAudioOn, toggleAudio } = useContext(AudioContext);
@@ -23,7 +24,7 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown })
     <View style={styles.container}>
       {/* Menu Button */}
       <TouchableOpacity onPress={toggleDropdown} style={styles.menuButton}>
-        <Ionicons name="menu" size={30} color="black" />
+        <Ionicons name="menu" size={40} color="black" />
       </TouchableOpacity>
 
       {/* Dropdown Menu and Overlay */}
