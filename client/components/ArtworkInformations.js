@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
 import HamburgerMenu from './HamBurgerMenu';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ArtworkInformations({ navigation, route }) {
   const { artworkKey } = route.params;
@@ -86,9 +87,9 @@ export default function ArtworkInformations({ navigation, route }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+    // <TouchableWithoutFeedback onPress={handleOutsidePress} accessible = {true}>
+      <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={true}>
           {/* Header */}
           <View style={styles.header}>
             {/* Pulsante "Other Artworks" */}
@@ -131,8 +132,8 @@ export default function ArtworkInformations({ navigation, route }) {
           onPress={() => navigation.navigate('ChatScreen', { artworkKey })}>
           <Ionicons name="chatbubble-outline" size={40} color="white" />
         </TouchableOpacity>
-      </View>
-    </TouchableWithoutFeedback>
+      </SafeAreaView>
+    // </TouchableWithoutFeedback>
   );
 }
 
@@ -140,11 +141,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E8F0FF',
+    overflow: 'scroll',
   },
   scrollContent: {
+    flexGrow:1,
     padding: 20,
-    paddingBottom: 100,
-    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
