@@ -3,17 +3,17 @@ cd server
 npm install 
 
 cd client 
-npm istall
+npm install
 
 ----------------
 to run the project:
 
-cd server 
+cd client
 npm run web 
 or 
 npm run ios 
 or 
 npm run android
 
-cd client
+cd server
 node server.js
