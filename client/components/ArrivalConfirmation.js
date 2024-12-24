@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    backgroundColor: '#0EB3EF', // Curved background color
+    backgroundColor: '#007fbb', // Curved background color
 
   },
   header: {

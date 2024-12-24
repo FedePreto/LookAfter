@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '110%',
     height: '100%',
-    backgroundColor: '#0EB3EF', // Curved background color
+    backgroundColor: '#007fbb', // Curved background color
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     borderTopLeftRadius: 50,
