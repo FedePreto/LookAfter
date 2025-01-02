@@ -4,7 +4,9 @@ import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import theme from '../config/theme';
+import CustomNavigationBar from './CustomNavigationBar.js';
+
 
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
@@ -85,28 +87,16 @@ export default function PathDetails({ route, navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <SafeAreaView style={styles.container}>
-        {/* Header Section */}
-        <View style={styles.header}>
-                <View style={styles.curvedBackground}></View>
+      <View style={styles.container}>
+        <CustomNavigationBar
+          navigation={navigation}
+          showBackButton={true}
+          showAudioButton={true}
+          onReplayAudio={() => Speech.speak(textToRead)}
+        />
+      
+      <Image source={artwork.image} style={styles.headerImage} />
         
-                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={40} color="#333" />
-                  </TouchableOpacity>
-                  
-                  <View style={styles.headerIcons}>
-                    <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
-                      <Image
-                        source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
-                        style={styles.icon}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.headerHambuerger}>
-                    <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-                  </View>
-                </View>
-                <Image source={artwork.image} style={styles.headerImage} />
 
         {/* Main Content */}
         <View style={styles.content}>
@@ -120,7 +110,8 @@ export default function PathDetails({ route, navigation }) {
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
           <Text style={styles.buttonText}>Get Info About Me</Text>
         </TouchableOpacity>
-      </SafeAreaView>
+        
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -128,48 +119,11 @@ export default function PathDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8F0FF',
-  },
-  backButton: {
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10, 
-    top:0,
-    right: -10,
-  },
-  curvedBackground: {
-    position: 'absolute',
-    width: '110%',
-    height: '100%',
-    backgroundColor: '#007fbb', // Curved background color
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-
-  },
-  header: {
-    flexDirection: 'row', // Arrange items horizontally
-    justifyContent: 'space-between', // Spread items to the left and right
-    alignItems: 'center', // Align items vertically
-    width: '115%', // Full width of the header
-    height: '100%',
-    paddingHorizontal: 16, // Add padding to the sides
-    paddingVertical: 0, // Add padding to the top and bottom
-    position: 'fixed',
-    top: 0, // Position the header at the top
-    zIndex: 20,
-    // backgroundColor: '#54A8E8',
-    height: 60,
-    right: 20,
+    alignContent: 'center',
+    backgroundColor: theme.colors.background,
   },
   
-  headerHambuerger: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: 20,
-    top: 0,
-  },
   headerImage: {
     width: 140,
     height: 140,
@@ -182,8 +136,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
-    top: 10,
-    left: 120,
+    top: "15%",
+    left: "30%",
     zIndex: 30,
   },
   headerIcons: {

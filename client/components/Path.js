@@ -4,7 +4,8 @@ import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomNavigationBar from './CustomNavigationBar';
+import theme from '../config/theme';
 
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
@@ -87,12 +88,11 @@ export default function PathDetails({ route, navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <SafeAreaView style={styles.container}>
-        
+             
       <View style={styles.container}>
         <CustomNavigationBar
             navigation={navigation}
-            showBackButton={false}
+            showBackButton={true}
             showAudioButton={true}
             onReplayAudio={() => Speech.speak(textToRead)}
             />
@@ -118,7 +118,6 @@ export default function PathDetails({ route, navigation }) {
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>
       </View>
-      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
@@ -126,48 +125,12 @@ export default function PathDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8F0FF',
-  },
-  backButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10, 
-    top:0,
-    right: -10,
-  },
-  curvedBackground: {
-    position: 'absolute',
-    width: '110%',
-    height: '100%',
-    backgroundColor: '#007fbb', // Curved background color
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-
-  },
-  header: {
-    flexDirection: 'row', // Arrange items horizontally
-    justifyContent: 'space-between', // Spread items to the left and right
-    alignItems: 'center', // Align items vertically
-    width: '115%', // Full width of the header
-    height: '100%',
-    paddingHorizontal: 16, // Add padding to the sides
-    paddingVertical: 0, // Add padding to the top and bottom
-    position: 'fixed',
-    top: 0, // Position the header at the top
-    zIndex: 20,
-    // backgroundColor: '#54A8E8',
-    height: 60,
-    right: 20,
+    backgroundColor: theme.colors.background,
   },
   
-  headerHambuerger: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: 20,
-    top: 0,
-  },
+ 
   headerImage: {
     width: 140,
     height: 140,
@@ -180,27 +143,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
-    top: 10,
-    left: 120,
+    top: '15%',
+    alignContent: 'center',
     zIndex: 30,
   },
-  headerIcons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    width: 40,
-    height: 40,
-    marginLeft: 10,
-    top: 0,
-    left: 80,
-  },
+
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 100,
+    bottom: 0,
   },
+
   directionContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
@@ -212,13 +166,15 @@ const styles = StyleSheet.create({
     elevation: 6,
     width: '90%',
   },
+
   directionHeader: {
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 0,
     color: '#007fbb',
   },
+  
   stepContainer: {
     flexDirection: 'row',
     alignItems: 'center',

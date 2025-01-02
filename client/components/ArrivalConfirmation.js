@@ -5,6 +5,7 @@ import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomNavigationBar from './CustomNavigationBar.js';
 import theme from '../config/theme';
 
 const artworkDetails = {
@@ -78,27 +79,13 @@ export default function ConfirmArtwork({ route, navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <SafeAreaView style={styles.container}>
-        {/* Header Section */}
-        <View style={styles.header}>
-                <View style={styles.curvedBackground}></View>
-        
-                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={40} color="#333" />
-                  </TouchableOpacity>
-                  
-                  <View style={styles.headerIcons}>
-                    <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
-                      <Image
-                        source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
-                        style={styles.icon}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.headerHambuerger}>
-                    <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-                  </View>
-                </View>
+        <View style={styles.container}>          
+          <CustomNavigationBar
+            navigation={navigation}
+            showBackButton={true}
+            showAudioButton={true}
+            onReplayAudio={() => Speech.speak(textToRead)}
+          />
                 <Image source={artwork.image} style={styles.headerImage} />
 
         {/* Main Content */}
@@ -112,7 +99,7 @@ export default function ConfirmArtwork({ route, navigation }) {
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
           <Text style={styles.buttonText}>Take Picture</Text>
         </TouchableOpacity>
-      </SafeAreaView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -120,6 +107,8 @@ export default function ConfirmArtwork({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
     backgroundColor: theme.colors.background,
   },
   description: {
@@ -128,42 +117,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
     bottom: 40,
-  },
-  backButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10, 
-    top:0,
-    right: -10,
-  },
-  curvedBackground: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.colors.primary, // Curved background color
+  },  
 
-  },
-  header: {
-    flexDirection: 'row', // Arrange items horizontally
-    justifyContent: 'space-between', // Spread items to the left and right
-    alignItems: 'center', // Align items vertically
-    width: '115%', // Full width of the header
-    height: '100%',
-    paddingHorizontal: 16, // Add padding to the sides
-    paddingVertical: 0, // Add padding to the top and bottom
-    position: 'fixed',
-    top: 0, // Position the header at the top
-    zIndex: 20,
-    height: 60,
-    right: 20,
-  },
-  
-  headerHambuerger: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    right: 20,
-    top: 0,
-  },
   headerImage: {
     width: 140,
     height: 140,
@@ -176,21 +131,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
-    top: 10,
-    left: 120,
+    top: "15%",
+    left: "30%",
     zIndex: 30,
   },
-  headerIcons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    width: 40,
-    height: 40,
-    marginLeft: 10,
-    top: 0,
-    left: 80,
-  },
+
   content: {
     flex: 1,
     justifyContent: 'center',

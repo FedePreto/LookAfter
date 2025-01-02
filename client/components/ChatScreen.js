@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { SafeAreaView, TouchableWithoutFeedback, View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // Assicurati di installare @expo/vector-icons
 import HamburgerMenu from './HamBurgerMenu';
+import theme from '../config/theme';
+import CustomNavigationBar from "./CustomNavigationBar.js";
 
 export default function ChatScreen({ route, navigation }) {
   const { artworkKey } = route.params;
@@ -56,24 +58,15 @@ export default function ChatScreen({ route, navigation }) {
   };
   
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
+  return (    
       <TouchableWithoutFeedback onPress={handleOutsidePress}>
-
         <View style={styles.container}>
-          <View style={styles.header}>
-            {/* Tasto Indietro con Freccia */}
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-              <Ionicons name="arrow-back" size={40} color="black" />
-            </TouchableOpacity>
-
-            {/* Menu Hamburger - A Destra */}
-            <View style={styles.hamburgerMenuWrapper}>
-              <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-            </View>
-            
-          </View>
-
+          <CustomNavigationBar
+           navigation={navigation}
+            showBackButton={true}
+            showAudioButton={true}
+            onReplayAudio={() => Speech.speak(textToRead)}
+          />
       <ScrollView style={styles.chatContainer}>
         {messages.map((message, index) => (
           <View
@@ -106,18 +99,20 @@ export default function ChatScreen({ route, navigation }) {
 
         </View>
       </TouchableWithoutFeedback>
-    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: "#F7F9FC" // Soft, neutral background color for better contrast
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
   },
   chatContainer: { 
     flex: 1, 
-    padding: 16 
+    top: "10%",
+    width: "95%",
   },
   message: { 
     marginBottom: 12, 

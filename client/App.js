@@ -178,7 +178,7 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.primary,
   },
   loadingContainer: {
     flex: 1,
@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.background,
-    //padding: 16,
   },
   header: {
     position: 'absolute',

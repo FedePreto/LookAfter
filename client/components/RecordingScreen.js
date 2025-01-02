@@ -3,6 +3,8 @@ import { SafeAreaView,TouchableWithoutFeedback,View, Text, TouchableOpacity, Sty
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
 import HamburgerMenu from './HamBurgerMenu';
+import theme from '../config/theme';
+import CustomNavigationBar from './CustomNavigationBar.js';
 
 export default function RecordingScreen({ route, navigation }) {
   const [transcription, setTranscription] = useState("");
@@ -65,22 +67,16 @@ export default function RecordingScreen({ route, navigation }) {
   };
   
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
+  return (    
       <TouchableWithoutFeedback onPress={handleOutsidePress}>
         <View style={styles.container}>
-          <View style={styles.header}>
-            {/* Tasto Indietro con Freccia */}
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-              <Ionicons name="arrow-back" size={40} color="black" />
-            </TouchableOpacity>
-
-            {/* Menu Hamburger - A Destra */}
-            <View style={styles.hamburgerMenuWrapper}>
-              <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-            </View>
-            
-          </View>
+          <CustomNavigationBar
+            navigation={navigation}
+            showBackButton={true}
+            showAudioButton={true}
+            onReplayAudio={() => Speech.speak(textToRead)}
+          />
+          
           <Text style={styles.title}>Registrazione e Trascrizione</Text>
           <TouchableOpacity
             style={styles.button}
@@ -93,17 +89,15 @@ export default function RecordingScreen({ route, navigation }) {
           <Text style={styles.transcription}>{transcription}</Text>
         </View>
       </TouchableWithoutFeedback>
-    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    padding: 20, 
-    justifyContent: "flex-start", 
-    alignItems: "center", 
-    backgroundColor: "#F5F5F5" 
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
   },
   header: {
     flexDirection: "row",

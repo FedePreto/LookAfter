@@ -5,6 +5,8 @@ import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import { Dimensions } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler'; // Import PanGestureHandler
+import CustomNavigationBar from './CustomNavigationBar.js';
+import theme from '../config/theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -101,14 +103,14 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={handleOutsidePress}>
-        <View style={styles.container}>
-          
-          {/* Header con Hamburger Menu */}
-          <View style={styles.header}>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-          </View>
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
+        <View style={styles.container}>          
+          <CustomNavigationBar
+            navigation={navigation}
+            showBackButton={false}
+            showAudioButton={false}
+            onReplayAudio={() => Speech.speak(textToRead)}
+          />
           
           {/* Titolo */}
           <View style={styles.titleContainer}>
@@ -148,17 +150,15 @@ export default function ChooseArtworkScreen({ route, navigation }) {
           </View>
         </View>
       </TouchableWithoutFeedback>
-    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF', // Bianco come sfondo principale
-    justifyContent: 'space-between', // Distribuisce i contenuti
-    alignItems: 'center', // Centra orizzontalmente
-    padding: '5%', // Spaziatura uniforme
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
   },
   header: {
     position: 'absolute',
