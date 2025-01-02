@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Modal,TouchableWithoutFeedbac
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { AudioContext } from './AudioProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import theme from '../config/theme';
 
 export default function HamburgerMenu({ navigation, isVisible, toggleDropdown }) {
   const { isAudioOn, toggleAudio } = useContext(AudioContext);
@@ -97,9 +98,11 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: 'absolute',
-    top: 40,
+    top: 50,
     right: 10,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.background,
+    borderColor: theme.colors.primary,
+    borderWidth: 2,  
     borderRadius: 10,
     elevation: 5,
     shadowColor: '#000',
@@ -117,12 +120,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: theme.colors.primary, 
     marginBottom: 10,
   },
   dropdownText: {
     fontSize: 16,
-    color: '#333',
+    color: theme.colors.textPrimary,
   },
   modalBackground: {
     flex: 1,
@@ -131,7 +134,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    backgroundColor: '#fff',
     padding: 20,
     borderRadius: 10,
     width: '80%',
@@ -146,14 +148,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   modalButton: {
-    backgroundColor: '#007bff',
     padding: 10,
     borderRadius: 5,
     width: '45%',
     alignItems: 'center',
   },
   modalButtonText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },

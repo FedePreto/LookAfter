@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Animated, SafeAreaView } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
+import theme from '../config/theme';
+import CustomNavigationBar from './CustomNavigationBar.js';
 
 export default function PreviewScreen({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
@@ -56,16 +58,16 @@ export default function PreviewScreen({ route, navigation }) {
   const isMultipleImages = Array.isArray(images);
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-       if (dropdownVisible) __closeDropdown();
-      }}
-    >
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
-      </View>
-      
+
+    <TouchableWithoutFeedback>    
+      <View style={styles.container}>
+                    
+        <CustomNavigationBar
+               navigation={navigation}
+               showBackButton={false}
+               showAudioButton={true}
+               onReplayAudio={() => Speech.speak(textToRead)}
+               /> 
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -97,19 +99,21 @@ export default function PreviewScreen({ route, navigation }) {
           <Text style={styles.textButton}>Proceed</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View>    
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: theme.colors.background, // Colore di sfondo dell'app
+  },
   container: {
     flex: 1,
     backgroundColor: '#E8F0FF', // Blu chiaro per lo sfondo
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 50,
+    justifyContent: 'center',    
   },
   text: {
     fontSize: 24,
@@ -134,7 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', // Arrange images horizontally
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20,
+    paddingTop: 50,
     marginBottom: 20,
   },
   imageWrapper: {

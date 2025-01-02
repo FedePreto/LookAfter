@@ -1,7 +1,9 @@
 import React , {useState}from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
 import HamburgerMenu from './HamBurgerMenu';
+import theme from '../config/theme';
+import CustomNavigationBar from './CustomNavigationBar.js';
 
 export default function PreviewConfirmation({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
@@ -29,11 +31,14 @@ export default function PreviewConfirmation({ route, navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleOutsidePress}>
-    <View style={styles.container}>
-      <View style={styles.header}>
-              <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
-            </View>
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>    
+          <View style={styles.container}>
+            <CustomNavigationBar
+                navigation={navigation}
+                showBackButton={false}
+                showAudioButton={true}
+                onReplayAudio={() => Speech.speak(textToRead)}
+                />
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -70,6 +75,10 @@ export default function PreviewConfirmation({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: theme.colors.background, // Colore di sfondo dell'app
+  },
   container: {
     flex: 1,
     backgroundColor: '#E8F0FF',

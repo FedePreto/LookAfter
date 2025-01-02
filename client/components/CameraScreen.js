@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, Alert, Platform, Animated, Vibration } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, Alert, Platform, Animated, Vibration, SafeAreaView } from 'react-native';
 import { Camera, CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import { useNavigation } from '@react-navigation/native';
@@ -8,10 +8,10 @@ import * as MediaLibrary from 'expo-media-library';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import HamburgerMenu from './HamBurgerMenu.js';
-import { Ionicons } from '@expo/vector-icons'; // Importiamo le icone
+
 import CustomNavigationBar from './CustomNavigationBar.js';
 import theme, { useCustomFonts } from '../config/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 export default function CameraScreen() {
   const [startCamera, setStartCamera] = useState(false);
@@ -105,16 +105,14 @@ export default function CameraScreen() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <SafeAreaView style={styles.safeArea}>
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>      
       <View style={styles.container}>
         <CustomNavigationBar
-            navigation={navigation}
-            showBackButton={false}
-            showAudioButton={true}
-            onReplayAudio={() => Speech.speak(textToRead)}
-            />
-        
+          navigation={navigation}
+          showBackButton={false}
+          showAudioButton={true}
+          onReplayAudio={() => Speech.speak(textToRead)}
+          />
         {Platform.OS === "web" ? (
           <View style={styles.cameraContainer}>
             <View style={styles.webCameraWrapper}>
@@ -158,8 +156,7 @@ export default function CameraScreen() {
             </TouchableOpacity>
           </CameraView>
         )}
-      </View>
-      </SafeAreaView>
+      </View>      
     </TouchableWithoutFeedback>
   );
 }
@@ -171,7 +168,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF", // Main background color (white)
+    backgroundColor: theme.colors.primary, // Main background color (white)
   },
   header: {
     flexDirection: 'row', // Arrange items horizontally

@@ -1,15 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform, Animated,TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform, Animated,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { Camera,CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
+import HamburgerMenu from './HamBurgerMenu';
+import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
-import theme, { useCustomFonts } from '../config/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function CameraConfirmation() {
     const [startCamera, setStartCamera] = useState(false);
@@ -108,14 +108,14 @@ export default function CameraConfirmation() {
   
     return (
       <TouchableWithoutFeedback onPress={handleOutsidePress}>
-        <SafeAreaView style={styles.safeArea}>
-          <View style={styles.container}>
-            <CustomNavigationBar
-                  navigation={navigation}
-                  showBackButton={false}
-                  showAudioButton={true}
-                  onReplayAudio={() => Speech.speak(textToRead)}
-                  />
+        <View style={styles.container}>
+        <CustomNavigationBar
+            navigation={navigation}
+            showBackButton={false}
+            showAudioButton={true}
+            onReplayAudio={() => Speech.speak(textToRead)}
+            />
+          
         {Platform.OS === 'web' ? (
           <View style={styles.cameraContainer}>
             <View style={styles.webCameraWrapper}>

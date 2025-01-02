@@ -22,8 +22,7 @@ const CustomNavigationBar = ({
       {/* Freccia di back */}
       {showBackButton && (
         <TouchableOpacity 
-          onPress={() => navigation.goBack()} 
-          style={styles.backButton}
+          onPress={() => navigation.goBack()}         
         >
           <Ionicons name="arrow-back" size={40} color="#000000" />
         </TouchableOpacity>
@@ -31,28 +30,25 @@ const CustomNavigationBar = ({
       </View>
       <View style={styles.rightSection}>
       {/* Pulsante audio */}
-      {showAudioButton && (
-        <View style={styles.headerIcons}>
+      {showAudioButton && (        
           <TouchableOpacity 
-            onPress={onReplayAudio} 
-            style={styles.iconWrapper}
+            onPress={onReplayAudio}
           >
             <Image
               source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
-              style={styles.icon}
+              style={styles.audioIcon}
             />
-          </TouchableOpacity>
-        </View>
+          </TouchableOpacity>        
       )}
 
-      {/* Menu hamburger */}
-      <View style={styles.headerHamburger}>
-        <HamburgerMenu 
-          navigation={navigation} 
-          isVisible={dropdownVisible} 
-          toggleDropdown={toggleDropdown} 
-        />
-      </View>
+        {/* Menu hamburger */}
+        <View>
+          <HamburgerMenu 
+            navigation={navigation} 
+            isVisible={dropdownVisible} 
+            toggleDropdown={toggleDropdown} 
+          />
+        </View>
       </View>
     </View>
   );
@@ -60,6 +56,7 @@ const CustomNavigationBar = ({
 
 const styles = StyleSheet.create({
     container: {
+     
     flexDirection: 'row', // Arrange items horizontally
     //justifyContent: 'space-between', // Spread items to the left and right
     alignItems: 'center', // Align items vertically
@@ -70,12 +67,7 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: theme.colors.primary, // Header background color
   },  
-  backButton: {
-    justifyContent: 'left',
-    alignItems: 'left',
-    left: 10,
-    
-  },
+  
   leftSection: {
     flex: 1, // Spazio riservato alla sinistra
     justifyContent: 'center',
@@ -88,24 +80,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-  },
-  headerIcons: {
-    left: 0,    
-  },
+  }, 
  
-  icon: {
+  audioIcon: {
     width: 40,
     height: 40,
-    marginLeft: 10,
-    top: 0,
-    left: 0,
-  },
-  headerHamburger: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    left: 0,
-    top: 0,
-  },
+  },  
 });
 
 export default CustomNavigationBar;

@@ -116,12 +116,11 @@ function MainPage({ navigation }) {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <SafeAreaView style={styles.safeArea}>
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>      
       <View style={styles.container}>
       <CustomNavigationBar
           navigation={navigation}
-          showBackButton={true}
+          showBackButton={false}
           showAudioButton={true}
           onReplayAudio={() => Speech.speak(textToRead)}
           />
@@ -142,13 +141,14 @@ function MainPage({ navigation }) {
           </TouchableOpacity>
         </Animated.View>
       </View>
-      </SafeAreaView>
+      
     </TouchableWithoutFeedback>
   );
 }
 
 export default function App() {
   return (
+    <SafeAreaView style={styles.safeArea}>
     <AudioProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="MainPage" screenOptions={{ headerShown: false }}>
@@ -170,6 +170,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </AudioProvider>
+    </SafeAreaView>
   );
 }
 
