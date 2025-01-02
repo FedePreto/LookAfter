@@ -84,7 +84,7 @@ export default function CameraConfirmation() {
         // await MediaLibrary.saveToLibraryAsync(photo.uri);
         setCapturedImage(photo); // Store captured image
         setPreviewVisible(true); // Navigate to Preview if picture is captured
-        Alert.alert('Photo Saved', 'Photo saved to your device\'s gallery.');
+        //Alert.alert('Photo Saved', 'Photo saved to your device\'s gallery.');
         navigation.navigate('PreviewConfirmation', { images: photo.uri,  artworkKey});
       } catch (error) {
         console.error("Error capturing photo:", error);

@@ -37,16 +37,8 @@ const Stack = createStackNavigator();
 
 function MainPage({ navigation }) {
   const fontsLoaded = useCustomFonts();
-  
-  if (!fontsLoaded) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}>Caricamento...</Text>
-      </View>
-    );
-  }
 
-  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
+  const { isAudioOn, activeScreen, setActiveScreen } = useContext(AudioContext);
   const textToRead = `Hello and welcome to Look After. Please touch the Scan button to proceed.`;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -115,6 +107,13 @@ function MainPage({ navigation }) {
       navigation.navigate('CameraScreen');
     });
   };
+  if (!fontsLoaded) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Caricamento...</Text>
+      </View>
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
@@ -122,7 +121,7 @@ function MainPage({ navigation }) {
       <View style={styles.container}>
       <CustomNavigationBar
           navigation={navigation}
-          showBackButton={true}
+          showBackButton={false}
           showAudioButton={true}
           onReplayAudio={() => Speech.speak(textToRead)}
           />

@@ -9,6 +9,9 @@ import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import HamburgerMenu from './HamBurgerMenu.js';
 import { Ionicons } from '@expo/vector-icons'; // Importiamo le icone
+import CustomNavigationBar from './CustomNavigationBar.js';
+import theme, { useCustomFonts } from '../config/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function CameraScreen() {
   const [startCamera, setStartCamera] = useState(false);
@@ -103,18 +106,14 @@ export default function CameraScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
+      <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          {/* Tasto Indietro con Freccia */}
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={40} color="black" />
-          </TouchableOpacity>
-
-          {/* Menu Hamburger - A Destra */}
-          <View style={styles.hamburgerMenuWrapper}>
-          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-          </View>
-        </View>
+        <CustomNavigationBar
+            navigation={navigation}
+            showBackButton={false}
+            showAudioButton={true}
+            onReplayAudio={() => Speech.speak(textToRead)}
+            />
         
         {Platform.OS === "web" ? (
           <View style={styles.cameraContainer}>
@@ -160,11 +159,16 @@ export default function CameraScreen() {
           </CameraView>
         )}
       </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: theme.colors.primary, // Colore di sfondo dell'app
+  },
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF", // Main background color (white)
