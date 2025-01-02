@@ -5,7 +5,6 @@ import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import theme from '../config/theme';
 
 const artworkDetails = {
   monalisa: {
@@ -120,11 +119,11 @@ export default function ConfirmArtwork({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: '#E8F0FF',
   },
   description: {
     fontSize: 24, // H2
-    color: theme.colors.textPrimary,
+    color: '#333',
     textAlign: 'center',
     marginBottom: 20,
     bottom: 40,
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    backgroundColor: theme.colors.primary, // Curved background color
+    backgroundColor: '#007fbb', // Curved background color
 
   },
   header: {
@@ -154,6 +153,7 @@ const styles = StyleSheet.create({
     position: 'fixed',
     top: 0, // Position the header at the top
     zIndex: 20,
+    // backgroundColor: '#54A8E8',
     height: 60,
     right: 20,
   },
@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: theme.colors.primary,
-    shadowColor: theme.colors.primary,
+    borderColor: '#54A8E8',
+    shadowColor: '#54A8E8',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
@@ -201,14 +201,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 70,
     right: 20,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: '#007fbb',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 10,
   },
   buttonText: {
     fontSize: 20, // H3
-    color: theme.colors.background,
+    color: '#fff',
     fontWeight: 'bold',
   },
   errorText: {
