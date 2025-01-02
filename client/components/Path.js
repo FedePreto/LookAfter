@@ -88,26 +88,15 @@ export default function PathDetails({ route, navigation }) {
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
       <SafeAreaView style={styles.container}>
-        {/* Header Section */}
-        <View style={styles.header}>
-        <View style={styles.curvedBackground}></View>
-
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={40} color="#333" />
-          </TouchableOpacity>
-          
-          <View style={styles.headerIcons}>
-            <TouchableOpacity onPress={handleReplayAudio} style={styles.iconWrapper}>
-              <Image
-                source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.headerHambuerger}>
-            <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-          </View>
-        </View>
+        
+      <View style={styles.container}>
+        <CustomNavigationBar
+            navigation={navigation}
+            showBackButton={false}
+            showAudioButton={true}
+            onReplayAudio={() => Speech.speak(textToRead)}
+            />
+       
         <Image source={artwork.image} style={styles.headerImage} />
         {/* Main Content */}
         <View style={styles.content}>
@@ -128,6 +117,7 @@ export default function PathDetails({ route, navigation }) {
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>
+      </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

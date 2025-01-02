@@ -7,7 +7,9 @@ import * as MediaLibrary from 'expo-media-library';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
-import HamburgerMenu from './HamBurgerMenu';
+import CustomNavigationBar from './CustomNavigationBar.js';
+import theme, { useCustomFonts } from '../config/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function CameraConfirmation() {
     const [startCamera, setStartCamera] = useState(false);
@@ -106,10 +108,14 @@ export default function CameraConfirmation() {
   
     return (
       <TouchableWithoutFeedback onPress={handleOutsidePress}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown}/>
-        </View>
+        <SafeAreaView style={styles.safeArea}>
+          <View style={styles.container}>
+            <CustomNavigationBar
+                  navigation={navigation}
+                  showBackButton={false}
+                  showAudioButton={true}
+                  onReplayAudio={() => Speech.speak(textToRead)}
+                  />
         {Platform.OS === 'web' ? (
           <View style={styles.cameraContainer}>
             <View style={styles.webCameraWrapper}>
@@ -141,12 +147,17 @@ export default function CameraConfirmation() {
             </TouchableOpacity>
           </CameraView>
         )}
-      </View>
+          </View>
+        </SafeAreaView>
       </TouchableWithoutFeedback>
     );    
   }
   
   const styles = StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.colors.primary, // Colore di sfondo dell'app
+    },
     container: {
       flex: 1,
       backgroundColor: "#fff",
