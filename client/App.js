@@ -35,6 +35,12 @@ import HamburgerMenu from './components/HamBurgerMenu.js';
 const Stack = createStackNavigator();
 
 function MainPage({ navigation }) {
+  const fontsLoaded = useCustomFonts();
+  
+  if (!fontsLoaded) {
+    return null; // Puoi mostrare una schermata di caricamento qui
+  }
+
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `Hello and welcome to Look After. Please touch the Scan button to proceed.`;
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -163,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF', // Main background color (white)
+    backgroundColor: theme.colors.background,
     padding: 16,
   },
   header: {
@@ -175,20 +181,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 46,
     fontWeight: '800',
-    color: '#007BFF', // Secondary color (blue)
+    fontFamily: theme.fonts.primary,
+    color: theme.colors.textSecondary, 
     textAlign: 'center',
     marginBottom: 16,
   },
   description: {
     fontSize: 32,
-    color: '#007BFF', // Secondary color (blue)
+    fontFamily: theme.fonts.primary,
+    color: theme.colors.textSecondary, 
     textAlign: 'center',
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#FFFFFF', // Main color (white)
+    backgroundColor: theme.colors.background,
     borderWidth: 2,
-    borderColor: '#007BFF', // Secondary color for the border
+    borderColor: theme.colors.primary,
     paddingVertical: 25,
     paddingHorizontal: 60,
     borderRadius: 25,
@@ -199,7 +207,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonText: {
-    color: '#007BFF', // Secondary color (blue)
+    fontFamily: theme.fonts.primary,
+    color: theme.colors.textSecondary,
     fontSize: 40,
     fontWeight: '700',
   },

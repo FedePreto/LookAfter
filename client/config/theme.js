@@ -1,15 +1,16 @@
+import { useFonts } from 'expo-font';
+
 const theme = {
     colors: {
       primary: '#007BFF', // Colore primario
-      secondary: '#F5F5F5', // Colore secondario
       background: '#FFFFFF', // Sfondo
       textPrimary: '#000000', // Testo principale
       textSecondary: '#007BFF', // Testo secondario
       danger: '#e74c3c', // Colore per errori
     },
     fonts: {
-        primary: 'PrimaryFont', // Nome del font principale
-        secondary: 'SecondaryFont', // Nome del font secondario
+        primary: 'Verdana', // Nome del font principale
+        secondary: 'Georgia', // Nome del font secondario
     },
   };
   
