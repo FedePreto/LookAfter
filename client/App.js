@@ -121,7 +121,7 @@ function MainPage({ navigation }) {
       <View style={styles.container}>
       <CustomNavigationBar
           navigation={navigation}
-          showBackButton={false}
+          showBackButton={true}
           showAudioButton={true}
           onReplayAudio={() => Speech.speak(textToRead)}
           />

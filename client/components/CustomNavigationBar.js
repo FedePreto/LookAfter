@@ -18,19 +18,18 @@ const CustomNavigationBar = ({
 
   return (
     <View style={styles.container}>
-      {/* Sfondo curvo */}
-      <View style={styles.curvedBackground}></View>
-
+      <View style={styles.leftSection}>
       {/* Freccia di back */}
       {showBackButton && (
         <TouchableOpacity 
           onPress={() => navigation.goBack()} 
           style={styles.backButton}
         >
-          <Ionicons name="arrow-back" size={40} color="#333" />
+          <Ionicons name="arrow-back" size={40} color="#000000" />
         </TouchableOpacity>
       )}
-
+      </View>
+      <View style={styles.rightSection}>
       {/* Pulsante audio */}
       {showAudioButton && (
         <View style={styles.headerIcons}>
@@ -54,6 +53,7 @@ const CustomNavigationBar = ({
           toggleDropdown={toggleDropdown} 
         />
       </View>
+      </View>
     </View>
   );
 };
@@ -61,49 +61,49 @@ const CustomNavigationBar = ({
 const styles = StyleSheet.create({
     container: {
     flexDirection: 'row', // Arrange items horizontally
-    justifyContent: 'space-between', // Spread items to the left and right
+    //justifyContent: 'space-between', // Spread items to the left and right
     alignItems: 'center', // Align items vertically
-    width: '100%', // Full width of the header
-    height: '100%',
-    paddingHorizontal: 0, // Add padding to the sides
-    paddingVertical: 0, // Add padding to the top and bottom
+    width: '100%', // Full width of the header  
     position: 'absolute',
     top: 0, // Position the header at the top
     zIndex: 1000,
     height: 60,
-    right: 0,
-  },
-  curvedBackground: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.colors.primary, // Curved background color
-  },
+    backgroundColor: theme.colors.primary, // Header background color
+  },  
   backButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10, 
-    top:0,
-    right: -10,
+    justifyContent: 'left',
+    alignItems: 'left',
+    left: 10,
+    
   },
-  headerIcons: {
+  leftSection: {
+    flex: 1, // Spazio riservato alla sinistra
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: 10,
+  },
+
+  rightSection: {
+    flex: 1, // Spazio riservato alla destra
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
-  //iconWrapper: {
-    //padding: 5,
-  //},
+  headerIcons: {
+    left: 0,    
+  },
+ 
   icon: {
     width: 40,
     height: 40,
     marginLeft: 10,
     top: 0,
-    left: 80,
+    left: 0,
   },
   headerHamburger: {
     justifyContent: 'center',
     alignItems: 'center',
-    right: 20,
+    left: 0,
     top: 0,
   },
 });
