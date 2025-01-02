@@ -30,7 +30,8 @@ import RecordingScreen from './components/RecordingScreen.js';
 import { AudioProvider } from './components/AudioProvider.js';
 import { AudioContext } from './components/AudioProvider.js';
 import * as Speech from 'expo-speech';
-import HamburgerMenu from './components/HamBurgerMenu.js';
+import CustomNavigationBar from './components/CustomNavigationBar.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -38,7 +39,11 @@ function MainPage({ navigation }) {
   const fontsLoaded = useCustomFonts();
   
   if (!fontsLoaded) {
-    return null; // Puoi mostrare una schermata di caricamento qui
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Caricamento...</Text>
+      </View>
+    );
   }
 
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
@@ -113,10 +118,14 @@ function MainPage({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
+      <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
-        </View>
+      <CustomNavigationBar
+          navigation={navigation}
+          showBackButton={true}
+          showAudioButton={true}
+          onReplayAudio={() => Speech.speak(textToRead)}
+          />
         <Text style={styles.title}>Look After</Text>
         <Text style={styles.description}>
           FEEL THE SPACE OWN YOUR PATH
@@ -134,6 +143,7 @@ function MainPage({ navigation }) {
           </TouchableOpacity>
         </Animated.View>
       </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
@@ -165,12 +175,26 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: theme.colors.primary, // Colore di sfondo dell'app
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
+  },
+  loadingText: {
+    fontSize: 24,
+    color: theme.colors.textPrimary,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.background,
-    padding: 16,
+    //padding: 16,
   },
   header: {
     position: 'absolute',
