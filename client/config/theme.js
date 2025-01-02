@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 const theme = {
     colors: {
       primary: '#007BFF', // Colore primario
-      background: '#FFFFFF', // Sfondo
+      background: '#E8F0FF', // Sfondo
       textPrimary: '#000000', // Testo principale
       textSecondary: '#007BFF', // Testo secondario
       danger: '#e74c3c', // Colore per errori

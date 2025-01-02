@@ -105,10 +105,6 @@ export default function PreviewScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.colors.background, // Colore di sfondo dell'app
-  },
   container: {
     flex: 1,
     backgroundColor: '#E8F0FF', // Blu chiaro per lo sfondo

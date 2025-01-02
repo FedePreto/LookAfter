@@ -33,6 +33,7 @@ import * as Speech from 'expo-speech';
 import CustomNavigationBar from './components/CustomNavigationBar.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+
 const Stack = createStackNavigator();
 
 function MainPage({ navigation }) {
@@ -177,7 +178,7 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: theme.colors.primary, // Colore di sfondo dell'app
+    backgroundColor: theme.colors.background,
   },
   loadingContainer: {
     flex: 1,

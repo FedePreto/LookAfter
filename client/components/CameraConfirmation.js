@@ -148,16 +148,13 @@ export default function CameraConfirmation() {
           </CameraView>
         )}
           </View>
-        </SafeAreaView>
+
       </TouchableWithoutFeedback>
     );    
   }
   
   const styles = StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: theme.colors.primary, // Colore di sfondo dell'app
-    },
+  
     container: {
       flex: 1,
       backgroundColor: "#fff",
