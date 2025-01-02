@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import CameraScreen from './components/CameraScreen.js';
 import PreviewScreen from './components/PreviewScreen.js';
-import Panoramica from './components/Panoramic.js';
+import theme, { useCustomFonts } from './config/theme';
 import ChooseArtworkScreen from './components/ArtworkScreenDavid.js';
 import PathDetails from './components/Path.js';
 import ConfirmArtwork from './components/ArrivalConfirmation.js';
