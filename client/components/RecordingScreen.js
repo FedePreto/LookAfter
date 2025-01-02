@@ -1,11 +1,14 @@
 import React, { useRef, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { SafeAreaView,TouchableWithoutFeedback,View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Audio } from "expo-av";
+import { Ionicons } from "@expo/vector-icons";
+import HamburgerMenu from './HamBurgerMenu';
 
-export default function RecordingScreen() {
+export default function RecordingScreen({ route, navigation }) {
   const [transcription, setTranscription] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const recordingRef = useRef(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   // Avvia la registrazione
   const startRecording = async () => {
@@ -51,26 +54,97 @@ export default function RecordingScreen() {
     }
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+  
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registrazione e Trascrizione</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={isRecording ? stopRecording : startRecording}
-      >
-        <Text style={styles.buttonText}>
-          {isRecording ? "Ferma Registrazione" : "Inizia Registrazione"}
-        </Text>
-      </TouchableOpacity>
-      <Text style={styles.transcription}>{transcription}</Text>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={handleOutsidePress}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            {/* Tasto Indietro con Freccia */}
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+              <Ionicons name="arrow-back" size={40} color="black" />
+            </TouchableOpacity>
+
+            {/* Menu Hamburger - A Destra */}
+            <View style={styles.hamburgerMenuWrapper}>
+              <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
+            </View>
+            
+          </View>
+          <Text style={styles.title}>Registrazione e Trascrizione</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={isRecording ? stopRecording : startRecording}
+          >
+            <Text style={styles.buttonText}>
+              {isRecording ? "Ferma Registrazione" : "Inizia Registrazione"}
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.transcription}>{transcription}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center" },
-  title: { fontSize: 20, marginBottom: 20 },
-  button: { backgroundColor: "#007AFF", padding: 15, borderRadius: 10 },
-  buttonText: { color: "#FFF", fontWeight: "bold" },
-  transcription: { marginTop: 20, fontSize: 16, textAlign: "center" },
+  container: { 
+    flex: 1, 
+    padding: 20, 
+    justifyContent: "flex-start", 
+    alignItems: "center", 
+    backgroundColor: "#F5F5F5" 
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    marginBottom: 20,
+  },
+  backButton: {
+    padding: 10,
+  },
+  hamburgerMenuWrapper: {
+    padding: 10,
+  },
+  title: { 
+    fontSize: 24, 
+    fontWeight: "bold", 
+    textAlign: "center", 
+    marginVertical: 20 
+  },
+  transcription: { 
+    marginTop: 20, 
+    fontSize: 18, 
+    color: "#333", 
+    textAlign: "center" 
+  },
+  button: { 
+    backgroundColor: "#007AFF", 
+    paddingVertical: 15, 
+    paddingHorizontal: 25, 
+    borderRadius: 8, 
+    shadowColor: "#000", 
+    shadowOpacity: 0.2, 
+    shadowOffset: { width: 0, height: 2 }, 
+    shadowRadius: 4, 
+    elevation: 5, 
+  },
+  buttonText: { 
+    color: "#FFF", 
+    fontWeight: "600", 
+    fontSize: 16, 
+    textAlign: "center" 
+  }
 });

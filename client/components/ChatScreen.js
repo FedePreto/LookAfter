@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet } from "react-native";
+import { SafeAreaView, TouchableWithoutFeedback, View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // Assicurati di installare @expo/vector-icons
+import HamburgerMenu from './HamBurgerMenu';
 
 export default function ChatScreen({ route, navigation }) {
   const { artworkKey } = route.params;
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Ciao! Come posso aiutarti?" },
@@ -43,8 +45,35 @@ export default function ChatScreen({ route, navigation }) {
     });
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
+
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+  
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={handleOutsidePress}>
+
+        <View style={styles.container}>
+          <View style={styles.header}>
+            {/* Tasto Indietro con Freccia */}
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+              <Ionicons name="arrow-back" size={40} color="black" />
+            </TouchableOpacity>
+
+            {/* Menu Hamburger - A Destra */}
+            <View style={styles.hamburgerMenuWrapper}>
+              <HamburgerMenu navigation={navigation} isVisible={dropdownVisible} toggleDropdown={toggleDropdown} />
+            </View>
+            
+          </View>
+
       <ScrollView style={styles.chatContainer}>
         {messages.map((message, index) => (
           <View
@@ -59,6 +88,7 @@ export default function ChatScreen({ route, navigation }) {
           </View>
         ))}
       </ScrollView>
+
       <View style={styles.inputContainer}>
         <TouchableOpacity onPress={handleMicrophonePress} style={styles.microphoneButton}>
           <Ionicons name="mic" size={24} color="#007BFF" />
@@ -73,7 +103,10 @@ export default function ChatScreen({ route, navigation }) {
           <Text style={styles.sendButtonText}>Invia</Text>
         </TouchableOpacity>
       </View>
-    </View>
+
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 

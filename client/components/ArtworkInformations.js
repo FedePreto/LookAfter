@@ -44,7 +44,7 @@ export default function ArtworkInformations({ navigation, route }) {
     );
   }
 
-  const textToRead = `This is the ${artwork.name}. ${artwork.description.join(' ')}`;
+  const textToRead = `${artwork.description.join(' ')}`;
 
   const [fadeAnim] = useState(new Animated.Value(0));
 
