@@ -65,7 +65,6 @@ export default function PreviewScreen({ route, navigation }) {
           showAudioButton={true}
           onReplayAudio={() => Speech.speak(textToRead)}
         />
-
         <View>
           <Text style={styles.text}>Does the image look good?</Text>
         </View>
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     width: width,
     padding: 0,
     position: 'absolute',
-    bottom: 50,
+    bottom: 10,
   },
   button: {
     backgroundColor: '#007BFF', // blu per i bottoni

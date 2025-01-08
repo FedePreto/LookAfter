@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
-import HamburgerMenu from './HamBurgerMenu';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import { Dimensions } from 'react-native';
@@ -104,52 +103,56 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={handleOutsidePress}>
-        <View style={styles.container}>          
-          <CustomNavigationBar
-            navigation={navigation}
-            showBackButton={false}
-            showAudioButton={true}
-            onReplayAudio={() => Speech.speak(textToRead)}
-          />
-          
-          {/* Titolo */}
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>Choose the Artwork</Text>
-          </View>
+      <View style={styles.container}>
+        <CustomNavigationBar
+          navigation={navigation}
+          showBackButton={false}
+          showAudioButton={true}
+          onReplayAudio={() => Speech.speak(textToRead)}
+        />
 
-          {/* Gesture Handler */}
-          <PanGestureHandler onGestureEvent={onGestureEvent}>
-            <View style={styles.imageContainer}>
-              <Image source={artwork.image} style={styles.artworkImage} />
-            </View>
-          </PanGestureHandler>
-
-          {/* Informazioni sull'opera */}
-          <View style={styles.infoContainer}>
-            <Text style={styles.artworkTitle}>{artwork.title}</Text>
-            <Text style={styles.artworkSubtitle}>Artwork number: {artwork.number}/2</Text>
-          </View>
-
-          {/* Pulsanti */}
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
-              <Text style={styles.chooseButtonText}>Choose</Text>
-            </TouchableOpacity>
-
-            {artwork.backScreen && (
-              <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                <Text style={styles.buttonText}>Previous</Text>
-              </TouchableOpacity>
-            )}
-
-            {artwork.nextScreen && (
-              <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
-            )}
-          </View>
+        {/* Titolo */}
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Choose the Artwork</Text>
         </View>
-      </TouchableWithoutFeedback>
+
+        {/* Gesture Handler */}
+        <PanGestureHandler onGestureEvent={onGestureEvent}>
+          <View style={styles.imageContainer}>
+            <Image source={artwork.image} style={styles.artworkImage} />
+          </View>
+        </PanGestureHandler>
+
+        {/* Informazioni sull'opera */}
+        <View style={styles.infoContainer}>
+          <Text style={styles.artworkTitle}>{artwork.title}</Text>
+          <Text style={styles.artworkSubtitle}>Artwork number: {artwork.number}/2</Text>
+        </View>
+
+        {/* Pulsanti */}
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            onPress={handleBack}
+            style={[styles.buttons, artwork.backScreen ? styles.enabledButton : styles.disabledButton]}
+            disabled={!artwork.backScreen}
+          >
+            <Text style={styles.buttonText}>Previous</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleNext}
+            style={[styles.buttons, artwork.nextScreen ? styles.enabledButton : styles.disabledButton]}
+            disabled={!artwork.nextScreen}
+          >
+            <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
+          <Text style={styles.chooseButtonText}>Choose</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -161,88 +164,85 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   titleContainer: {
-    flex: 0.2, // Occupa il 20% dello schermo
+    flex: 0.2,
     justifyContent: 'center',
     alignItems: 'center',
+    top: -width * 0.15,
   },
   title: {
-    fontSize: 36, // H1: 32-40px
+    fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: theme.colors.textSecondary, // Testo grigio scuro
-    marginTop: height * 0.1, // Sposta il titolo più in basso
+    color: theme.colors.textSecondary,
+    marginTop: height * 0.1,
   },
   imageContainer: {
-    flex: 0.4, // Occupa il 40% dello schermo
+    flex: 0.4,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: height*0.1,
   },
   artworkImage: {
-    width: width * 0.9, // 90% della larghezza dello schermo
-    height: width * 0.9, // Immagine quadrata
+    width: width * 0.9,
+    height: width * 0.9,
     resizeMode: 'contain',
   },
   infoContainer: {
-    flex: 0.2, // Occupa il 20% dello schermo
+    flex: 0.2,
     justifyContent: 'center',
     alignItems: 'center',
   },
   artworkTitle: {
-    fontSize: 28, // 24-30px per H2
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: theme.colors.textSecondary, 
-    marginBottom: height * 0.01,
+    color: theme.colors.textSecondary,
+    marginTop: height * 0.1,
   },
   artworkSubtitle: {
-    fontSize: 20, // 18-20px per il testo secondario
+    fontSize: 20,
     textAlign: 'center',
-    color: theme.colors.textSecondary, // Testo grigio più chiaro
+    color: theme.colors.textSecondary,
   },
   buttonsContainer: {
-    flex: 0.2, // Occupa il 20% dello schermo
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: '5%',
+    width: width,
+    paddingHorizontal: width * 0.04,
+    marginBottom: 20,
+  },
+  buttons: {
+    width: width * 0.45,
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: height * 0.03,
+  },
+  enabledButton: {
+    backgroundColor: '#007BFF', // Blu
+  },
+  disabledButton: {
+    backgroundColor: '#A9A9A9', // Grigio disabilitato
   },
   chooseButton: {
-    backgroundColor: '#007BFF', // Blu
-    height: height*0.1,
-    width: width*0.4,
+    backgroundColor: '#28a745', // Verde
+    width: width * 0.92,
+    height: height * 0.08,
     borderRadius: 15,
-    alignItems: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
   },
   chooseButtonText: {
-    color: '#FFFFFF', // Testo bianco
-    fontSize: 22, // Testo grande per la leggibilità
+    color: '#FFFFFF',
+    fontSize: 22,
     fontWeight: 'bold',
-   
-  },
-  backButton: {
-    backgroundColor: theme.colors.danger, // Grigio scuro per il pulsante di ritorno
-    width: width * 0.4,
-    height: height * 0.1,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  nextButton: {
-    backgroundColor: '#28a745', // Verde per il pulsante successivo
-    width: width * 0.4,
-    height: height * 0.1,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 22, // Font grande per visibilità
-    fontWeight: 'bold', 
-    
+    fontSize: 22,
+    fontWeight: 'bold',
   },
 });
