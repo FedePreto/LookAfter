@@ -6,6 +6,7 @@ import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
 import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
+const { width, height } = Dimensions.get('window');
 
 
 export default function PathDetails({ route, navigation }) {

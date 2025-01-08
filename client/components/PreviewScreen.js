@@ -1,37 +1,38 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Animated, SafeAreaView } from 'react-native';
-import HamburgerMenu from './HamBurgerMenu';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated, SafeAreaView } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export default function PreviewScreen({ route, navigation }) {
-  const { images } = route.params || {}; // Receive images array from CameraScreen
+  const { images } = route.params || {}; // Receive the image from CameraScreen
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `This is a preview of the picture you took, please make sure that everything is clear and recognisable before proceeding.`;
   const [fadeAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
-      setActiveScreen('Preview');
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 2000,
-        useNativeDriver: true,
-      }).start();
-  
-      if (isAudioOn && activeScreen === 'Preview') {
-        Speech.speak(textToRead);
-      } else {
-        Speech.stop();
-      }
-  
-      return () => {
-        Speech.stop();
-      };
-    }, [textToRead, isAudioOn]);
+    setActiveScreen('Preview');
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+
+    if (isAudioOn && activeScreen === 'Preview') {
+      Speech.speak(textToRead);
+    } else {
+      Speech.stop();
+    }
+
+    return () => {
+      Speech.stop();
+    };
+  }, [textToRead, isAudioOn]);
 
   const __closeDropdown = () => {
     setDropdownVisible(false);
@@ -54,52 +55,38 @@ export default function PreviewScreen({ route, navigation }) {
   const __chooseArtwork = () => {
     navigation.navigate('ChooseArtwork', { artworkKey: 'david' }); // Navigate to ChooseArtworkScreen
   };
-  
-  const isMultipleImages = Array.isArray(images);
 
   return (
-
-    <TouchableWithoutFeedback>    
+    <TouchableWithoutFeedback>
       <View style={styles.container}>
-                    
         <CustomNavigationBar
-               navigation={navigation}
-               showBackButton={false}
-               showAudioButton={true}
-               onReplayAudio={() => Speech.speak(textToRead)}
-               /> 
-      {isMultipleImages ? (
-        // Multiple Images - Display in a horizontal scroll
-        <ScrollView
-          horizontal
-          pagingEnabled
-          contentContainerStyle={styles.imageContainer}
-        >
-          {images.map((uri, index) => (
-            <View key={index} style={styles.imageWrapper}>
-              <Image source={{ uri }} style={styles.image} />
-            </View>
-          ))}
-        </ScrollView>
-      ) : images ? (
-        // Single Image - Display directly
-        <Image source={{ uri: images }} style={styles.image} />
-      ) : (
-        // No Images
-        <Text style={styles.noImagesText}>No images captured</Text>
-      )}
-      
-      <Text style={styles.text}>Does the image looks Good?</Text>
+          navigation={navigation}
+          showBackButton={false}
+          showAudioButton={true}
+          onReplayAudio={() => Speech.speak(textToRead)}
+        />
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={__retakePicture} style={styles.button}>
-          <Text style={styles.textButton}>Re-Take</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={__chooseArtwork} style={styles.button}>
-          <Text style={styles.textButton}>Proceed</Text>
-        </TouchableOpacity>
+        <View>
+          <Text style={styles.text}>Does the image look good?</Text>
+        </View>
+
+        {images ? (
+          // Single Image - Display directly
+          <Image source={{ uri: images }} style={styles.image} />
+        ) : (
+          // No Images
+          <Text style={styles.noImagesText}>No images captured</Text>
+        )}
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={__retakePicture} style={styles.button}>
+            <Text style={styles.textButton}>Re-Take</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={__chooseArtwork} style={styles.button}>
+            <Text style={styles.textButton}>Proceed</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>    
     </TouchableWithoutFeedback>
   );
 }
@@ -107,47 +94,19 @@ export default function PreviewScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8F0FF', // Blu chiaro per lo sfondo
+    backgroundColor: theme.colors.background,
     alignItems: 'center',
-    justifyContent: 'center',    
+    justifyContent: 'center',
   },
   text: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 26,
     fontWeight: 'bold',
-    marginTop: 20,
-    textAlign: 'center',
-    color: '#444444', // Grigio scuro per i testi principali
-  },
-  header: {
-    position: 'absolute',
-    top: 50,
-    right: 10, // Align to the top-right corner
-    zIndex: 10, // Ensure it's above other elements
-  },
-  menuButton: {
-    top: 0,
-    right:0,
-    padding: 10,
-  },
-  imageContainer: {
-    flexDirection: 'row', // Arrange images horizontally
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 50,
-    marginBottom: 20,
-  },
-  imageWrapper: {
-    width: 350, // Match image width for paging
-    justifyContent: 'center',
-    alignItems: 'center',
+    color: theme.colors.textSecondary,
   },
   image: {
-    width: 350,
-    height: 250,
-    marginHorizontal: 10,
-    borderRadius: 10,
-    marginTop: -200,
+    width: width,
+    height: height * 0.4, // 40% dell'altezza dello schermo
+    borderRadius: 15,
     shadowColor: '#000', // Subtle shadow for depth
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -163,17 +122,17 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '100%',
+    width: width,
+    padding: 0,
     position: 'absolute',
-    bottom: 100,
-    paddingHorizontal: 0,
+    bottom: 50,
   },
   button: {
     backgroundColor: '#007BFF', // blu per i bottoni
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    width: 120,
+    paddingVertical:20,
+    borderRadius: 15,
+    width: width * 0.4,
+    height: width * 0.2,
     alignItems: 'center',
     shadowColor: 'black', // Shadow for depth
     shadowOffset: { width: 0, height: 3 },
@@ -183,7 +142,9 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: '#FFFFFF', // Bianco per il testo nei bottoni
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
+

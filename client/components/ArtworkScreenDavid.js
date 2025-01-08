@@ -108,7 +108,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
           <CustomNavigationBar
             navigation={navigation}
             showBackButton={false}
-            showAudioButton={false}
+            showAudioButton={true}
             onReplayAudio={() => Speech.speak(textToRead)}
           />
           
@@ -160,12 +160,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.background,
   },
-  header: {
-    position: 'absolute',
-    top: 50, // Margine superiore
-    right: 20, // Posizione del menu a destra
-    zIndex: 10,
-  },
   titleContainer: {
     flex: 0.2, // Occupa il 20% dello schermo
     justifyContent: 'center',
@@ -175,13 +169,14 @@ const styles = StyleSheet.create({
     fontSize: 36, // H1: 32-40px
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#444444', // Testo grigio scuro
+    color: theme.colors.textSecondary, // Testo grigio scuro
     marginTop: height * 0.1, // Sposta il titolo più in basso
   },
   imageContainer: {
     flex: 0.4, // Occupa il 40% dello schermo
     justifyContent: 'center',
     alignItems: 'center',
+    padding: height*0.1,
   },
   artworkImage: {
     width: width * 0.9, // 90% della larghezza dello schermo
@@ -197,13 +192,13 @@ const styles = StyleSheet.create({
     fontSize: 28, // 24-30px per H2
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#444444',
+    color: theme.colors.textSecondary, 
     marginBottom: height * 0.01,
   },
   artworkSubtitle: {
     fontSize: 20, // 18-20px per il testo secondario
     textAlign: 'center',
-    color: '#777777', // Testo grigio più chiaro
+    color: theme.colors.textSecondary, // Testo grigio più chiaro
   },
   buttonsContainer: {
     flex: 0.2, // Occupa il 20% dello schermo
@@ -215,33 +210,39 @@ const styles = StyleSheet.create({
   },
   chooseButton: {
     backgroundColor: '#007BFF', // Blu
-    paddingVertical: height * 0.02, // 2% dell'altezza dello schermo
-    paddingHorizontal: width * 0.1, // 10% della larghezza
+    height: height*0.1,
+    width: width*0.4,
     borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   chooseButtonText: {
     color: '#FFFFFF', // Testo bianco
-    fontSize: 20, // Testo grande per la leggibilità
+    fontSize: 22, // Testo grande per la leggibilità
     fontWeight: 'bold',
+   
   },
   backButton: {
-    backgroundColor: '#6c757d', // Grigio scuro per il pulsante di ritorno
-    paddingVertical: height * 0.02,
-    paddingHorizontal: width * 0.08,
+    backgroundColor: theme.colors.danger, // Grigio scuro per il pulsante di ritorno
+    width: width * 0.4,
+    height: height * 0.1,
     borderRadius: 15,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   nextButton: {
     backgroundColor: '#28a745', // Verde per il pulsante successivo
-    paddingVertical: height * 0.02,
-    paddingHorizontal: width * 0.08,
+    width: width * 0.4,
+    height: height * 0.1,
     borderRadius: 15,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 20, // Font grande per visibilità
-    fontWeight: 'bold',
+    fontSize: 22, // Font grande per visibilità
+    fontWeight: 'bold', 
+    
   },
 });
