@@ -30,31 +30,24 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown })
 
       {/* Dropdown Menu and Overlay */}
       {isVisible && (
-        <>
-          {/* Overlay */}
-          <TouchableWithoutFeedback onPress={toggleDropdown}>
-            <View style={StyleSheet.absoluteFillObject} />
-          </TouchableWithoutFeedback>
-
-          {/* Dropdown Menu */}
-          <View style={styles.dropdown}>
-            <TouchableOpacity style={styles.dropdownItem} onPress={toggleAudio}>
-              <Text style={styles.dropdownText}>Audio</Text>
-              <Ionicons
-                name={isAudioOn ? 'volume-high' : 'volume-mute'}
-                size={20}
-                color="black"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.dropdownItem}
-              onPress={__confirmGoHome}
-            >
-              <Text style={styles.dropdownText}>Home</Text>
-              <MaterialIcons name="home" size={20} color="black" />
-            </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={toggleDropdown}>
+          <View style={styles.overlay}>
+            <View style={styles.dropdown}>
+              <TouchableOpacity style={styles.dropdownItem} onPress={toggleAudio}>
+                <Text style={styles.dropdownText}>Audio</Text>
+                <Ionicons
+                  name={isAudioOn ? 'volume-high' : 'volume-mute'}
+                  size={20}
+                  color="black"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.dropdownItem} onPress={__confirmGoHome}>
+                <Text style={styles.dropdownText}>Home</Text>
+                <MaterialIcons name="home" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
-        </>
+        </TouchableWithoutFeedback>
       )}
 
       {showConfirmation && (

@@ -6,18 +6,21 @@ import theme from '../config/theme';//
 
 const CustomNavigationBar = ({ 
   navigation, 
+  isVisible,
+  toggleDropdown,
   showBackButton = true,       // Mostra o nasconde la freccia di back
   showAudioButton = true,      // Mostra o nasconde il pulsante audio
   onReplayAudio,               // Funzione opzionale per il pulsante audio
 }) => {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  // const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
+  // const toggleDropdown = () => {
+  //   setDropdownVisible(!dropdownVisible);
+  // };
 
   return (
     <View style={styles.container}>
+      {/* <TouchableOpacity onPress={toggleDropdown} style={styles.menuButton}> */}
       <View style={styles.leftSection}>
       {/* Freccia di back */}
       {showBackButton && (
@@ -45,11 +48,12 @@ const CustomNavigationBar = ({
         <View>
           <HamburgerMenu 
             navigation={navigation} 
-            isVisible={dropdownVisible} 
+            isVisible={isVisible} 
             toggleDropdown={toggleDropdown} 
           />
         </View>
       </View>
+      {/* </TouchableOpacity> */}
     </View>
   );
 };

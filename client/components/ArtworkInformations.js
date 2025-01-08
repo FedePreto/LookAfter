@@ -88,6 +88,7 @@ export default function ArtworkInformations({ navigation, route }) {
 
   return (
     // <TouchableWithoutFeedback onPress={handleOutsidePress} accessible = {true}>
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={true}>
           {/* Header */}
@@ -133,7 +134,7 @@ export default function ArtworkInformations({ navigation, route }) {
           <Ionicons name="chatbubble-outline" size={40} color="white" />
         </TouchableOpacity>
       </SafeAreaView>
-    // </TouchableWithoutFeedback>
+     </TouchableWithoutFeedback>
   );
 }
 

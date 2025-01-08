@@ -106,6 +106,8 @@ export default function ChooseArtworkScreen({ route, navigation }) {
       <View style={styles.container}>
         <CustomNavigationBar
           navigation={navigation}
+          isVisible={dropdownVisible} 
+          toggleDropdown={toggleDropdown}
           showBackButton={false}
           showAudioButton={true}
           onReplayAudio={() => Speech.speak(textToRead)}
