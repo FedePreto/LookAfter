@@ -3,11 +3,13 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 export default function AnotherArtworkReached({ navigation }) {
   const handleProceed = () => {
-    navigation.navigate('ArtworkInformationsBalloon');
+    
+    // navigation.navigate('ArtworkInformationsBalloon');
+    navigation.navigate('ArtworkInformations', {artworkKey: 'ballon_girl'});
   };
 
   const handleProceedMonalisa = () => {
-    navigation.navigate('PathDetails');
+    navigation.navigate('PathDetails',{  artworkKey: 'monalisa' });
   };
 
   return (

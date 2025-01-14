@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,Image, TouchableOpacity} from 'react-native';
 
 export default function LostPage({ navigation }) {
+
   const handleProceed = () => {
-    navigation.navigate('CameraScreen');
+  
+          navigation.navigate('CameraScreen');
+        
   };
 
   return (

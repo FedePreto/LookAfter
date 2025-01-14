@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function ArtworkInformationsBalloon({ navigation }) {
+export default function ArtworkInformationsBalloon({ navigation, route }) {
+  const { artworkKey } = route.params;
   const handleChatOpen = () => {
     // Logic to open chat can be added here
     console.log('Chat button pressed');

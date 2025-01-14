@@ -5,18 +5,43 @@ import HamburgerMenu from './HamBurgerMenu';
 import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
 
+let newAccessCount = 0
+
 export default function PreviewConfirmation({ route, navigation }) {
   const { images } = route.params || {}; // Receive images array from CameraScreen
   const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
+  const [accessCount, setAccessCount] = useState(newAccessCount); // Initial access count
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const __retakePicture = () => {
     navigation.goBack(); // Go back to CameraScreen
   };
 
   const __chooseArtwork = () => {
-    navigation.navigate('ArtworkReached', { images, artworkKey }); 
-    //navigation.navigate('AnotherArtworkReached', { images }); 
-    //navigation.navigate('LostPage', { images });
+    // navigation.navigate('ArtworkReached', { images, artworkKey }); 
+    // navigation.navigate('AnotherArtworkReached', { images }); 
+    // navigation.navigate('LostPage', { images });
+    
+    // setAccessCount(newAccessCount);
+    switch (newAccessCount) {
+      
+      case 0:
+        navigation.navigate('ArtworkReached', { images, artworkKey });
+        break;
+      case 1:
+        navigation.navigate('AnotherArtworkReached', { images });
+        break;
+      case 2:
+        navigation.navigate('LostPage', { images });
+        break;
+      default:
+        navigation.navigate('ArtworkReached', { images, artworkKey });
+        break;
+    }
+    if(newAccessCount>2){
+      newAccessCount = 0
+    }
+    newAccessCount += 1; // Increment the global variable
+    setAccessCount(newAccessCount); // Update local state to trigger a re-render
   };
   const isMultipleImages = Array.isArray(images);
 

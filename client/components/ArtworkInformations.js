@@ -32,6 +32,16 @@ export default function ArtworkInformations({ navigation, route }) {
         "I am David, a story of bravery, artistry, and the triumph of the human spirit.",
       ],
     },
+    ballon_girl:{
+      name: 'Balloon girl',
+      image: require('../assets/balloon.png'),
+      description: [
+        "A vibrant image of a young girl standing in an open field, holding a brightly colored balloon.",
+        "The balloon, a bold red or yellow, contrasts beautifully with the soft hues of a clear blue sky.",
+        "The girl, dressed in a simple yet charming outfit, gazes upward with a look of wonder and joy. ",
+        " Her hair flows gently in the breeze, and the overall scene radiates a sense of innocence and freedom.",
+      ],
+    }
   };
 
   const artwork = artworkMap[artworkKey];
