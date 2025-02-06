@@ -28,7 +28,7 @@ export default function PreviewConfirmation({ route, navigation }) {
         navigation.navigate('ArtworkReached', { images, artworkKey });
         break;
       case 1:
-        navigation.navigate('AnotherArtworkReached', { images });
+        navigation.navigate('AnotherArtworkReached', { images, artworkKey });
         break;
       case 2:
         navigation.navigate('LostPage', { images });
@@ -38,7 +38,7 @@ export default function PreviewConfirmation({ route, navigation }) {
         break;
     }
     if(newAccessCount>2){
-      newAccessCount = 0
+      newAccessCount =0
     }
     newAccessCount += 1; // Increment the global variable
     setAccessCount(newAccessCount); // Update local state to trigger a re-render

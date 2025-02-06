@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-export default function AnotherArtworkReached({ navigation }) {
+export default function AnotherArtworkReached({ navigation, route }) {
+  const { artworkKey } = route.params;
   const handleProceed = () => {
     
     // navigation.navigate('ArtworkInformationsBalloon');
@@ -9,7 +10,7 @@ export default function AnotherArtworkReached({ navigation }) {
   };
 
   const handleProceedMonalisa = () => {
-    navigation.navigate('PathDetails',{  artworkKey: 'monalisa' });
+    navigation.navigate('PathDetails',{artworkKey});
   };
 
   return (
@@ -25,14 +26,14 @@ export default function AnotherArtworkReached({ navigation }) {
       {/* Main Content */}
       <View style={styles.content}>
         <Text style={styles.description}>
-          You didn't reach Monalisa, but you reached balloon girl instead!
+          You didn't reach {artworkKey}, but you reached balloon girl instead!
         </Text>
       </View>
 
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleProceedMonalisa} style={styles.buttonLeft}>
-          <Text style={styles.buttonText}>Bring me to Monalisa</Text>
+          <Text style={styles.buttonText}>Bring me to {artworkKey}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProceed} style={styles.buttonRight}>
           <Text style={styles.buttonText}>Get Info about Balloon Girl</Text>
