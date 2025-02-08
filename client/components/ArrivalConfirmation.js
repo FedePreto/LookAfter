@@ -7,6 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomNavigationBar from './CustomNavigationBar.js';
 import theme from '../config/theme';
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 const artworkDetails = {
   monalisa: {
@@ -170,6 +173,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     zIndex: 30,
   },
+
   artworkTitle: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -184,16 +188,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 40,
+    bottom: 0,
   },
+  
   proceedButton: {
+    backgroundColor: '#007fbb',
+    width: width * 0.92,
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
-    bottom: 70,
-    right: 20,
-    backgroundColor: theme.colors.primary,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+    bottom: 20,
   },
   buttonText: {
     fontSize: 20, // H3
