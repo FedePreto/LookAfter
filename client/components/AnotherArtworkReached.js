@@ -1,23 +1,43 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Dimensions } from 'react-native';
-
+import CustomNavigationBar from './CustomNavigationBar.js';
+import theme from '../config/theme';
 const { width, height } = Dimensions.get('window');
 
 export default function AnotherArtworkReached({ navigation, route }) {
   const { artworkKey } = route.params;
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const handleProceed = () => {
     
     // navigation.navigate('ArtworkInformationsBalloon');
     navigation.navigate('ArtworkInformations', {artworkKey: 'ballon_girl'});
+  };
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
   };
 
   const handleProceedMonalisa = () => {
     navigation.navigate('PathDetails',{artworkKey});
   };
 
+  const handleOutsidePress = () => {
+    if (dropdownVisible) {
+      setDropdownVisible(false); // Close the menu if it's open
+    }
+  };
+
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}> 
     <View style={styles.container}>
+      <CustomNavigationBar
+                navigation={navigation}
+                isVisible={dropdownVisible} 
+                toggleDropdown={toggleDropdown}
+                showBackButton={false}
+                showAudioButton={true}
+                onReplayAudio={() => Speech.speak(textToRead)}
+                />
       {/* Header Section */}
       <View style={styles.header}>
         <Image
@@ -43,14 +63,16 @@ export default function AnotherArtworkReached({ navigation, route }) {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 40,
+    backgroundColor: theme.colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   description: {
     fontSize: 30,
@@ -62,10 +84,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
+    
   },
   headerImage: {
     width: 300,
     height: 300,
+    top: 100,
   },
   content: {
     flex: 1,
