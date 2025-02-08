@@ -6,6 +6,8 @@ import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
 import CustomNavigationBar from './CustomNavigationBar';
 import theme from '../config/theme';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
@@ -203,13 +205,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   proceedButton: {
-    position: 'absolute',
-    bottom: 50,
-    right: 20,
     backgroundColor: '#007fbb',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+    width: width * 0.92,
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
   },
   buttonText: {
     color: '#fff',
