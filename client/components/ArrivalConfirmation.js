@@ -21,11 +21,32 @@ const artworkDetails = {
 
 export default function ConfirmArtwork({ route, navigation }) {
   const { artworkKey } = route.params || {};
-  const artwork = artworkDetails[artworkKey];
+  // const artwork = artworkDetails[artworkKey];
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `To confirm that you have arrived to me please take a picture of me`;
   const [fadeAnim] = useState(new Animated.Value(0));
+  const artworkDetails = {
+    david: {
+      name: 'David',
+      image: require('../assets/david.png'),
+      description: [
+        'Proceed straight for 2 steps to reach the iconic sculpture, the Mona Lisa.',
+        'Turn right and take 1 step after reaching the Mona Lisa.',
+      ],
+      nextScreen: 'ConfirmArtwork',
+    },
+    monalisa: {
+      name: 'Mona Lisa',
+      image: require('../assets/monalisa.png'),
+      description: [
+        'Proceed straight for 2 steps to reach the iconic sculpture, the David.',
+        'Turn right and take 1 step after reaching the David.',
+      ],
+      nextScreen: 'ConfirmArtwork',
+    },
+  };
+  const artwork = artworkDetails[artworkKey];
 
   useEffect(() => {
     setActiveScreen('ArrivalConfirmation');
@@ -88,7 +109,10 @@ export default function ConfirmArtwork({ route, navigation }) {
             showAudioButton={true}
             onReplayAudio={() => Speech.speak(textToRead)}
           />
-                <Image source={artwork.image} style={styles.headerImage} />
+               <View style ={styles.container2}>
+                         <Text style={styles.artworkTitle}>{artwork.name}</Text>
+                         <Image source={artwork.image} style={styles.headerImage} />
+                       </View>
 
         {/* Main Content */}
         <View style={styles.content}>
@@ -113,6 +137,13 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     backgroundColor: theme.colors.background,
   },
+  container2: {
+    top:0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
+  },
+  
   description: {
     fontSize: 24, // H2
     color: theme.colors.textPrimary,
@@ -127,15 +158,24 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: theme.colors.primary,
-    shadowColor: theme.colors.primary,
+    borderColor: '#54A8E8',
+    shadowColor: '#54A8E8',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
-    top: "15%",
-    left: "30%",
+    top: '15%',
+    alignContent: 'center',
     zIndex: 30,
+  },
+  artworkTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 40, // Aggiunge spazio sopra
+    color: '#007fbb',
+    top: '10%', // Posiziona in alto
+    width: '100%',
   },
 
   content: {
