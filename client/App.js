@@ -77,7 +77,7 @@ function MainPage({ navigation }) {
   };
 
   const handlePress = () => {
-    Vibration.vibrate([100, 200, 100]);
+    //Vibration.vibrate([100, 200, 100]);
 
     Animated.parallel([
       Animated.sequence([

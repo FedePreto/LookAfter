@@ -90,7 +90,7 @@ export default function CameraScreen() {
   };
 
   const handleButtonPress = (callback) => {
-    Vibration.vibrate([100, 200, 100]); // Vibrate on button press
+    //Vibration.vibrate([100, 200, 100]); // Vibrate on button press
 
     Animated.spring(fadeAnim, {
       toValue: 1.2, // Scale up
