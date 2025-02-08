@@ -8,6 +8,17 @@ export default function ArtworkInformationsBalloon({ navigation, route }) {
     // Logic to open chat can be added here
     console.log('Chat button pressed');
   };
+  const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
+  
+  useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
 
   return (
     <View style={styles.container}>
