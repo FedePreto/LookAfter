@@ -129,7 +129,10 @@ function MainPage({ navigation }) {
           />
         <Text style={styles.title}>Look After</Text>
         <Text style={styles.description}>
-          FEEL THE SPACE OWN YOUR PATH
+          FEEL THE SPACE,
+        </Text>
+        <Text style={styles.description}>
+          OWN YOUR PATH
         </Text>
         <Animated.View
           style={{
