@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 8,
     borderWidth: 3,
-    borderColor: "#0000FF", // Blue border for contrast
+    borderColor: "#007fbb", // Blue border for contrast
   },
   buttonText: {
     fontSize: 16,

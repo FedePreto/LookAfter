@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.03,
   },
   enabledButton: {
-    backgroundColor: '#007BFF', // Blu
+    backgroundColor: '#007fbb', // Blu
   },
   disabledButton: {
     backgroundColor: '#A9A9A9', // Grigio disabilitato
