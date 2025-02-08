@@ -101,6 +101,8 @@ export default function PathDetails({ route, navigation }) {
             onReplayAudio={() => Speech.speak(textToRead)}
             />
        
+       <Text style={styles.artworkTitle}>{artwork.name}</Text>
+
         <Image source={artwork.image} style={styles.headerImage} />
         {/* Main Content */}
         <View style={styles.content}>
@@ -170,6 +172,17 @@ const styles = StyleSheet.create({
     elevation: 6,
     width: '90%',
   },
+
+  artworkTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 40, // Aggiunge spazio sopra
+    color: '#007fbb',
+    top: '10%', // Posiziona in alto
+    width: '100%',
+  },
+  
 
   directionHeader: {
     fontSize: 28,
