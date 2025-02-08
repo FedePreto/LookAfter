@@ -1,13 +1,38 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Animated,TouchableWithoutFeedback } from 'react-native';
 import { Dimensions } from 'react-native';
 import CustomNavigationBar from './CustomNavigationBar.js';
 import theme from '../config/theme';
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech';
+
 const { width, height } = Dimensions.get('window');
 
 export default function AnotherArtworkReached({ navigation, route }) {
   const { artworkKey } = route.params;
+  const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const textToRead = `You didn't reach david, but you have reached balloon girl instead! Now you got two option either i can bring back you to david or get information about ballon girl`;
+  
+    const { isAudioOn } = useContext(AudioContext); 
+
+  useEffect(() => {
+        if (isAudioOn) {
+          Speech.speak(textToRead); // Parla solo se isAudioOn è true
+        }
+        
+        return () => {
+          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+        };
+      }, [isAudioOn]);
+  
+      useEffect(() => {
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+          }).start();
+        }, []);
   const handleProceed = () => {
     
     // navigation.navigate('ArtworkInformationsBalloon');

@@ -1,10 +1,13 @@
-import React , {useState}from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Animated,ScrollView,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
 import { Dimensions } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,9 +18,30 @@ export default function PreviewConfirmation({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
   const [accessCount, setAccessCount] = useState(newAccessCount); // Initial access count
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
+  const textToRead = `This is a preview of the picture you took, please make sure that everything is clear and recognisable before proceeding.`;
+  const [fadeAnim] = useState(new Animated.Value(0));
+
   const __retakePicture = () => {
     navigation.goBack(); // Go back to CameraScreen
   };
+  useEffect(() => {
+    if (isAudioOn) {
+      Speech.speak(textToRead); // Parla solo se isAudioOn è true
+    }
+    
+    return () => {
+      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+    };
+  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+
+  useEffect(() => {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true,
+      }).start();
+    }, []);
 
   const __chooseArtwork = () => {
     // navigation.navigate('ArtworkReached', { images, artworkKey }); 
@@ -25,6 +49,8 @@ export default function PreviewConfirmation({ route, navigation }) {
     // navigation.navigate('LostPage', { images });
     
     // setAccessCount(newAccessCount);
+    
+
     switch (newAccessCount) {
       
       case 0:

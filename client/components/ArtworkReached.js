@@ -57,25 +57,43 @@ export default function PathDetails({ route, navigation }) {
 
   const [fadeAnim] = useState(new Animated.Value(0));
 
-  useEffect(() => {
-    setActiveScreen('Path');
+   useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+    }, [isAudioOn]);
 
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
+    useEffect(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }).start();
+      }, []);
 
-    if (isAudioOn && activeScreen === 'Path') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
-    }
+  // useEffect(() => {
+  //   setActiveScreen('Path');
 
-    return () => {
-      Speech.stop();
-    };
-  }, [textToRead, isAudioOn]);
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 2000,
+  //     useNativeDriver: true,
+  //   }).start();
+
+  //   if (isAudioOn && activeScreen === 'Path') {
+  //     Speech.speak(textToRead);
+  //   } else {
+  //     Speech.stop();
+  //   }
+
+  //   return () => {
+  //     Speech.stop();
+  //   };
+  // }, [textToRead, isAudioOn]);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -99,8 +117,10 @@ export default function PathDetails({ route, navigation }) {
           onReplayAudio={() => Speech.speak(textToRead)}
         />
       
-      <Image source={artwork.image} style={styles.headerImage} />
-        
+                <View style ={styles.container2}>
+                    <Text style={styles.artworkTitle}>{artwork.name}</Text>
+                    <Image source={artwork.image} style={styles.headerImage} />
+                </View>
 
         {/* Main Content */}
         <View style={styles.content}>
@@ -123,11 +143,16 @@ export default function PathDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+      backgroundColor: theme.colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+  container2: {
+    top:0,
     justifyContent: 'center',
-    alignContent: 'center',
+    alignItems: 'center',
     backgroundColor: theme.colors.background,
   },
-  
   headerImage: {
     width: 140,
     height: 140,
@@ -140,10 +165,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 5,
-    top: "15%",
-    left: "30%",
+    top: '15%',
+    alignContent: 'center',
     zIndex: 30,
   },
+  artworkTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 40, // Aggiunge spazio sopra
+    color: '#007fbb',
+    top: '10%', // Posiziona in alto
+    width: '100%',
+  },
+
   headerIcons: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -160,13 +195,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     bottom: 0,
-  },
-  artworkTitle: {
-    fontSize: 36, // H1: 32-40 px
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
   },
   description: {
     fontSize: 30, // H3: 20-24 px

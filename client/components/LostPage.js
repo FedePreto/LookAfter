@@ -1,7 +1,50 @@
-import React from 'react';
-import { StyleSheet, Text, View,Image, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image,TouchableWithoutFeedback, Alert, Platform, Animated, Vibration, SafeAreaView } from 'react-native';
+import { AudioContext } from './AudioProvider';
+import { useNavigation } from '@react-navigation/native';
+import theme from '../config/theme';
+import * as Speech from 'expo-speech';
+import CustomNavigationBar from './CustomNavigationBar.js';
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export default function LostPage({ navigation }) {
+  // const navigation = useNavigation();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [fadeAnim] = useState(new Animated.Value(0));
+   const textToRead = `You have got lost, please re-scan the area around you !`;
+  
+    const { isAudioOn } = useContext(AudioContext);
+
+
+    useEffect(() => {
+        if (isAudioOn) {
+          Speech.speak(textToRead); // Parla solo se isAudioOn è true
+        }
+        
+        return () => {
+          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+        };
+      }, [isAudioOn]);
+
+      useEffect(() => {
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+          }).start();
+        }, []);
+
+        const toggleDropdown = () => {
+          setDropdownVisible(!dropdownVisible);
+        };
+      
+        const handleOutsidePress = () => {
+          if (dropdownVisible) {
+            setDropdownVisible(false); // Close the menu if it's open
+          }
+        };
 
   const handleProceed = () => {
   
@@ -10,7 +53,16 @@ export default function LostPage({ navigation }) {
   };
 
   return (
+    <TouchableWithoutFeedback onPress={handleOutsidePress}> 
     <View style={styles.container}>
+    <CustomNavigationBar
+          navigation={navigation}
+          isVisible={dropdownVisible} 
+          toggleDropdown={toggleDropdown}
+          showBackButton={false}
+          showAudioButton={true}
+          onReplayAudio={() => Speech.speak(textToRead)}
+          />
         {/* Header Section */}
       <View style={styles.header}>
         <Image
@@ -31,14 +83,16 @@ export default function LostPage({ navigation }) {
         <Text style={styles.buttonText}>Rescan</Text>
       </TouchableOpacity>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
-      padding: 40,
+      backgroundColor: theme.colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     description: {
         fontSize: 30,
@@ -51,6 +105,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       alignItems: 'center',
       marginBottom: 40,
+      top: 100,
     },
     headerImage: {
       width: 300,
@@ -79,13 +134,14 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     proceedButton: {
-      position: 'absolute',
-      bottom: 30,
-      right: 20,
-      backgroundColor: '#d32f2f',
-      paddingVertical: 15,
-      paddingHorizontal: 30,
-      borderRadius: 10,
+      backgroundColor: '#007fbb',
+    width: width * 0.92,
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
     },
     buttonText: {
       color: '#fff',

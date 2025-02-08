@@ -25,24 +25,32 @@ export default function PreviewScreen({ route, navigation }) {
       };
     }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
 
-  useEffect(() => {
-    setActiveScreen('Preview');
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
+    useEffect(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }).start();
+      }, []);
 
-    if (isAudioOn && activeScreen === 'Preview') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
-    }
+  // useEffect(() => {
+  //   setActiveScreen('Preview');
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 2000,
+  //     useNativeDriver: true,
+  //   }).start();
 
-    return () => {
-      Speech.stop();
-    };
-  }, [textToRead, isAudioOn]);
+  //   if (isAudioOn && activeScreen === 'Preview') {
+  //     Speech.speak(textToRead);
+  //   } else {
+  //     Speech.stop();
+  //   }
+
+  //   return () => {
+  //     Speech.stop();
+  //   };
+  // }, [textToRead, isAudioOn]);
 
   const __closeDropdown = () => {
     setDropdownVisible(false);

@@ -38,27 +38,43 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0));
 
   
+    useEffect(() => {
+          if (isAudioOn) {
+            Speech.speak(textToRead); // Parla solo se isAudioOn è true
+          }
+          
+          return () => {
+            Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+          };
+        }, [isAudioOn, textToRead]); // Dipendenza: si aggiorna se cambia isAudioOn
     
+        useEffect(() => {
+            Animated.timing(fadeAnim, {
+              toValue: 1,
+              duration: 2000,
+              useNativeDriver: true,
+            }).start();
+          }, []);
     
 
-  useEffect(() => {
-    setActiveScreen('ChooseArtwork');
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
+  // useEffect(() => {
+  //   setActiveScreen('ChooseArtwork');
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 2000,
+  //     useNativeDriver: true,
+  //   }).start();
 
-    if (isAudioOn && activeScreen === 'ChooseArtwork') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
-    }
+  //   if (isAudioOn && activeScreen === 'ChooseArtwork') {
+  //     Speech.speak(textToRead);
+  //   } else {
+  //     Speech.stop();
+  //   }
 
-    return () => {
-      Speech.stop();
-    };
-  }, [textToRead, isAudioOn]);
+  //   return () => {
+  //     Speech.stop();
+  //   };
+  // }, [textToRead, isAudioOn]);
 
   if (!artwork) {
     return (

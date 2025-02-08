@@ -35,42 +35,52 @@ export default function ConfirmArtwork({ route, navigation }) {
     david: {
       name: 'David',
       image: require('../assets/david.png'),
-      description: [
-        'Proceed straight for 2 steps to reach the iconic sculpture, the Mona Lisa.',
-        'Turn right and take 1 step after reaching the Mona Lisa.',
-      ],
       nextScreen: 'CameraConfirmation',
     },
     monalisa: {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
-      description: [
-        'Proceed straight for 2 steps to reach the iconic sculpture, the David.',
-        'Turn right and take 1 step after reaching the David.',
-      ],
       nextScreen: 'CameraConfirmation',
     },
   };
   const artwork = artworkDetails[artworkKey];
 
   useEffect(() => {
-    setActiveScreen('ArrivalConfirmation');
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
+        if (isAudioOn) {
+          Speech.speak(textToRead); // Parla solo se isAudioOn è true
+        }
+        
+        return () => {
+          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+        };
+      }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+  
+      useEffect(() => {
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+          }).start();
+        }, []);
 
-    if (isAudioOn && activeScreen === 'ArrivalConfirmation') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
-    }
+  // useEffect(() => {
+  //   setActiveScreen('ArrivalConfirmation');
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 2000,
+  //     useNativeDriver: true,
+  //   }).start();
 
-    return () => {
-      Speech.stop();
-    };
-  }, [textToRead, isAudioOn]);
+  //   if (isAudioOn && activeScreen === 'ArrivalConfirmation') {
+  //     Speech.speak(textToRead);
+  //   } else {
+  //     Speech.stop();
+  //   }
+
+  //   return () => {
+  //     Speech.stop();
+  //   };
+  // }, [textToRead, isAudioOn]);
 
   if (!artwork) {
     return (
@@ -114,10 +124,10 @@ export default function ConfirmArtwork({ route, navigation }) {
             showAudioButton={true}
             onReplayAudio={() => Speech.speak(textToRead)}
           />
-               <View style ={styles.container2}>
-                         <Text style={styles.artworkTitle}>{artwork.name}</Text>
-                         <Image source={artwork.image} style={styles.headerImage} />
-                       </View>
+          <View style ={styles.container2}>
+              <Text style={styles.artworkTitle}>{artwork.name}</Text>
+              <Image source={artwork.image} style={styles.headerImage} />
+          </View>
 
         {/* Main Content */}
         <View style={styles.content}>
@@ -138,9 +148,9 @@ export default function ConfirmArtwork({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
-    backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
   },
   container2: {
     top:0,

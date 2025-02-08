@@ -49,14 +49,22 @@ export default function PathDetails({ route, navigation }) {
 
   
   useEffect(() => {
-      if (isAudioOn) {
-        Speech.speak(textToRead); // Parla solo se isAudioOn è true
-      }
-      
-      return () => {
-        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-      };
-  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+        if (isAudioOn) {
+          Speech.speak(textToRead); // Parla solo se isAudioOn è true
+        }
+        
+        return () => {
+          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+        };
+      }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+  
+      useEffect(() => {
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+          }).start();
+        }, []); // Dipendenza: si aggiorna se cambia isAudioOn
 
   const handleProceed = () => {
     navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
@@ -69,25 +77,25 @@ export default function PathDetails({ route, navigation }) {
 
   const [fadeAnim] = useState(new Animated.Value(0));
 
-  useEffect(() => {
-    setActiveScreen('Path');
+  // useEffect(() => {
+  //   setActiveScreen('Path');
 
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
+  //   Animated.timing(fadeAnim, {
+  //     toValue: 1,
+  //     duration: 2000,
+  //     useNativeDriver: true,
+  //   }).start();
 
-    if (isAudioOn && activeScreen === 'Path') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
-    }
+  //   if (isAudioOn && activeScreen === 'Path') {
+  //     Speech.speak(textToRead);
+  //   } else {
+  //     Speech.stop();
+  //   }
 
-    return () => {
-      Speech.stop();
-    };
-  }, [textToRead, isAudioOn]);
+  //   return () => {
+  //     Speech.stop();
+  //   };
+  // }, [textToRead, isAudioOn]);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
