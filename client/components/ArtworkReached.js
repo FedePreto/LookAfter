@@ -4,9 +4,10 @@ import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
+import { Dimensions } from 'react-native';
 import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
-// const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 
 export default function PathDetails({ route, navigation }) {
@@ -35,7 +36,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = `'Congratulations! you reached me'`;
+  const textToRead = "Congratulations! you reached me";
 
   if (!artwork) {
     return (
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 80,
+    bottom: 0,
   },
   artworkTitle: {
     fontSize: 36, // H1: 32-40 px
@@ -174,13 +175,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   proceedButton: {
-    position: 'absolute',
-    bottom: 50,
-    right: 20,
     backgroundColor: '#007fbb',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+    width: width * 0.92,
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
   },
   buttonText: {
     color: '#fff',
