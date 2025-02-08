@@ -36,7 +36,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleProceedMonalisa} style={styles.buttonLeft}>
-          <Text style={styles.buttonText}>Bring me to {artworkKey}</Text>
+          <Text style={styles.buttonText2}>Bring me to {artworkKey}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProceed} style={styles.buttonRight}>
           <Text style={styles.buttonText}>Get Info about Balloon Girl</Text>
@@ -74,32 +74,40 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+    justifyContent: 'space-around',
+    width: width,
+    padding: 0,
+    position: 'absolute',
+    bottom: 10,
   },
   buttonLeft: {
-    flex: 1,
-    marginRight: 10,
-    backgroundColor: '#d32f2f',
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    borderRadius: 10,
+    backgroundColor: '#FFFFFF', // blu per i bottoni
+    paddingVertical:15,
+    borderRadius: 15,
+    width: width * 0.46,
+    height: height * 0.08,
     alignItems: 'center',
+    elevation: 6,
+    bottom: 20,
   },
   buttonRight: {
-    flex: 1,
-    marginLeft: 10,
-    backgroundColor: '#1976d2',
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    borderRadius: 10,
+    backgroundColor: '#007fbb', // blu per i bottoni
+    paddingVertical:15,
+    borderRadius: 15,
+    width: width * 0.46,
+    height: height * 0.08,
     alignItems: 'center',
+    elevation: 6,
+    bottom: 20,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 14,
+    color: '#FFFFFF', // Bianco per il testo nei bottoni
+    fontSize: 13,
     fontWeight: 'bold',
-    textAlign: 'center',
+  },
+  buttonText2: {
+    color: '#007fbb', // Bianco per il testo nei bottoni
+    fontSize: 13,
+    fontWeight: 'bold',
   },
 });
