@@ -1,18 +1,46 @@
-import React, { useState } from "react";
-import { SafeAreaView, TouchableWithoutFeedback, View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Assicurati di installare @expo/vector-icons
-import HamburgerMenu from './HamBurgerMenu';
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet,Keyboard,KeyboardAvoidingView,Platform } from "react-native";
+import { Ionicons } from "@expo/vector-icons"; 
 import theme from '../config/theme';
+import AsyncStorage from "@react-native-async-storage/async-storage"; 
 import CustomNavigationBar from "./CustomNavigationBar.js";
+import * as Speech from 'expo-speech'; 
+import ImageViewer from 'react-native-image-zoom-viewer';
+
 
 export default function ChatScreen({ route, navigation }) {
   const { artworkKey } = route.params;
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
+  const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Ciao! Come posso aiutarti?" },
   ]);
-  const [input, setInput] = useState("");
+  
+ 
+  const loadMessages = async () => {
+    try {
+      const storedMessages = await AsyncStorage.getItem("chatMessages");
+      if (storedMessages) {
+        setMessages(JSON.parse(storedMessages)); 
+      }
+    } catch (error) {
+      console.error("Errore nel caricare i messaggi", error);
+    }
+  };
+
+  const saveMessages = async (messages) => {
+    try {
+      await AsyncStorage.setItem("chatMessages", JSON.stringify(messages));
+    } catch (error) {
+      console.error("Errore nel salvare i messaggi", error);
+    }
+  };
+
+
+  useEffect(() => {
+    loadMessages();
+  }, []);
+
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -25,7 +53,7 @@ export default function ChatScreen({ route, navigation }) {
       botResponse = {
         sender: "bot",
         text: "Gli occhi della Monna Lisa sono enigmatici e sembrano seguire l'osservatore.",
-        image: require('../assets/monalisa.png'), 
+        image: require('../assets/eyes.png'), 
       };
     } else if (input.toLowerCase().includes("uomo")) {
       botResponse = {
@@ -38,12 +66,13 @@ export default function ChatScreen({ route, navigation }) {
     }
 
     setMessages([...updatedMessages, botResponse]);
+    saveMessages([...updatedMessages, botResponse]); 
     setInput("");
   };
 
   const handleMicrophonePress = () => {
     navigation.navigate("RecordingScreen", {
-      onRecordingComplete: (audioText) => setInput(audioText), // Callback per aggiornare il testo
+      onRecordingComplete: (audioText) => setInput(audioText), 
     });
   };
 
@@ -53,13 +82,51 @@ export default function ChatScreen({ route, navigation }) {
 
   const handleOutsidePress = () => {
     if (dropdownVisible) {
-      setDropdownVisible(false); // Close the menu if it's open
+      setDropdownVisible(false); 
     }
   };
+
+const scrollViewRef = useRef(null);
+const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+
+useEffect(() => {
+  const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", (event) => {
+    setKeyboardHeight(event.endCoordinates.height);
+  });
+
+  const keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", () => {
+    setKeyboardHeight(0);
+  });
+
+  return () => {
+    keyboardDidShowListener.remove();
+    keyboardDidHideListener.remove();
+  };
+}, []);
+
+useEffect(() => {
+  if (scrollViewRef.current) {
+    scrollViewRef.current.scrollToEnd({ animated: true });
+  }
+}, [messages, keyboardHeight]); 
+
+const [chatHeight, setChatHeight] = useState(0);
+const [inputHeight, setInputHeight] = useState(60); 
+
+useEffect(() => {
+  const updatePadding = chatHeight > 500 ? 120 : 80; 
+  setInputHeight(updatePadding);
+}, [chatHeight]);
   
 
   return (    
-      <TouchableWithoutFeedback onPress={handleOutsidePress}>
+      
+        <KeyboardAvoidingView 
+          style={{ flex: 1 }} 
+          behavior={Platform.OS === "ios" ? "padding" : undefined} 
+          keyboardVerticalOffset={62}
+        >
         <View style={styles.container}>
           <CustomNavigationBar
            navigation={navigation}
@@ -69,7 +136,18 @@ export default function ChatScreen({ route, navigation }) {
             showAudioButton={true}
             onReplayAudio={() => Speech.speak(textToRead)}
           />
-      <ScrollView style={styles.chatContainer}>
+       <ScrollView 
+          style={styles.chatContainer} 
+          ref={scrollViewRef}
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: inputHeight }}
+          keyboardShouldPersistTaps="handled"
+          onScrollBeginDrag={Keyboard.dismiss} 
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            setChatHeight(contentHeight);
+            scrollViewRef.current?.scrollToEnd({ animated: true });
+          }}
+          
+        >
         {messages.map((message, index) => (
           <View
             key={index}
@@ -99,8 +177,8 @@ export default function ChatScreen({ route, navigation }) {
         </TouchableOpacity>
       </View>
 
-        </View>
-      </TouchableWithoutFeedback>
+    </View>
+  </KeyboardAvoidingView>
   );
 }
 
@@ -120,41 +198,41 @@ const styles = StyleSheet.create({
     marginBottom: 12, 
     padding: 12, 
     borderRadius: 16, 
-    maxWidth: "80%", // Keep messages from stretching too wide
-    shadowColor: "#000", // Add a shadow for depth
+    maxWidth: "80%", 
+    shadowColor: "#000", 
     shadowOffset: { width: 0, height: 2 }, 
     shadowOpacity: 0.1, 
     shadowRadius: 4,
-    elevation: 3, // Shadow for Android
+    elevation: 3, 
   },
   userMessage: { 
     alignSelf: "flex-end", 
-    backgroundColor: "#D1F7C4", // Light green for user messages
-    borderTopRightRadius: 0, // Differentiate sender visually
+    backgroundColor: "#D1F7C4", 
+    borderTopRightRadius: 0, 
   },
   botMessage: { 
     alignSelf: "flex-start", 
-    backgroundColor: "#FFFFFF", // White for bot messages
-    borderTopLeftRadius: 0, // Differentiate sender visually
+    backgroundColor: "#FFFFFF", 
+    borderTopLeftRadius: 0, 
   },
   messageText: { 
     fontSize: 16, 
-    color: "#333", // Neutral text color for readability
+    color: "#333", 
   },
   messageImage: { 
     marginTop: 8, 
-    width: 200, 
-    height: 150, // Slightly larger for better visibility
+    width: 230, 
+    height: 150, 
     borderRadius: 12, 
-    alignSelf: "center" // Center the image in the message bubble
+    alignSelf: "center"
   },
   inputContainer: { 
     flexDirection: "row", 
     padding: 12, 
     borderTopWidth: 1, 
-    borderColor: "#E0E0E0", // Subtle separator color
+    borderColor: "#E0E0E0", 
     alignItems: "center", 
-    backgroundColor: "#FFFFFF", // White input background
+    backgroundColor: "#FFFFFF", 
   },
   input: { 
     flex: 1, 
@@ -163,16 +241,16 @@ const styles = StyleSheet.create({
     borderRadius: 24, 
     padding: 10, 
     fontSize: 16, 
-    backgroundColor: "#F9F9F9", // Light gray for input background
+    backgroundColor: "#F9F9F9", 
   },
   sendButton: { 
-    backgroundColor: "#007BFF", // Primary blue color
+    backgroundColor: "#007BFF", 
     borderRadius: 24, 
     paddingVertical: 10, 
     paddingHorizontal: 16, 
     justifyContent: "center", 
     alignItems: "center", 
-    marginLeft: 8, // Add space between input and button
+    marginLeft: 8, 
   },
   sendButtonText: { 
     color: "#FFFFFF", 
@@ -182,10 +260,10 @@ const styles = StyleSheet.create({
   microphoneButton: { 
     justifyContent: "center", 
     alignItems: "center", 
-    backgroundColor: "#E8F0FF", // Light blue for microphone button
+    backgroundColor: "#E8F0FF",
     borderRadius: 24, 
     padding: 10, 
-    marginRight: 8, // Space between mic button and input
+    marginRight: 8, 
   },
 });
 
