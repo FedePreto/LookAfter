@@ -47,6 +47,17 @@ export default function PathDetails({ route, navigation }) {
     );
   }
 
+  
+  useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+
   const handleProceed = () => {
     navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
   };

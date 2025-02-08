@@ -36,6 +36,16 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `I am ${artwork.title} the artwork ${artwork.number} of 2.`;
   const [fadeAnim] = useState(new Animated.Value(0));
+  
+    useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+    }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
 
   useEffect(() => {
     setActiveScreen('ChooseArtwork');
