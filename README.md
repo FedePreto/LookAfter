@@ -1,19 +1,11 @@
-first time to setup:
-cd server 
-npm install 
+# First time setup
 
-cd client 
+## Client
+
 npm install
+npx expo start
 
-----------------
-to run the project:
+## Server 
 
-cd client
-npm run web 
-or 
-npm run ios 
-or 
-npm run android
-
-cd server
+npm install
 node server.js
