@@ -201,9 +201,12 @@ const styles = StyleSheet.create({
   stepText: {
     fontSize: 20,
     color: '#555',
-    flex: 1,
     flexWrap: 'wrap',
-  },
+    width: '100%',
+    flexShrink: 1, // Prevents text from being cut off
+    lineHeight: 24, // Ensures text is readable
+    overflow: 'visible', // Allows text to appear fully
+  }, 
   proceedButton: {
     backgroundColor: '#007fbb',
     width: width * 0.92,
