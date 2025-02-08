@@ -21,7 +21,9 @@ const artworkDetails = {
 
 export default function ConfirmArtwork({ route, navigation }) {
   const { artworkKey } = route.params || {};
+  // console.log(artworkKey)
   // const artwork = artworkDetails[artworkKey];
+  // console.log(artwork)
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `To confirm that you have arrived to me please take a picture of me`;
@@ -34,7 +36,7 @@ export default function ConfirmArtwork({ route, navigation }) {
         'Proceed straight for 2 steps to reach the iconic sculpture, the Mona Lisa.',
         'Turn right and take 1 step after reaching the Mona Lisa.',
       ],
-      nextScreen: 'ConfirmArtwork',
+      nextScreen: 'CameraConfirmation',
     },
     monalisa: {
       name: 'Mona Lisa',
@@ -43,7 +45,7 @@ export default function ConfirmArtwork({ route, navigation }) {
         'Proceed straight for 2 steps to reach the iconic sculpture, the David.',
         'Turn right and take 1 step after reaching the David.',
       ],
-      nextScreen: 'ConfirmArtwork',
+      nextScreen: 'CameraConfirmation',
     },
   };
   const artwork = artworkDetails[artworkKey];
