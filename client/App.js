@@ -105,6 +105,7 @@ function MainPage({ navigation }) {
         }),
       ]),
     ]).start(() => {
+      Speech.stop();
       navigation.navigate('CameraScreen');
     });
   };

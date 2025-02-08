@@ -67,10 +67,12 @@ export default function PreviewScreen({ route, navigation }) {
   };
 
   const __retakePicture = () => {
+    Speech.stop();
     navigation.goBack(); // Go back to CameraScreen
   };
 
   const __chooseArtwork = () => {
+    Speech.stop();
     navigation.navigate('ChooseArtwork', { artworkKey: 'david' }); // Navigate to ChooseArtworkScreen
   };
 

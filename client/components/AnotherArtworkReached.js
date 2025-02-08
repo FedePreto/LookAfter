@@ -36,6 +36,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
   const handleProceed = () => {
     
     // navigation.navigate('ArtworkInformationsBalloon');
+    Speech.stop();
     navigation.navigate('ArtworkInformations', {artworkKey: 'ballon_girl'});
   };
   const toggleDropdown = () => {
@@ -43,6 +44,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
   };
 
   const handleProceedMonalisa = () => {
+    Speech.stop();
     navigation.navigate('PathDetails',{artworkKey});
   };
 

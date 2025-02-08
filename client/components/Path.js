@@ -67,6 +67,7 @@ export default function PathDetails({ route, navigation }) {
         }, []); // Dipendenza: si aggiorna se cambia isAudioOn
 
   const handleProceed = () => {
+    Speech.stop();
     navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
   };
 

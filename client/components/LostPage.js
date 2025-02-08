@@ -47,7 +47,7 @@ export default function LostPage({ navigation }) {
         };
 
   const handleProceed = () => {
-  
+          Speech.stop();
           navigation.navigate('CameraScreen');
         
   };

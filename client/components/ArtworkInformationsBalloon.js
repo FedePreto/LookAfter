@@ -6,6 +6,8 @@ export default function ArtworkInformationsBalloon({ navigation, route }) {
   const { artworkKey } = route.params;
   const handleChatOpen = () => {
     // Logic to open chat can be added here
+    Speech.stop();
+    navigation.navigate('ChatScreen', {artworkKey})
     console.log('Chat button pressed');
   };
   const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale

@@ -73,8 +73,13 @@ export default function ArtworkInformations({ navigation, route }) {
       Speech.stop();
     }
 
+    const unsubscribe = navigation.addListener('blur', () => {
+      Speech.stop(); // Stop speech when the screen is no longer in focus
+    });
+
     return () => {
       Speech.stop();
+      unsubscribe();
     };
   }, [textToRead, isAudioOn, activeScreen]);
 

@@ -86,17 +86,20 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 
   const handleNext = () => {
     if (artwork.nextScreen) {
+      Speech.stop();
       navigation.navigate('ChooseArtwork', { artworkKey: artwork.nextScreen });
     }
   };
 
   const handleBack = () => {
     if (artwork.backScreen) {
+      Speech.stop();
       navigation.navigate('ChooseArtwork', { artworkKey: artwork.backScreen });
     }
   };
 
   const handleChoose = () => {
+    Speech.stop();
     navigation.navigate('PathDetails', { artworkKey: artwork.artworkKey }); // Passa il parametro
   };
 

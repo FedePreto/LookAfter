@@ -47,6 +47,8 @@ export default function PathDetails({ route, navigation }) {
   }
 
   const handleProceed = () => {
+    Speech.stop();
+
     navigation.navigate('ArtworkInformations', { artworkKey });
   };
 

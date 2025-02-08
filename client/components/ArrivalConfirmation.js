@@ -91,6 +91,7 @@ export default function ConfirmArtwork({ route, navigation }) {
   }
 
   const handleProceed = () => {
+    Speech.stop();
     navigation.navigate(artwork.nextScreen, { artworkKey });
   };
 

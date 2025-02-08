@@ -104,6 +104,7 @@ export default function CameraConfirmation() {
         setCapturedImage(photo); // Store captured image
         setPreviewVisible(true); // Navigate to Preview if picture is captured
         //Alert.alert('Photo Saved', 'Photo saved to your device\'s gallery.');
+        Speech.stop();
         navigation.navigate('PreviewConfirmation', { images: photo.uri,  artworkKey});
       } catch (error) {
         console.error("Error capturing photo:", error);
@@ -150,6 +151,7 @@ export default function CameraConfirmation() {
                 onPress={() => {
                   const screenshot = webcamRef.current.getScreenshot();
                   if (screenshot) {
+                    Speech.stop();
                     navigation.navigate("Preview", { images: screenshot });
                   }
                 }}

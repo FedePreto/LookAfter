@@ -23,6 +23,7 @@ export default function PreviewConfirmation({ route, navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0));
 
   const __retakePicture = () => {
+    Speech.stop();
     navigation.goBack(); // Go back to CameraScreen
   };
   useEffect(() => {
@@ -50,9 +51,9 @@ export default function PreviewConfirmation({ route, navigation }) {
     
     // setAccessCount(newAccessCount);
     
-
+    Speech.stop();
+    
     switch (newAccessCount) {
-      
       case 0:
         navigation.navigate('ArtworkReached', { images, artworkKey });
         break;
