@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 80, // Adds space to avoid overlap with the button
   },
   description: {
-    fontSize: 18,
+    fontSize: 30,
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,

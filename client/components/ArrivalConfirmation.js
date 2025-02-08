@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   
   description: {
-    fontSize: 24, // H2
+    fontSize: 30, // H2
     color: theme.colors.textPrimary,
     textAlign: 'center',
     marginBottom: 20,

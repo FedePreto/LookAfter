@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   description: {
-    fontSize: 20,
+    fontSize: 30,
     color: '#555',
     lineHeight: 28,
     textAlign: 'justify',
