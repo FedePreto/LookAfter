@@ -1,9 +1,12 @@
 import React , {useState}from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
+import { Dimensions } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
+
+const { width, height } = Dimensions.get('window');
 
 let newAccessCount = 0
 
@@ -145,11 +148,16 @@ const styles = StyleSheet.create({
     bottom: 50,
   },
   button: {
+    
+
     backgroundColor: '#007fbb',
-    padding: 15,
-    borderRadius: 10,
-    width: 120,
+    width: width * 0.45,
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
     alignItems: 'center',
+    bottom: 20,
+    
   },
   textButton: {
     color: '#fff',
