@@ -101,9 +101,13 @@ export default function PathDetails({ route, navigation }) {
             onReplayAudio={() => Speech.speak(textToRead)}
             />
        
-       <Text style={styles.artworkTitle}>{artwork.name}</Text>
+       
 
-        <Image source={artwork.image} style={styles.headerImage} />
+        <View style ={styles.container2}>
+          <Text style={styles.artworkTitle}>{artwork.name}</Text>
+          <Image source={artwork.image} style={styles.headerImage} />
+        </View>
+        
         {/* Main Content */}
         <View style={styles.content}>
           <View style={styles.directionContainer}>
@@ -131,6 +135,13 @@ export default function PathDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
+  },
+  
+  container2: {
+    top: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.background,
