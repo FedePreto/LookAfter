@@ -14,6 +14,16 @@ export default function PreviewScreen({ route, navigation }) {
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `This is a preview of the picture you took, please make sure that everything is clear and recognisable before proceeding.`;
   const [fadeAnim] = useState(new Animated.Value(0));
+  
+    useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+    }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
 
   useEffect(() => {
     setActiveScreen('Preview');
