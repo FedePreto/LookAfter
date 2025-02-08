@@ -14,6 +14,16 @@ export default function PreviewScreen({ route, navigation }) {
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = `This is a preview of the picture you took, please make sure that everything is clear and recognisable before proceeding.`;
   const [fadeAnim] = useState(new Animated.Value(0));
+  
+    useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+    }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
 
   useEffect(() => {
     setActiveScreen('Preview');
@@ -80,8 +90,8 @@ export default function PreviewScreen({ route, navigation }) {
         )}
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={__retakePicture} style={styles.button}>
-            <Text style={styles.textButton}>Re-Take</Text>
+          <TouchableOpacity onPress={__retakePicture} style={styles.button2}>
+            <Text style={styles.textButton2}>Re-Take</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={__chooseArtwork} style={styles.button}>
             <Text style={styles.textButton}>Proceed</Text>
@@ -129,23 +139,34 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   button: {
-    backgroundColor: '#007BFF', // blu per i bottoni
-    paddingVertical:20,
+    backgroundColor: '#007fbb', // blu per i bottoni
+    paddingVertical:15,
     borderRadius: 15,
-    width: width * 0.4,
-    height: width * 0.2,
+    width: width * 0.46,
+    height: height * 0.08,
     alignItems: 'center',
-    shadowColor: 'black', // Shadow for depth
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
     elevation: 6,
+    bottom: 20,
+  },
+  button2: {
+    backgroundColor: '#FFFFFF', // blu per i bottoni
+    paddingVertical:15,
+    borderRadius: 15,
+    width: width * 0.46,
+    height: height * 0.08,
+    alignItems: 'center',
+    elevation: 6,
+    bottom: 20,
   },
   textButton: {
     color: '#FFFFFF', // Bianco per il testo nei bottoni
     fontSize: 22,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
+  textButton2: {
+    color: '#007fbb', // Bianco per il testo nei bottoni
+    fontSize: 22,
+    fontWeight: 'bold',
+  },  
 });
 

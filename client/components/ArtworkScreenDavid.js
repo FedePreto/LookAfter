@@ -37,6 +37,10 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const textToRead = `I am ${artwork.title} the artwork ${artwork.number} of 2.`;
   const [fadeAnim] = useState(new Animated.Value(0));
 
+  
+    
+    
+
   useEffect(() => {
     setActiveScreen('ChooseArtwork');
     Animated.timing(fadeAnim, {

@@ -1,9 +1,12 @@
 import React , {useState}from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
+import { Dimensions } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
+
+const { width, height } = Dimensions.get('window');
 
 let newAccessCount = 0
 
@@ -89,8 +92,8 @@ export default function PreviewConfirmation({ route, navigation }) {
       <Text style={styles.text}>Does the image looks Good?</Text>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={__retakePicture} style={styles.button}>
-          <Text style={styles.textButton}>Re-Take</Text>
+        <TouchableOpacity onPress={__retakePicture} style={styles.button2}>
+          <Text style={styles.textButton2}>Re-Take</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={__chooseArtwork} style={styles.button}>
           <Text style={styles.textButton}>Proceed</Text>
@@ -108,14 +111,14 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#E8F0FF',
+    backgroundColor: theme.colors.background,
     alignItems: 'center',
     justifyContent: 'center',
   },
   text: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 26,
     fontWeight: 'bold',
+    color: theme.colors.textSecondary,
   },
   imageContainer: {
     flexDirection: 'row', // Arrange images horizontally
@@ -140,20 +143,40 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '100%',
+    width: width,
+    padding: 0,
     position: 'absolute',
-    bottom: 50,
+    bottom: 10,
   },
   button: {
-    backgroundColor: '#007fbb',
-    padding: 15,
-    borderRadius: 10,
-    width: 120,
+    backgroundColor: '#007fbb', // blu per i bottoni
+    paddingVertical:15,
+    borderRadius: 15,
+    width: width * 0.46,
+    height: height * 0.08,
     alignItems: 'center',
+    elevation: 6,
+    bottom: 20,
+    
+  },
+  button2: {
+    backgroundColor: '#FFFFFF', // blu per i bottoni
+    paddingVertical:15,
+    borderRadius: 15,
+    width: width * 0.46,
+    height: height * 0.08,
+    alignItems: 'center',
+    elevation: 6,
+    bottom: 20,
   },
   textButton: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#FFFFFF', // Bianco per il testo nei bottoni
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  textButton2: {
+    color: '#007fbb', // Bianco per il testo nei bottoni
+    fontSize: 22,
     fontWeight: 'bold',
   },
   header: {

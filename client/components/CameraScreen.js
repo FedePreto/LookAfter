@@ -30,6 +30,19 @@ export default function CameraScreen() {
 
   const textToRead = `Whenever you feel ready, touch the Take Picture button.`;
 
+  const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
+
+  useEffect(() => {
+    if (isAudioOn) {
+      Speech.speak(textToRead); // Parla solo se isAudioOn è true
+    }
+    
+    return () => {
+      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+    };
+  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+
+
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();

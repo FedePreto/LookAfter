@@ -8,6 +8,17 @@ export default function ArtworkInformationsBalloon({ navigation, route }) {
     // Logic to open chat can be added here
     console.log('Chat button pressed');
   };
+  const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
+  
+  useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
 
   return (
     <View style={styles.container}>
@@ -83,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 80, // Adds space to avoid overlap with the button
   },
   description: {
-    fontSize: 18,
+    fontSize: 30,
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,

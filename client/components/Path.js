@@ -6,6 +6,8 @@ import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
 import CustomNavigationBar from './CustomNavigationBar';
 import theme from '../config/theme';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
@@ -44,6 +46,17 @@ export default function PathDetails({ route, navigation }) {
       </View>
     );
   }
+
+  
+  useEffect(() => {
+      if (isAudioOn) {
+        Speech.speak(textToRead); // Parla solo se isAudioOn è true
+      }
+      
+      return () => {
+        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+      };
+  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
 
   const handleProceed = () => {
     navigation.navigate(artwork.nextScreen, { artworkKey }); // Passa l'artworkKey
@@ -99,7 +112,13 @@ export default function PathDetails({ route, navigation }) {
             onReplayAudio={() => Speech.speak(textToRead)}
             />
        
-        <Image source={artwork.image} style={styles.headerImage} />
+       
+
+        <View style ={styles.container2}>
+          <Text style={styles.artworkTitle}>{artwork.name}</Text>
+          <Image source={artwork.image} style={styles.headerImage} />
+        </View>
+        
         {/* Main Content */}
         <View style={styles.content}>
           <View style={styles.directionContainer}>
@@ -127,6 +146,13 @@ export default function PathDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
+  },
+  
+  container2: {
+    top: 0,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.background,
@@ -169,6 +195,17 @@ const styles = StyleSheet.create({
     width: '90%',
   },
 
+  artworkTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 40, // Aggiunge spazio sopra
+    color: '#007fbb',
+    top: '10%', // Posiziona in alto
+    width: '100%',
+  },
+  
+
   directionHeader: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -199,17 +236,21 @@ const styles = StyleSheet.create({
   stepText: {
     fontSize: 20,
     color: '#555',
-    flex: 1,
     flexWrap: 'wrap',
-  },
+    width: '100%',
+    flexShrink: 1, // Prevents text from being cut off
+    lineHeight: 24, // Ensures text is readable
+    overflow: 'visible', // Allows text to appear fully
+  }, 
   proceedButton: {
-    position: 'absolute',
-    bottom: 50,
-    right: 20,
     backgroundColor: '#007fbb',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+    width: width * 0.92,
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
   },
   buttonText: {
     color: '#fff',
