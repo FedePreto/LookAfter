@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   description: {
-    fontSize: 22, // H3: 20-24 px
+    fontSize: 30, // H3: 20-24 px
     color: '#555',
     textAlign: 'center',
     marginBottom: 20,
