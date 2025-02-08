@@ -1,5 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export default function AnotherArtworkReached({ navigation, route }) {
   const { artworkKey } = route.params;
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
     padding: 40,
   },
   description: {
-    fontSize: 20,
+    fontSize: 30,
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,
