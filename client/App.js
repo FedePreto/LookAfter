@@ -129,11 +129,14 @@ function MainPage({ navigation }) {
           onReplayAudio={() => Speech.speak(textToRead)}
           />
         <Text style={styles.title}>Look After</Text>
+        <TouchableOpacity style={styles.button} onPress={handlePress}>
+            <Text style={styles.buttonText}>Scan</Text>
+          </TouchableOpacity>
         <Text style={styles.description}>
           FEEL THE SPACE,
         </Text>
         <Text style={styles.description}>
-          OWN YOUR PATH
+        OWN YOUR PATH
         </Text>
         <Animated.View
           style={{
@@ -143,9 +146,7 @@ function MainPage({ navigation }) {
             ],
           }}
         >
-          <TouchableOpacity style={styles.button} onPress={handlePress}>
-            <Text style={styles.buttonText}>Scan</Text>
-          </TouchableOpacity>
+          
         </Animated.View>
       </View>
       
@@ -209,36 +210,40 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   title: {
-    fontSize: 46,
+    fontSize: 50,
     fontWeight: '800',
     fontFamily: theme.fonts.primary,
     color: theme.colors.textSecondary, 
     textAlign: 'center',
     marginBottom: 16,
+    bottom: 40
   },
   description: {
-    fontSize: 32,
+    fontSize: 30,
     fontFamily: theme.fonts.primary,
     color: theme.colors.textSecondary, 
     textAlign: 'center',
-    marginBottom: 20,
+    // marginBottom: 20,
+    top:100
   },
   button: {
-    backgroundColor: theme.colors.background,
+    backgroundColor: '#007fbb',
     borderWidth: 2,
-    borderColor: theme.colors.primary,
-    paddingVertical: 25,
-    paddingHorizontal: 60,
-    borderRadius: 25,
+    borderColor: '#007fbb',
+    paddingVertical: 30, // Increase vertical padding for a taller button
+    paddingHorizontal: 80, // Increase horizontal padding for a wider button
+    borderRadius: 30, // Slightly bigger border radius for a rounder appearance
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 6 }, // Increased shadow offset for more prominence
+    shadowOpacity: 0.5,
+    shadowRadius: 6, // Larger shadow radius
+    elevation: 12, // Increased elevation for a higher shadow effect
+    alignItems: 'center',
   },
+  
   buttonText: {
     fontFamily: theme.fonts.primary,
-    color: theme.colors.textSecondary,
+    color: 'white',
     fontSize: 40,
     fontWeight: '700',
   },
