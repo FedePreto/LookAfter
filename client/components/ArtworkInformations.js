@@ -112,7 +112,7 @@ export default function ArtworkInformations({ navigation, route }) {
                 isVisible={dropdownVisible} 
                 toggleDropdown={toggleDropdown}
                 showBackButton={false}
-                showAudioButton={false}
+                showAudioButton={true}
                 onReplayAudio={() => Speech.speak(textToRead)}
                 showNextArtwork = {true} 
                 />
@@ -140,9 +140,9 @@ export default function ArtworkInformations({ navigation, route }) {
           {/* Artwork Image */}
           <View style={styles.imageContainer}>
             <Image source={artwork.image} style={styles.artworkImage} />
-            <TouchableOpacity onPress={handleReplayAudio} style={styles.audioButton}>
+            {/*<TouchableOpacity onPress={handleReplayAudio} style={styles.audioButton}>
               <Ionicons name="volume-high-outline" size={40} color="white" />
-            </TouchableOpacity>
+            </TouchableOpacity>*/}
           </View>
 
           {/* Title and Description */}

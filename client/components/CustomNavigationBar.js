@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
 
   audioIcon: {
     width: 35,
-    height: 35,
+    height: 36,
   },
   otherArtworksButton: {
     backgroundColor: '#007fbb',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 10,
     borderWidth: 2,        // Set the border width to your desired thickness
-    borderColor: '#ffffff', // Set the border color to white
+    borderColor: '#007fbb', // Set the border color to white
   },
   
   otherArtworksText: {

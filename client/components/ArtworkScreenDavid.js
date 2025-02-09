@@ -117,10 +117,10 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const onGestureEvent = (event) => {
     const { translationX } = event.nativeEvent;
 
-    if (translationX > 100) {
-      handleNext(); // Swipe right
-    } else if (translationX < -100) {
-      handleBack(); // Swipe left
+    if (translationX < -100 && artwork.number<2 ) {//currently max 2 artworks
+      handleNext(); // Swipe left per pagina successiva
+    } else if (translationX > 100 && artwork.number>1) {
+      handleBack(); // Swipe right per pagina precedente
     }
   };
 

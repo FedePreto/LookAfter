@@ -19,7 +19,7 @@ export default function ChatScreen({ route, navigation }) {
  
   const loadMessages = async () => {
     try {
-      const storedMessages = await AsyncStorage.getItem("chatMessages");
+      const storedMessages = await AsyncStorage.getItem(`chatMessages_${artworkKey}`);
       if (storedMessages) {
         setMessages(JSON.parse(storedMessages)); 
       }
@@ -30,7 +30,7 @@ export default function ChatScreen({ route, navigation }) {
 
   const saveMessages = async (messages) => {
     try {
-      await AsyncStorage.setItem("chatMessages", JSON.stringify(messages));
+      await AsyncStorage.setItem(`chatMessages_${artworkKey}`, JSON.stringify(messages));
     } catch (error) {
       console.error("Errore nel salvare i messaggi", error);
     }
@@ -53,7 +53,7 @@ export default function ChatScreen({ route, navigation }) {
       botResponse = {
         sender: "bot",
         text: "Gli occhi della Monna Lisa sono enigmatici e sembrano seguire l'osservatore.",
-        image: require('../assets/eyes.png'), 
+        image: require('../assets/eyes.png'),
       };
     } else if (input.toLowerCase().includes("uomo")) {
       botResponse = {
@@ -65,8 +65,13 @@ export default function ChatScreen({ route, navigation }) {
       botResponse = { sender: "bot", text: "Non sono sicuro di capire. Puoi ripetere?" };
     }
 
-    setMessages([...updatedMessages, botResponse]);
-    saveMessages([...updatedMessages, botResponse]); 
+    if (botResponse) {
+      updatedMessages.push(botResponse);
+    }
+
+    setMessages(updatedMessages);
+    saveMessages(updatedMessages);
+
     setInput("");
   };
 

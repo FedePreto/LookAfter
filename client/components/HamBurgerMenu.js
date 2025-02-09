@@ -21,9 +21,9 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
   }, [audio, isAudioOn]); // Depend on audio content instead of just isAudioOn
   // Dipendenza: si aggiorna se cambia isAudioOn
 
-const __confirmGoHome = () => {
-  setShowConfirmation(true);
-};
+  const __confirmGoHome = () => {
+    setShowConfirmation(true);
+  };
 
   const __goHome = () => {
     setShowConfirmation(false);
