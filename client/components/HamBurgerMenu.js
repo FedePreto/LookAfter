@@ -49,13 +49,13 @@ const __confirmGoHome = () => {
                 <Text style={styles.dropdownText}>Audio</Text>
                 <Ionicons
                   name={isAudioOn ? 'volume-high' : 'volume-mute'}
-                  size={20}
+                  size={28}
                   color="white"
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.dropdownItem} onPress={__confirmGoHome}>
                 <Text style={styles.dropdownText}>Home</Text>
-                <MaterialIcons name="home" size={20} color="white" />
+                <MaterialIcons name="home" size={28} color="white" />
               </TouchableOpacity>
             </View>
           </View>
@@ -114,24 +114,37 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    padding: 10,
-    width: 150,
+    padding: 10, // Increase padding for a larger look
+    width: 200, // Increase width
     zIndex: 2, // Ensure it's above other elements
+    // Centering buttons inside
+    justifyContent: 'center',  // Aligns buttons in the middle
+    alignItems: 'center', 
   },
+  
   dropdownItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: 12,   // Increase vertical padding for spacing
+    paddingHorizontal: 20, // Increase horizontal padding
     borderRadius: 5,
     backgroundColor: '#007fbb', 
-    marginBottom: 10,
+    marginVertical: 8,  // Space between buttons
+    width: '100%',      // Ensure buttons take full width inside dropdown
   },
+  
+  
+  
   dropdownText: {
-    fontSize: 16,
+    fontSize: 24, // Make text size consistent
     color: 'white',
+    flex: 1, // Make sure text takes full space
+    textAlign: 'left', // Align text properly
+    paddingLeft: 10, // Add left padding to match icon spacing
+    fontWeight: 'bold'
   },
+  
   modalBackground: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -142,7 +155,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     backgroundColor: theme.colors.background,
-    width: '80%',
+    width: '100%',
+
   },
   modalText: {
     fontSize: 25,
