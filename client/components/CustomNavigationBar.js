@@ -50,6 +50,7 @@ const CustomNavigationBar = ({
             navigation={navigation} 
             isVisible={isVisible} 
             toggleDropdown={toggleDropdown} 
+            audio = {onReplayAudio}
           />
         </View>
       </View>

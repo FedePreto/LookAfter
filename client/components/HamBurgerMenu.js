@@ -1,17 +1,29 @@
-import React,  { useState,useContext } from 'react';
+import React,  { useEffect, useState,useContext } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Modal,TouchableWithoutFeedback } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { AudioContext } from './AudioProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import theme from '../config/theme';
+import * as Speech from 'expo-speech';
 
-export default function HamburgerMenu({ navigation, isVisible, toggleDropdown }) {
+export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, audio}) {
   const { isAudioOn, toggleAudio } = useContext(AudioContext);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const __confirmGoHome = () => {
-    setShowConfirmation(true);
-  };
+  useEffect(() => {
+    if (isAudioOn && audio) {
+      Speech.stop(); // Stop any ongoing speech
+      Speech.speak(audio); // Speak only the current page's text
+    }
+    return () => {
+      Speech.stop(); // Stop speech when the component unmounts
+    };
+  }, [audio, isAudioOn]); // Depend on audio content instead of just isAudioOn
+  // Dipendenza: si aggiorna se cambia isAudioOn
+
+const __confirmGoHome = () => {
+  setShowConfirmation(true);
+};
 
   const __goHome = () => {
     setShowConfirmation(false);
