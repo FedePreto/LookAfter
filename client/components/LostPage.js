@@ -72,10 +72,16 @@ export default function LostPage({ navigation }) {
         
       </View>
       {/*main Content */}
+      
+
       <View style={styles.content}>
-      <Text style={styles.description}>
-        You got lost, please re-scan the area around you!
-      </Text>
+              <View style={styles.directionContainer}>
+                <Text style={styles.directionHeader}>You got lost</Text>
+                <Text style={styles.description}>
+                  You got lost, please re-scan the area around you!
+                </Text>
+              </View>
+              
       </View>
 
       {/* Process button  */}
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     description: {
-        fontSize: 30,
+        fontSize: 20,
         color: '#333',
         textAlign: 'center', // Center-align the text horizontally
         marginBottom: 20, // Adds space above the button
@@ -106,6 +112,24 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginBottom: 40,
       top: 100,
+    },
+    directionContainer: {
+      backgroundColor: '#FFFFFF',
+      borderRadius: 15,
+      padding: 20,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 5,
+      elevation: 6,
+      width: '90%',
+    },
+    directionHeader: {
+      fontSize: 28,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginBottom: 10,
+      color: '#007fbb',
     },
     headerImage: {
       width: 300,
