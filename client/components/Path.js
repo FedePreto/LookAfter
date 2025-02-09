@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 6,
-    width: '90%',
+    width: '76%',
   },
 
   artworkTitle: {
