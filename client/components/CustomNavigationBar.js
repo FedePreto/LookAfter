@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { AudioContext } from './AudioProvider';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import HamburgerMenu from './HamBurgerMenu'; 
 import theme from '../config/theme';//
+import * as Speech from 'expo-speech';
 
 const CustomNavigationBar = ({ 
   navigation, 
@@ -17,6 +19,22 @@ const CustomNavigationBar = ({
   // const toggleDropdown = () => {
   //   setDropdownVisible(!dropdownVisible);
   // };
+  const { isAudioOn, toggleAudio } = useContext(AudioContext); // Get the audio state from context
+  console.log(isAudioOn)
+  const handleReplayAudio = () => {
+
+    if (!isAudioOn) {
+      toggleAudio(); // Turn on audio if it's off
+    }
+    setTimeout(() => {
+      Speech.stop(); // Stop any ongoing speech
+      Speech.speak("Your audio content here"); // Replace with actual text
+    }, 100);
+    // if (isAudioOn) { // Only speak if audio is on
+    //   Speech.stop(); // Stop any ongoing speech
+    //   Speech.speak(onReplayAudio); // Replace with the actual text/audio
+    // }
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +53,7 @@ const CustomNavigationBar = ({
       {/* Pulsante audio */}
       {showAudioButton && (        
           <TouchableOpacity 
-            onPress={onReplayAudio}
+            onPress={handleReplayAudio}
           >
             <Image
               source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
