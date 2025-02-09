@@ -96,6 +96,8 @@ export default function PreviewConfirmation({ route, navigation }) {
                 showAudioButton={true}
                 onReplayAudio={() => Speech.speak(textToRead)}
                 />
+<View style={styles.titleContainer}>
+      <Text style={styles.text}>Does the image looks Good?</Text>          
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -116,7 +118,8 @@ export default function PreviewConfirmation({ route, navigation }) {
         // No Images
         <Text style={styles.noImagesText}>No images captured</Text>
       )}
-      <Text style={styles.text}>Does the image looks Good?</Text>
+      </View>
+      
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={__retakePicture} style={styles.button2}>
@@ -143,9 +146,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 26,
+    fontSize: 36,
     fontWeight: 'bold',
+    textAlign: 'center',
     color: theme.colors.textSecondary,
+    marginTop: height * 0.1,
   },
   imageContainer: {
     flexDirection: 'row', // Arrange images horizontally
@@ -158,10 +163,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 300,
-    height: 400,
-    marginHorizontal: 10,
-    borderRadius: 10,
+    width: width,
+    height: height * 0.5, // 40% dell'altezza dello schermo
+    borderRadius: 15,
+    shadowColor: '#000', // Subtle shadow for depth
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5, // Android shadow
+    borderWidth: 1,
+    borderColor: '#ddd', // Grigio chiaro per il bordo delle immagini
   },
   noImagesText: {
     fontSize: 18,
@@ -211,5 +222,11 @@ const styles = StyleSheet.create({
     top: 50,
     right: 20,
     zIndex: 10,
+  },
+  titleContainer: {
+    // flex: 0.2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: -width * 0.25,
   },
 });

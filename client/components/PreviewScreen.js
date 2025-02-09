@@ -87,17 +87,22 @@ export default function PreviewScreen({ route, navigation }) {
           showAudioButton={true}
           onReplayAudio={() => Speech.speak(textToRead)}
         />
-        <View>
+        <View style={styles.titleContainer}>
           <Text style={styles.text}>Does the image look good?</Text>
-        </View>
-
-        {images ? (
+          {images ? (
           // Single Image - Display directly
           <Image source={{ uri: images }} style={styles.image} />
         ) : (
           // No Images
           <Text style={styles.noImagesText}>No images captured</Text>
         )}
+        </View>
+
+        
+        
+    
+
+        
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={__retakePicture} style={styles.button2}>
@@ -120,13 +125,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 26,
+    fontSize: 36,
     fontWeight: 'bold',
+    textAlign: 'center',
     color: theme.colors.textSecondary,
+    marginTop: height * 0.1,
   },
   image: {
     width: width,
-    height: height * 0.4, // 40% dell'altezza dello schermo
+    height: height * 0.5, // 40% dell'altezza dello schermo
     borderRadius: 15,
     shadowColor: '#000', // Subtle shadow for depth
     shadowOffset: { width: 0, height: 4 },
@@ -177,6 +184,17 @@ const styles = StyleSheet.create({
     color: '#007fbb', // Bianco per il testo nei bottoni
     fontSize: 22,
     fontWeight: 'bold',
-  },  
+  }, 
+  titleContainer: {
+    // flex: 0.2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: -width * 0.25,
+  },
+  imageContainer: {
+    flex: 0.4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 

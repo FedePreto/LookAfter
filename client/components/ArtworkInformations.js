@@ -25,7 +25,7 @@ export default function ArtworkInformations({ navigation, route }) {
       ],
     },
     david: {
-      name: 'David',
+      name: 'The David',
       image: require('../assets/david.png'),
       description: [
         "Hello, I am David, the masterpiece sculpted by the legendary Michelangelo between 1501 and 1504. I stand tall, a symbol of strength, courage, and youthful determination.",
@@ -229,8 +229,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#555',
     lineHeight: 28,
-    textAlign: 'justify',
+    textAlign: 'left',
     marginBottom: 15,
+    paddingHorizontal: 10, 
   },
   chatButton: {
     position: 'absolute',
