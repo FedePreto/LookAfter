@@ -154,6 +154,11 @@ export default function ChooseArtworkScreen({ route, navigation }) {
           <Text style={styles.artworkSubtitle}>Artwork number: {artwork.number}/2</Text>
         </View>
 
+        <View style={styles.buttonsWrapper}>
+        <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
+          <Text style={styles.chooseButtonText}>Choose</Text>
+        </TouchableOpacity>
+
         {/* Pulsanti */}
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
@@ -172,10 +177,8 @@ export default function ChooseArtworkScreen({ route, navigation }) {
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
-          <Text style={styles.chooseButtonText}>Choose</Text>
-        </TouchableOpacity>
+      </View>
+        
       </View>
     </TouchableWithoutFeedback>
   );
@@ -228,6 +231,44 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: theme.colors.textSecondary,
   },
+  buttonsWrapper: {
+    // position: 'absolute',
+    alignSelf: 'stretch', // Ensures it spans full width
+    alignItems: 'center',
+    paddingHorizontal: width * 0.04,
+    // paddingVertical: 20,
+    top: 60
+    // marginBottom: height * 0.004, // Space from bottom
+  },
+  
+  chooseButton: {
+    backgroundColor: '#28a745', // Green
+    width: width * 0.92, // Set width to match Previous/Next buttons
+    height: height * 0.08,
+    // width: '100%',
+    height: height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // position: 'absolute',
+    marginBottom: -20, // Added margin to separate from Previous/Next buttons
+  },
+   // chooseButton: {
+  //   backgroundColor: '#28a745', // Verde
+  //   width: width * 0.92,
+  //   height: height * 0.08,
+  //   borderRadius: 15,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   position: 'absolute',
+  //   bottom: 20,
+  // },
+  
+  // buttonsContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   width: '100%',
+  // },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -250,16 +291,16 @@ const styles = StyleSheet.create({
   disabledButton: {
     backgroundColor: '#A9A9A9', // Grigio disabilitato
   },
-  chooseButton: {
-    backgroundColor: '#28a745', // Verde
-    width: width * 0.92,
-    height: height * 0.08,
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    bottom: 20,
-  },
+  // chooseButton: {
+  //   backgroundColor: '#28a745', // Verde
+  //   width: width * 0.92,
+  //   height: height * 0.08,
+  //   borderRadius: 15,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   position: 'absolute',
+  //   bottom: 20,
+  // },
   chooseButtonText: {
     color: '#FFFFFF',
     fontSize: 22,
