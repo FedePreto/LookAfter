@@ -28,7 +28,7 @@ const CustomNavigationBar = ({
     }
     setTimeout(() => {
       Speech.stop(); // Stop any ongoing speech
-      Speech.speak("Your audio content here"); // Replace with actual text
+      Speech.speak(onReplayAudio); // Replace with actual text
     }, 100);
     // if (isAudioOn) { // Only speak if audio is on
     //   Speech.stop(); // Stop any ongoing speech
