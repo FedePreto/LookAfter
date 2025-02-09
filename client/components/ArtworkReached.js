@@ -9,7 +9,6 @@ import theme from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
 const { width, height } = Dimensions.get('window');
 
-
 export default function PathDetails({ route, navigation }) {
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -48,7 +47,6 @@ export default function PathDetails({ route, navigation }) {
 
   const handleProceed = () => {
     Speech.stop();
-
     navigation.navigate('ArtworkInformations', { artworkKey });
   };
 
@@ -59,43 +57,22 @@ export default function PathDetails({ route, navigation }) {
 
   const [fadeAnim] = useState(new Animated.Value(0));
 
-   useEffect(() => {
-      if (isAudioOn) {
-        Speech.speak(textToRead); // Parla solo se isAudioOn è true
-      }
-      
-      return () => {
-        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-      };
-    }, [isAudioOn]);
+  useEffect(() => {
+    if (isAudioOn) {
+      Speech.speak(textToRead); // Parla solo se isAudioOn è true
+    }
+    return () => {
+      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+    };
+  }, [isAudioOn]);
 
-    useEffect(() => {
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 2000,
-          useNativeDriver: true,
-        }).start();
-      }, []);
-
-  // useEffect(() => {
-  //   setActiveScreen('Path');
-
-  //   Animated.timing(fadeAnim, {
-  //     toValue: 1,
-  //     duration: 2000,
-  //     useNativeDriver: true,
-  //   }).start();
-
-  //   if (isAudioOn && activeScreen === 'Path') {
-  //     Speech.speak(textToRead);
-  //   } else {
-  //     Speech.stop();
-  //   }
-
-  //   return () => {
-  //     Speech.stop();
-  //   };
-  // }, [textToRead, isAudioOn]);
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -119,24 +96,27 @@ export default function PathDetails({ route, navigation }) {
           onReplayAudio={() => Speech.speak(textToRead)}
         />
       
-                <View style ={styles.container2}>
-                    <Text style={styles.artworkTitle}>{artwork.name}</Text>
-                    <Image source={artwork.image} style={styles.headerImage} />
-                </View>
-
-        {/* Main Content */}
-        <View style={styles.content}>
-          {/* Mappiamo ogni descrizione per renderizzarla separatamente */}
-          {artwork.description.map((desc, index) => (
-            <Text key={index} style={styles.description}>{desc}</Text>
-          ))}
+        <View style ={styles.container2}>
+          <Text style={styles.artworkTitle}>{artwork.name}</Text>
+          <Image source={artwork.image} style={styles.headerImage} />
         </View>
 
-        {/* Proceed Button */}
+        <View style={styles.content}>
+          <View style={styles.directionContainer}>
+            <Text style={styles.directionHeader}>Artwork Reached</Text>
+            <Text style={styles.stepText}>
+            {artwork.description.map((desc, index) => (
+            <Text key={index} style={styles.description}>{desc}</Text>
+          ))}
+            </Text>
+          
+          </View>
+          
+        </View>
+
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
           <Text style={styles.buttonText}>Get Info About Me</Text>
         </TouchableOpacity>
-        
       </View>
     </TouchableWithoutFeedback>
   );
@@ -145,12 +125,12 @@ export default function PathDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-      backgroundColor: theme.colors.background,
-      alignItems: 'center',
-      justifyContent: 'center',
+    backgroundColor: theme.colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   container2: {
-    top:0,
+    top: 0,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.background,
@@ -175,22 +155,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 40, // Aggiunge spazio sopra
+    marginTop: 40,
     color: '#007fbb',
-    top: '10%', // Posiziona in alto
+    top: '10%',
     width: '100%',
-  },
-
-  headerIcons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    width: 40,
-    height: 40,
-    marginLeft: 10,
-    top: 0,
-    left: 80,
   },
   content: {
     flex: 1,
@@ -199,10 +167,34 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   description: {
-    fontSize: 30, // H3: 20-24 px
+    fontSize: 20,
     color: '#555',
     textAlign: 'center',
     marginBottom: 20,
+  },
+  directionHeader: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+    color: '#007fbb',
+  },
+  stepText: {
+    fontSize: 20,
+    color: '#555',
+    textAlign: 'center',
+    lineHeight: 30,
+  },
+  directionContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 15,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6,
+    width: '90%',
   },
   proceedButton: {
     backgroundColor: '#007fbb',
