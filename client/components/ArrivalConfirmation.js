@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     zIndex: 30,
   },
   artworkTitle: {
-    fontSize: 30,
+    fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40,

@@ -16,11 +16,11 @@ export default function PathDetails({ route, navigation }) {
 
   const artworkDetails = {
     david: {
-      name: 'David',
+      name: 'The David',
       image: require('../assets/david.png'),
       description: [
-        'Proceed straight for 2 steps to reach the iconic sculpture, the Mona Lisa.',
-        'Turn right and take 1 step after reaching the David.',
+        'Proceed straight for 2 steps to reach the iconic painting, the Mona Lisa.',
+        'Turn then right and take 1 step finally reaching me.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -29,7 +29,7 @@ export default function PathDetails({ route, navigation }) {
       image: require('../assets/monalisa.png'),
       description: [
         'Proceed straight for 2 steps to reach the iconic sculpture, the David.',
-        'Turn right and take 1 step after reaching the Mona Lisa.',
+        'Turn right and take 1 step finally reaching me.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -37,7 +37,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = `This is the ${artwork?.name}. ${artwork?.description.join(' ')}`;
+  const textToRead = `Hello, my name is ${artwork?.name}. Now i provide you a simple way to reach me. ${artwork?.description.join(' ')}`;
 
   if (!artwork) {
     return (
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
 
   artworkTitle: {
-    fontSize: 30,
+    fontSize: 36,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40, // Aggiunge spazio sopra
@@ -263,11 +263,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   errorText: {
-    fontSize: 18,
+    fontSize: 22,
     color: 'red',
     textAlign: 'center',
     marginTop: 50,
