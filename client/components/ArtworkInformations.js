@@ -5,6 +5,8 @@ import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
 import HamburgerMenu from './HamBurgerMenu';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomNavigationBar from './CustomNavigationBar.js';
+import theme from '../config/theme';
 
 export default function ArtworkInformations({ navigation, route }) {
   const { artworkKey } = route.params;
@@ -26,10 +28,10 @@ export default function ArtworkInformations({ navigation, route }) {
       name: 'David',
       image: require('../assets/david.png'),
       description: [
-        "Hello, I am the David, the masterpiece sculpted by the legendary Michelangelo between 1501 and 1504. I stand tall, a symbol of strength, courage, and youthful determination.",
+        "Hello, I am David, the masterpiece sculpted by the legendary Michelangelo between 1501 and 1504. I stand tall, a symbol of strength, courage, and youthful determination.",
         "I represent the biblical hero David, moments before his epic battle with Goliath. Notice the tension in my pose: my muscles are taut, my gaze focused and confident.",
         "Step closer and observe the intricate details: the veins running through my hands, the curve of my muscles, and the determination in my expression.",
-        "I am the David, a story of bravery, artistry, and the triumph of the human spirit.",
+        "I am David, a story of bravery, artistry, and the triumph of the human spirit.",
       ],
     },
     ballon_girl:{
@@ -104,26 +106,36 @@ export default function ArtworkInformations({ navigation, route }) {
   return (
     // <TouchableWithoutFeedback onPress={handleOutsidePress} accessible = {true}>
     // <TouchableWithoutFeedback onPress={handleOutsidePress} accessible={false}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <CustomNavigationBar
+                navigation={navigation}
+                isVisible={dropdownVisible} 
+                toggleDropdown={toggleDropdown}
+                showBackButton={false}
+                showAudioButton={false}
+                onReplayAudio={() => Speech.speak(textToRead)}
+                showNextArtwork = {true} 
+                />
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={true}>
           {/* Header */}
-          <View style={styles.header}>
+          {/* <View style={styles.header}> */}
             {/* Pulsante "Other Artworks" */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
               style={styles.otherArtworksButton}>
               <Text style={styles.otherArtworksText}>Other Artworks</Text>
             </TouchableOpacity>
             
             {/* Menu Hamburger */}
-            <View style={styles.hamburgerMenuContainer}>
+            {/* <View style={styles.hamburgerMenuContainer}>
               <HamburgerMenu
                 navigation={navigation}
                 isVisible={dropdownVisible}
                 toggleDropdown={toggleDropdown}
               />
-            </View>
-          </View>
+            </View> */} 
+            
+          {/* </View> */}
 
           {/* Artwork Image */}
           <View style={styles.imageContainer}>
@@ -148,7 +160,7 @@ export default function ArtworkInformations({ navigation, route }) {
           onPress={() => navigation.navigate('ChatScreen', { artworkKey })}>
           <Ionicons name="chatbubble-outline" size={40} color="white" />
         </TouchableOpacity>
-      </SafeAreaView>
+      </View>
     //  </TouchableWithoutFeedback>
   );
 }
@@ -156,24 +168,25 @@ export default function ArtworkInformations({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8F0FF',
-    overflow: 'scroll',
+    backgroundColor: theme.colors.background,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scrollContent: {
     flexGrow:1,
     padding: 20,
+    top: 50,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between', // Distribuisce gli elementi ai lati opposti
-    alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: 10,
-    paddingTop: 10,
-  },
+  // header: {
+  //   flex: 1,
+  //   backgroundColor: theme.colors.background,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   hamburgerMenuContainer: {
     position: 'absolute',
     right: 10, // Posiziona il menu a destra
+    backgroundColor: '#007fbb',
   },
   otherArtworksButton: {
     backgroundColor: '#007fbb',

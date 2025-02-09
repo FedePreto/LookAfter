@@ -78,7 +78,7 @@ export default function CameraScreen() {
         }
         setCapturedImage(photo);
         setPreviewVisible(true);
-        Alert.alert('Photo Saved', 'Photo saved to your device\'s gallery.');
+        // Alert.alert('Photo Saved', 'Photo saved to your device\'s gallery.');
         Speech.stop();
         navigation.navigate('Preview', { images: photo.uri });
       } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import HamburgerMenu from './HamBurgerMenu'; 
@@ -13,6 +13,7 @@ const CustomNavigationBar = ({
   showBackButton = true,       // Mostra o nasconde la freccia di back
   showAudioButton = true,      // Mostra o nasconde il pulsante audio
   onReplayAudio,               // Funzione opzionale per il pulsante audio
+  showNextArtwork = false,
 }) => {
   // const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -45,8 +46,15 @@ const CustomNavigationBar = ({
         <TouchableOpacity 
           onPress={() => navigation.goBack()}         
         >
-          <Ionicons name="arrow-back" size={40} color="#000000" />
+          <Ionicons name="arrow-back" size={40} color="white" />
         </TouchableOpacity>
+      )}
+      {showNextArtwork && (
+        <TouchableOpacity
+        onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
+        style={styles.otherArtworksButton}>
+        <Text style={styles.otherArtworksText}>Other Artworks</Text>
+      </TouchableOpacity>
       )}
       </View>
       <View style={styles.rightSection}>
@@ -112,6 +120,20 @@ const styles = StyleSheet.create({
   audioIcon: {
     width: 35,
     height: 35,
+  },
+  otherArtworksButton: {
+    backgroundColor: '#007fbb',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    borderWidth: 2,        // Set the border width to your desired thickness
+    borderColor: '#ffffff', // Set the border color to white
+  },
+  
+  otherArtworksText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

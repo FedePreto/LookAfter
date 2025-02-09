@@ -73,8 +73,8 @@ const __confirmGoHome = () => {
                 <TouchableOpacity style={styles.modalButton} onPress={__goHome}>
                   <Text style={styles.modalButtonText}>Go Home</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.modalButton} onPress={__cancelGoHome}>
-                  <Text style={styles.modalButtonText}>Cancel</Text>
+                <TouchableOpacity style={styles.modalButton2} onPress={__cancelGoHome}>
+                  <Text style={styles.modalButtonText2}>Cancel</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -141,26 +141,43 @@ const styles = StyleSheet.create({
   modalContainer: {
     padding: 20,
     borderRadius: 10,
-    backgroundColor: '#007fbb',
+    backgroundColor: theme.colors.background,
     width: '80%',
   },
   modalText: {
     fontSize: 16,
     marginBottom: 20,
     textAlign: 'center',
+    color: '#007fbb',
+    fontWeight: 'bold',
   },
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   modalButton: {
+    backgroundColor: '#FFFFFF',
     padding: 10,
     borderRadius: 5,
     width: '45%',
     alignItems: 'center',
+    borderColor:'#007fbb',
   },
   modalButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color:'#007fbb'
+  },
+  modalButton2: {
+    padding: 10,
+    borderRadius: 5,
+    width: '45%',
+    alignItems: 'center',
+    backgroundColor: '#007fbb',
+  },
+  modalButtonText2: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color:'white'
   },
 });
