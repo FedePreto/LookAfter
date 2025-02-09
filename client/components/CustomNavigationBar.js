@@ -78,37 +78,42 @@ const CustomNavigationBar = ({
 };
 
 const styles = StyleSheet.create({
-    container: {
-     
+  container: {
     flexDirection: 'row', // Arrange items horizontally
-    //justifyContent: 'space-between', // Spread items to the left and right
     alignItems: 'center', // Align items vertically
     width: '100%', // Full width of the header  
     position: 'absolute',
     top: 0, // Position the header at the top
     zIndex: 1000,
     height: 60,
-    backgroundColor: theme.colors.primary, // Header background color
-  },  
-  
+    backgroundColor: '#007fbb', // Header background color (consistent blue)
+    // Remove shadow and elevation to ensure a uniform color
+    shadowColor: 'transparent', // Prevent shadows if not needed
+    shadowOffset: { width: 0, height: 0 }, // Reset shadow offset
+    shadowOpacity: 0, // Reset shadow opacity
+    elevation: 0, // Reset elevation
+  },
+
   leftSection: {
-    flex: 1, // Spazio riservato alla sinistra
+    flex: 1, // Space on the left side
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingLeft: 10,
   },
 
   rightSection: {
-    flex: 1, // Spazio riservato alla destra
+    flex: 1, // Space on the right side
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    backgroundColor: 'transparent', // Ensure no background color conflict here
   }, 
- 
+
   audioIcon: {
     width: 40,
     height: 40,
-  },  
+  },
 });
+
 
 export default CustomNavigationBar;

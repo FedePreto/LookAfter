@@ -37,7 +37,7 @@ const __confirmGoHome = () => {
     <View style={styles.container}>
       {/* Menu Button */}
       <TouchableOpacity onPress={toggleDropdown} style={styles.menuButton}>
-        <Ionicons name="menu" size={40} color="black" />
+        <Ionicons name="menu" size={40} color="white" />
       </TouchableOpacity>
 
       {/* Dropdown Menu and Overlay */}
@@ -50,12 +50,12 @@ const __confirmGoHome = () => {
                 <Ionicons
                   name={isAudioOn ? 'volume-high' : 'volume-mute'}
                   size={20}
-                  color="black"
+                  color="white"
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.dropdownItem} onPress={__confirmGoHome}>
                 <Text style={styles.dropdownText}>Home</Text>
-                <MaterialIcons name="home" size={20} color="black" />
+                <MaterialIcons name="home" size={20} color="white" />
               </TouchableOpacity>
             </View>
           </View>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     top: 50,
     right: 10,
     backgroundColor: theme.colors.background,
-    borderColor: theme.colors.primary,
+    borderColor: '#007fbb',
     borderWidth: 2,  
     borderRadius: 10,
     elevation: 5,
@@ -125,12 +125,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
-    backgroundColor: theme.colors.primary, 
+    backgroundColor: '#007fbb', 
     marginBottom: 10,
   },
   dropdownText: {
     fontSize: 16,
-    color: theme.colors.textPrimary,
+    color: 'white',
   },
   modalBackground: {
     flex: 1,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     padding: 20,
     borderRadius: 10,
-    backgroundColor: theme.colors.background,
+    backgroundColor: '#007fbb',
     width: '80%',
   },
   modalText: {
