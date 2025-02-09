@@ -20,7 +20,7 @@ export default function PathDetails({ route, navigation }) {
       image: require('../assets/david.png'),
       description: [
         'Proceed straight for 2 steps to reach the iconic sculpture, the Mona Lisa.',
-        'Turn right and take 1 step after reaching the Mona Lisa.',
+        'Turn right and take 1 step after reaching the David.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -29,7 +29,7 @@ export default function PathDetails({ route, navigation }) {
       image: require('../assets/monalisa.png'),
       description: [
         'Proceed straight for 2 steps to reach the iconic sculpture, the David.',
-        'Turn right and take 1 step after reaching the David.',
+        'Turn right and take 1 step after reaching the Mona Lisa.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
