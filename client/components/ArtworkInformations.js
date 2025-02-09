@@ -26,10 +26,10 @@ export default function ArtworkInformations({ navigation, route }) {
       name: 'David',
       image: require('../assets/david.png'),
       description: [
-        "Hello, I am David, the masterpiece sculpted by the legendary Michelangelo between 1501 and 1504. I stand tall, a symbol of strength, courage, and youthful determination.",
+        "Hello, I am the David, the masterpiece sculpted by the legendary Michelangelo between 1501 and 1504. I stand tall, a symbol of strength, courage, and youthful determination.",
         "I represent the biblical hero David, moments before his epic battle with Goliath. Notice the tension in my pose: my muscles are taut, my gaze focused and confident.",
         "Step closer and observe the intricate details: the veins running through my hands, the curve of my muscles, and the determination in my expression.",
-        "I am David, a story of bravery, artistry, and the triumph of the human spirit.",
+        "I am the David, a story of bravery, artistry, and the triumph of the human spirit.",
       ],
     },
     ballon_girl:{
