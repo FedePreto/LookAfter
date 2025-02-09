@@ -12,11 +12,11 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
 
   useEffect(() => {
     if (isAudioOn && audio) {
-      Speech.stop(); // Stop any ongoing speech
+      // Speech.stop(); // Stop any ongoing speech
       Speech.speak(audio); // Speak only the current page's text
     }
     return () => {
-      Speech.stop(); // Stop speech when the component unmounts
+      // Speech.stop(); // Stop speech when the component unmounts
     };
   }, [audio, isAudioOn]); // Depend on audio content instead of just isAudioOn
   // Dipendenza: si aggiorna se cambia isAudioOn

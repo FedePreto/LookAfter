@@ -67,7 +67,10 @@ export default function CameraScreen() {
   const __takePicture = async () => {
     if (cameraRef.current) {
       try {
-        const photo = await cameraRef.current.takePictureAsync();
+        const photo = await cameraRef.current.takePictureAsync({
+          quality: 1,   // Ensures highest quality (default is 1, but make sure it's set)
+          base64: false // Prevents unnecessary data transformation
+        });
         const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
         if (mediaLibraryPermission.status !== 'granted') {
           Alert.alert(

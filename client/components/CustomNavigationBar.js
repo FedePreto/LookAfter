@@ -21,7 +21,7 @@ const CustomNavigationBar = ({
   //   setDropdownVisible(!dropdownVisible);
   // };
   const { isAudioOn, toggleAudio } = useContext(AudioContext); // Get the audio state from context
-  console.log(isAudioOn)
+  // console.log(isAudioOn)
   const handleReplayAudio = () => {
 
     if (!isAudioOn) {
@@ -51,22 +51,22 @@ const CustomNavigationBar = ({
       )}
       {showNextArtwork && (
         <TouchableOpacity
-        onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
-        style={styles.otherArtworksButton}>
-        <Text style={styles.otherArtworksText}>Other Artworks</Text>
-      </TouchableOpacity>
-      )}
-      </View>
-      <View style={styles.rightSection}>
-      {/* Pulsante audio */}
-      {showAudioButton && (        
-          <TouchableOpacity 
-            onPress={handleReplayAudio}
-          >
-            <Image
-              source={require('../assets/white_icon_bg.png')} // Icona per il pulsante audio
-              style={styles.audioIcon}
-            />
+              onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
+              style={styles.otherArtworksButton}>
+              <Text style={styles.otherArtworksText}>Other Artworks</Text>
+            </TouchableOpacity>
+            )}
+            </View>
+            <View style={styles.rightSection}>
+            {/* Pulsante audio */}
+            {showAudioButton && (        
+                  <TouchableOpacity 
+                    onPress={handleReplayAudio}
+                  >
+                  <Image
+                    source={require('../assets/white_icon_bg.png')} // Icona per il pulsante audio
+                    style={styles.audioIcon}
+                  />
           </TouchableOpacity>        
       )}
 

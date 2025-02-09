@@ -134,15 +134,18 @@ const styles = StyleSheet.create({
   image: {
     width: width,
     height: height * 0.5, // 40% dell'altezza dello schermo
-    borderRadius: 15,
-    shadowColor: '#000', // Subtle shadow for depth
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5, // Android shadow
-    borderWidth: 1,
-    borderColor: '#ddd', // Grigio chiaro per il bordo delle immagini
+    // borderRadius: 15,
+    // shadowColor: '#000', // Subtle shadow for depth
+    // // shadowOffset: { width: 0, height: 4 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 6,
+    // elevation: 5, // Android shadow
+    // borderWidth: 1,
+    // borderColor: '#ddd', // Grigio chiaro per il bordo delle immagini
+    resizeMode: 'contain',
+    top:20,
   },
+  
   noImagesText: {
     fontSize: 18,
     color: 'gray',
