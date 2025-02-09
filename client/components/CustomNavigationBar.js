@@ -56,7 +56,7 @@ const CustomNavigationBar = ({
             onPress={handleReplayAudio}
           >
             <Image
-              source={require('../assets/audio_repeat.png')} // Icona per il pulsante audio
+              source={require('../assets/white_icon_bg.png')} // Icona per il pulsante audio
               style={styles.audioIcon}
             />
           </TouchableOpacity>        
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
   }, 
 
   audioIcon: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
   },
 });
 
