@@ -70,11 +70,11 @@ const __confirmGoHome = () => {
                 Are you sure you want to go home? You will lose your progress.
               </Text>
               <View style={styles.modalButtons}>
-                <TouchableOpacity style={styles.modalButton} onPress={__goHome}>
-                  <Text style={styles.modalButtonText}>Go Home</Text>
+                <TouchableOpacity style={styles.modalButton} onPress={__cancelGoHome}>
+                  <Text style={styles.modalButtonText}>Cancel</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.modalButton2} onPress={__cancelGoHome}>
-                  <Text style={styles.modalButtonText2}>Cancel</Text>
+                <TouchableOpacity style={styles.modalButton2} onPress={__goHome}>
+                  <Text style={styles.modalButtonText2}>Go Home</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   modalText: {
-    fontSize: 16,
-    marginBottom: 20,
+    fontSize: 25,
+    marginBottom: 25,
     textAlign: 'center',
     color: '#007fbb',
     fontWeight: 'bold',
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     borderColor:'#007fbb',
   },
   modalButtonText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color:'#007fbb'
   },
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#007fbb',
   },
   modalButtonText2: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color:'white'
   },
