@@ -176,6 +176,7 @@ const styles = StyleSheet.create({
     flexGrow:1,
     padding: 20,
     top: 50,
+    paddingBottom: 120,
   },
   // header: {
   //   flex: 1,
