@@ -32,7 +32,7 @@ import { AudioContext } from './components/AudioProvider.js';
 import * as Speech from 'expo-speech';
 import CustomNavigationBar from './components/CustomNavigationBar.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import CameraScreen3 from './components/Camera3.js'
 
 const Stack = createStackNavigator();
 
@@ -173,6 +173,7 @@ export default function App() {
           <Stack.Screen name="AnotherArtworkReached" component={AnotherArtworkReached} />
           <Stack.Screen name="ArtworkInformationsBalloon" component={ArtworkInformationsBalloon} />
           <Stack.Screen name="LostPage" component={LostPage} />
+          <Stack.Screen name="CameraScreen3" component={CameraScreen3} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
           <Stack.Screen name="RecordingScreen" component={RecordingScreen} />
         </Stack.Navigator>
