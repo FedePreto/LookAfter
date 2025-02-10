@@ -23,7 +23,7 @@ export default function ConfirmArtwork({ route, navigation }) {
   const { artworkKey } = route.params || {};
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn } = useContext(AudioContext);
-  const textToRead = `Per confermare che sei arrivato da me, scatta una mia foto.`;
+  const textToRead = `Per confermare che mi abbia raggiunto, scattami una foto!`;
   const [fadeAnim] = useState(new Animated.Value(0));
   const artwork = artworkDetails[artworkKey];
 
@@ -87,16 +87,16 @@ export default function ConfirmArtwork({ route, navigation }) {
         {/* Main Content */}
         <View style={styles.content}>
           <View style={styles.directionContainer}>
-            <Text style={styles.directionHeader}>Confirmation</Text>
+            <Text style={styles.directionHeader}>Conferma</Text>
             <Text style={styles.stepText}>
-              To confirm that you have arrived to me please take a picture of me!
+              Per confermare che mi abbia raggiunto, scattami una foto!
             </Text>
           </View>
         </View>
 
         {/* Proceed Button */}
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
-          <Text style={styles.buttonText}>Take Picture</Text>
+          <Text style={styles.buttonText}>Scatta Foto</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
