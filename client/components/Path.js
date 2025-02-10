@@ -28,8 +28,7 @@ export default function PathDetails({ route, navigation }) {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        'Proceed straight for 2 steps to reach the iconic sculpture, the David.',
-        'Turn right and take 1 step finally reaching me.',
+        'Proceed straight for 2 steps and you will reach me.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
