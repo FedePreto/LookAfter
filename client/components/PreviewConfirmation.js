@@ -19,7 +19,7 @@ export default function PreviewConfirmation({ route, navigation }) {
   const [accessCount, setAccessCount] = useState(newAccessCount); // Initial access count
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
-  const textToRead = `This is a preview of the picture you took, please make sure that everything is clear and recognisable before proceeding.`;
+  const textToRead = "Questa è un'anteprima dell'immagine che hai scattato, per favore assicurati che tutto sia chiaro e riconoscibile prima di procedere.";
   const [fadeAnim] = useState(new Animated.Value(0));
 
   const __retakePicture = () => {
@@ -97,7 +97,7 @@ export default function PreviewConfirmation({ route, navigation }) {
                 onReplayAudio={() => Speech.speak(textToRead)}
                 />
 <View style={styles.titleContainer}>
-      <Text style={styles.text}>Does the image looks Good?</Text>          
+      <Text style={styles.text}>L'immagine risulta essere chiara?</Text>          
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -123,10 +123,10 @@ export default function PreviewConfirmation({ route, navigation }) {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={__retakePicture} style={styles.button2}>
-          <Text style={styles.textButton2}>Re-Take</Text>
+          <Text style={styles.textButton2}>Rifai foto</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={__chooseArtwork} style={styles.button}>
-          <Text style={styles.textButton}>Proceed</Text>
+          <Text style={styles.textButton}>Procedi</Text>
         </TouchableOpacity>
       </View>
     </View>

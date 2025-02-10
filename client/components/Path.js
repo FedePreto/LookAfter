@@ -19,8 +19,8 @@ export default function PathDetails({ route, navigation }) {
       name: 'The David',
       image: require('../assets/david.png'),
       description: [
-        'Proceed straight for 2 steps to reach the iconic painting, the Mona Lisa.',
-        'Turn then right and take 1 step finally reaching me.',
+        "Prosegui dritto per 2 passi per raggiungere il dipinto iconico, la Mona Lisa."  ,
+        "Poi gira a destra e fai un passo, e sarai di fronte a me."
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -28,7 +28,7 @@ export default function PathDetails({ route, navigation }) {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        'Proceed straight for 2 steps and you will reach me.',
+        'Prosegui dritto per 2 passi e mi avrai raggiunta.',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -36,7 +36,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = `Hello, my name is ${artwork?.name}. Now i provide you a simple way to reach me. ${artwork?.description.join(' ')}`;
+  const textToRead = `Ciao, mi chiamo ${artwork?.name}. Adesso ti indicherò come raggiungermi. ${artwork?.description.join(' ')}`;
 
   if (!artwork) {
     return (
@@ -130,7 +130,7 @@ export default function PathDetails({ route, navigation }) {
         {/* Main Content */}
         <View style={styles.content}>
           <View style={styles.directionContainer}>
-            <Text style={styles.directionHeader}>Route Information</Text>
+            <Text style={styles.directionHeader}>Informazioni di percorso</Text>
             {artwork.description.map((step, index) => (
               <View key={index} style={styles.stepContainer}>
                 <View style={styles.stepIndicator}>
@@ -144,7 +144,7 @@ export default function PathDetails({ route, navigation }) {
 
         {/* Proceed Button */}
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
-          <Text style={styles.buttonText}>Proceed</Text>
+          <Text style={styles.buttonText}>Prosegui</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>

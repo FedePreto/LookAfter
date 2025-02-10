@@ -13,7 +13,7 @@ export default function LostPage({ navigation }) {
   // const navigation = useNavigation();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
-   const textToRead = `You have got lost, please re-scan the area around you !`;
+   const textToRead = "Ti sei perso, per favore fai un'altra foto dell'area attorno a te!";
   
     const { isAudioOn } = useContext(AudioContext);
 
@@ -48,7 +48,7 @@ export default function LostPage({ navigation }) {
 
   const handleProceed = () => {
           Speech.stop();
-          navigation.navigate('CameraScreen');
+          navigation.navigate('CameraScreen3');
         
   };
 
@@ -76,9 +76,9 @@ export default function LostPage({ navigation }) {
 
       <View style={styles.content}>
               <View style={styles.directionContainer}>
-                <Text style={styles.directionHeader}>You got lost</Text>
+                <Text style={styles.directionHeader}>Ti sei perso</Text>
                 <Text style={styles.description}>
-                  You got lost, please re-scan the area around you!
+                  Ti sei perso, per favore fai un'altra foto dell'area attorno a te!
                 </Text>
               </View>
               
@@ -86,7 +86,7 @@ export default function LostPage({ navigation }) {
 
       {/* Process button  */}
       <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
-        <Text style={styles.buttonText}>Rescan</Text>
+        <Text style={styles.buttonText}>Rifai Foto</Text>
       </TouchableOpacity>
     </View>
     </TouchableWithoutFeedback>

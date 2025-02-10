@@ -19,7 +19,7 @@ export default function PathDetails({ route, navigation }) {
       name: 'David',
       image: require('../assets/david.png'),
       description: [
-        'Congratulations! you reached me',
+        'Congratulazioni! mi hai raggiunto',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -27,7 +27,7 @@ export default function PathDetails({ route, navigation }) {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        'Congratulations! you reached me',
+        'Congratulazioni! mi hai raggiunta',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -35,7 +35,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = "Congratulations! you reached me";
+  const textToRead = "Congratulazioni! mi hai ragiunto";
 
   if (!artwork) {
     return (
@@ -103,7 +103,7 @@ export default function PathDetails({ route, navigation }) {
 
         <View style={styles.content}>
           <View style={styles.directionContainer}>
-            <Text style={styles.directionHeader}>Artwork Reached</Text>
+            <Text style={styles.directionHeader}>Opera raggiunta</Text>
             <Text style={styles.stepText}>
             {artwork.description.map((desc, index) => (
             <Text key={index} style={styles.description}>{desc}</Text>
@@ -115,7 +115,7 @@ export default function PathDetails({ route, navigation }) {
         </View>
 
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
-          <Text style={styles.buttonText}>Get Info About Me</Text>
+          <Text style={styles.buttonText}>Conoscimi meglio</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Animated, Text } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import HamburgerMenu from './HamBurgerMenu'; 
@@ -53,7 +53,7 @@ const CustomNavigationBar = ({
         <TouchableOpacity
               onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
               style={styles.otherArtworksButton}>
-              <Text style={styles.otherArtworksText}>Other Artworks</Text>
+              <Text style={styles.otherArtworksText}>Altre opere d'arte</Text>
             </TouchableOpacity>
             )}
             </View>

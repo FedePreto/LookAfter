@@ -1,22 +1,43 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, StyleSheet,Keyboard,KeyboardAvoidingView,Platform } from "react-native";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { View, Text, TextInput, TouchableOpacity,Animated , TouchableWithoutFeedback,ScrollView, Image, StyleSheet,Keyboard,KeyboardAvoidingView,Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; 
 import theme from '../config/theme';
 import AsyncStorage from "@react-native-async-storage/async-storage"; 
 import CustomNavigationBar from "./CustomNavigationBar.js";
 import * as Speech from 'expo-speech'; 
 import ImageViewer from 'react-native-image-zoom-viewer';
-
+import { AudioContext } from './AudioProvider';
 
 export default function ChatScreen({ route, navigation }) {
   const { artworkKey } = route.params;
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [input, setInput] = useState("");
+   const [fadeAnim] = useState(new Animated.Value(0));
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Ciao! Come posso aiutarti?" },
   ]);
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
+  const lastBotMessage = messages.filter((msg) => msg.sender === "bot").pop(); 
+
+const textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi da riprodurre.";
+
   
+ useEffect(() => {
+     if (isAudioOn) {
+       Speech.speak(textToRead); // Parla solo se isAudioOn è true
+     }
+     return () => {
+       Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+     };
+   }, [isAudioOn]);
  
+   useEffect(() => {
+     Animated.timing(fadeAnim, {
+       toValue: 1,
+       duration: 2000,
+       useNativeDriver: true,
+     }).start();
+   }, []);
   const loadMessages = async () => {
     try {
       const storedMessages = await AsyncStorage.getItem(`chatMessages_${artworkKey}`);
@@ -76,6 +97,7 @@ export default function ChatScreen({ route, navigation }) {
   };
 
   const handleMicrophonePress = () => {
+    Speech.stop();
     navigation.navigate("RecordingScreen", {
       onRecordingComplete: (audioText) => setInput(audioText), 
     });
@@ -124,9 +146,10 @@ useEffect(() => {
   setInputHeight(updatePadding);
 }, [chatHeight]);
   
+// console.log(messages.text);
 
   return (    
-      
+      <TouchableWithoutFeedback onPress={handleOutsidePress}> 
         <KeyboardAvoidingView 
           style={{ flex: 1 }} 
           behavior={Platform.OS === "ios" ? "padding" : undefined} 
@@ -184,6 +207,7 @@ useEffect(() => {
 
     </View>
   </KeyboardAvoidingView>
+  </TouchableWithoutFeedback>
   );
 }
 

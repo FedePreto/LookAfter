@@ -12,7 +12,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
   const { artworkKey } = route.params;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const textToRead = `You didn't reach david, but you have reached balloon girl instead! Now you got two option either i can bring back you to david or get information about ballon girl`;
+  const textToRead = `Non hai raggiunto David, ma hai invece raggiunto me: Balloon Girl! Ora hai due opzioni: posso riportarti dal David oppure darti informazioni su di me.`;
   
     const { isAudioOn } = useContext(AudioContext); 
 
@@ -76,9 +76,9 @@ export default function AnotherArtworkReached({ navigation, route }) {
       {/* Main Content */}
       <View style={styles.content}>
         <View style={styles.directionContainer}>
-          <Text style={styles.directionHeader}>Baloon girl reached</Text>
+          <Text style={styles.directionHeader}>Hai raggiunto Baloon girl</Text>
           <Text style={styles.description}>
-          You didn't reach {artworkKey}, but you reached balloon girl instead!
+          Non hai raggiunto {artworkKey}, Ma ti trovi di fronte me, balloon girl di Banksy!
         </Text>
         </View>
         
@@ -87,10 +87,10 @@ export default function AnotherArtworkReached({ navigation, route }) {
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleProceedMonalisa} style={styles.buttonLeft}>
-          <Text style={styles.buttonText2}>Bring me to {artworkKey}</Text>
+          <Text style={styles.buttonText2}>Portami da {artworkKey}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProceed} style={styles.buttonRight}>
-          <Text style={styles.buttonText}>Get Info about Balloon Girl</Text>
+          <Text style={styles.buttonText}>Conoscimi meglio</Text>
         </TouchableOpacity>
       </View>
     </View>

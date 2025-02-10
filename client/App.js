@@ -32,7 +32,7 @@ import { AudioContext } from './components/AudioProvider.js';
 import * as Speech from 'expo-speech';
 import CustomNavigationBar from './components/CustomNavigationBar.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import CameraScreen3 from './components/Camera3.js'
 
 const Stack = createStackNavigator();
 
@@ -40,7 +40,7 @@ function MainPage({ navigation }) {
   const fontsLoaded = useCustomFonts();
 
   const { isAudioOn, activeScreen, setActiveScreen } = useContext(AudioContext);
-  const textToRead = `Hello and welcome to Look After. Please touch the Scan button to proceed.`;
+  const textToRead = "Ciao e benvenuto su Look After. Per favore, tocca il pulsante Scatta foto per procedere.";
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [buttonAnim] = useState(new Animated.Value(1));
@@ -130,13 +130,13 @@ function MainPage({ navigation }) {
           />
         <Text style={styles.title}>Look After</Text>
         <TouchableOpacity style={styles.button} onPress={handlePress}>
-            <Text style={styles.buttonText}>Scan</Text>
+            <Text style={styles.buttonText}>Scatta Foto</Text>
           </TouchableOpacity>
         <Text style={styles.description}>
-          FEEL THE SPACE,
+         VIVI LO SPAZIO,
         </Text>
         <Text style={styles.description}>
-        OWN YOUR PATH
+        PRENDI IN MANO IL TUO CAMMINO
         </Text>
         <Animated.View
           style={{
@@ -173,6 +173,7 @@ export default function App() {
           <Stack.Screen name="AnotherArtworkReached" component={AnotherArtworkReached} />
           <Stack.Screen name="ArtworkInformationsBalloon" component={ArtworkInformationsBalloon} />
           <Stack.Screen name="LostPage" component={LostPage} />
+          <Stack.Screen name="CameraScreen3" component={CameraScreen3} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
           <Stack.Screen name="RecordingScreen" component={RecordingScreen} />
         </Stack.Navigator>

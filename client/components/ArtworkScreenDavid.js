@@ -11,7 +11,7 @@ const { width, height } = Dimensions.get('window');
 
 const artworkDetails = {
   david: {
-    title: "The David",
+    title: "Il David",
     image: require('../assets/david.png'),
     nextScreen: 'monalisa',
     backScreen: null,
@@ -19,7 +19,7 @@ const artworkDetails = {
     number: 1,
   },
   monalisa: {
-    title: "The Monalisa",
+    title: "La Monalisa",
     image: require('../assets/monalisa.png'),
     nextScreen: null,
     backScreen: 'david',
@@ -34,7 +34,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `I am ${artwork.title} the artwork ${artwork.number} of 2.`;
+  const textToRead = `Sono ${artwork.title}, opera d'arte ${artwork.number} su 2.`;
   const [fadeAnim] = useState(new Animated.Value(0));
 
   
@@ -138,7 +138,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 
         {/* Titolo */}
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Choose the Artwork</Text>
+          <Text style={styles.title}>Scegli opera d'arte</Text>
         </View>
 
         {/* Gesture Handler */}
@@ -151,12 +151,12 @@ export default function ChooseArtworkScreen({ route, navigation }) {
         {/* Informazioni sull'opera */}
         <View style={styles.infoContainer}>
           <Text style={styles.artworkTitle}>{artwork.title}</Text>
-          <Text style={styles.artworkSubtitle}>Artwork number: {artwork.number}/2</Text>
+          <Text style={styles.artworkSubtitle}>Numero opera: {artwork.number}/2</Text>
         </View>
 
         <View style={styles.buttonsWrapper}>
         <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
-          <Text style={styles.chooseButtonText}>Choose</Text>
+          <Text style={styles.chooseButtonText}>Scegli</Text>
         </TouchableOpacity>
 
         {/* Pulsanti */}
@@ -166,7 +166,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
             style={[styles.buttons, artwork.backScreen ? styles.enabledButton : styles.disabledButton]}
             disabled={!artwork.backScreen}
           >
-            <Text style={styles.buttonText}>Previous</Text>
+            <Text style={styles.buttonText}>Precedente</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -174,7 +174,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
             style={[styles.buttons, artwork.nextScreen ? styles.enabledButton : styles.disabledButton]}
             disabled={!artwork.nextScreen}
           >
-            <Text style={styles.buttonText}>Next</Text>
+            <Text style={styles.buttonText}>Successivo</Text>
           </TouchableOpacity>
         </View>
       </View>

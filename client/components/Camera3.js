@@ -13,7 +13,7 @@ import CustomNavigationBar from './CustomNavigationBar.js';
 import theme, { useCustomFonts } from '../config/theme';
 
 
-export default function CameraScreen() {
+export default function CameraScreen3() {
   const [startCamera, setStartCamera] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
