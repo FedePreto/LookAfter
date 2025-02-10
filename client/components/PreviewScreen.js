@@ -88,7 +88,7 @@ export default function PreviewScreen({ route, navigation }) {
           onReplayAudio={() => Speech.speak(textToRead)}
         />
         <View style={styles.titleContainer}>
-          <Text style={styles.text}>Does the image look good?</Text>
+          <Text style={styles.text}>L'immagine risulta essere chiara?</Text>
           {images ? (
           // Single Image - Display directly
           <Image source={{ uri: images }} style={styles.image} />
@@ -106,10 +106,10 @@ export default function PreviewScreen({ route, navigation }) {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={__retakePicture} style={styles.button2}>
-            <Text style={styles.textButton2}>Re-Take</Text>
+            <Text style={styles.textButton2}>Rifai foto</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={__chooseArtwork} style={styles.button}>
-            <Text style={styles.textButton}>Proceed</Text>
+            <Text style={styles.textButton}>Procedi</Text>
           </TouchableOpacity>
         </View>
       </View>
