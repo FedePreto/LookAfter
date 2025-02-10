@@ -35,7 +35,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = "Congratulazioni! mi hai ragiunto";
+  const textToRead = "Congratulazioni! mi hai raggiunto. Per saperne di più premi sul pulsante Conoscimi meglio";
 
   if (!artwork) {
     return (

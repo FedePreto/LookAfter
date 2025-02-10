@@ -74,7 +74,7 @@ const textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi 
       botResponse = {
         sender: "bot",
         text: "Gli occhi della Monna Lisa sono enigmatici e sembrano seguire l'osservatore.",
-        image: require('../assets/eyes.png'),
+        image: require("../assets/occhi.png"),
       };
     } else if (input.toLowerCase().includes("uomo")) {
       botResponse = {
@@ -99,9 +99,15 @@ const textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi 
   const handleMicrophonePress = () => {
     Speech.stop();
     navigation.navigate("RecordingScreen", {
-      onRecordingComplete: (audioText) => setInput(audioText), 
+      onRecordingComplete: (audioText) => {
+        setInput(audioText);
+        setTimeout(() => {
+          handleSend(); // Ora viene invocato correttamente
+        }, 500);
+      },
     });
   };
+  
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);

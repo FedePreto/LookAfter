@@ -34,7 +34,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `Sono ${artwork.title}, opera d'arte ${artwork.number} su 2.`;
+  const textToRead = `Piacere, sono ${artwork.title}, l'opera d'arte ${artwork.number} su 2. Premi Scegli per raggiungermi`;
   const [fadeAnim] = useState(new Animated.Value(0));
 
   

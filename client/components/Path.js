@@ -16,7 +16,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artworkDetails = {
     david: {
-      name: 'The David',
+      name: 'Il David',
       image: require('../assets/david.png'),
       description: [
         "Prosegui dritto per 2 passi per raggiungere il dipinto iconico, la Mona Lisa."  ,
@@ -36,7 +36,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = `Ciao, mi chiamo ${artwork?.name}. Adesso ti indicherò come raggiungermi. ${artwork?.description.join(' ')}`;
+  const textToRead = `Sono ${artwork?.name}, grazie per avermi scelto. Adesso ti indicherò come raggiungermi. ${artwork?.description.join(' ')} Una volta fatto, premi su Prosegui.`;
 
   if (!artwork) {
     return (

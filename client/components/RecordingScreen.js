@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext} from "react";
 import Icon from "react-native-vector-icons/FontAwesome"; 
 import CustomNavigationBar from "./CustomNavigationBar.js";
 import {
@@ -14,17 +14,33 @@ import { Audio } from "expo-av";
 import { transcribeSpeech } from './functions.js';
 import { recordSpeech } from './functions.js';
 import { Dimensions } from 'react-native';
+import { AudioContext } from './AudioProvider';
+import * as Speech from 'expo-speech'; 
 const { width, height } = Dimensions.get('window');
 
 
-export default function RecordingScreen({ navigation }) {
+
+export default function RecordingScreen({ navigation,route }) {
   const [transcribedSpeech, setTranscribedSpeech] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
+  const { onRecordingComplete } = route.params || {};
   const audioRecordingRef = useRef(new Audio.Recording());
+  const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
+
+  const textToRead = "Tieni premuto il pulsante del microfono per iniziare la registrazione. Rilascia il pulsante per terminare la registrazione. Per inviare il testo trascritto premi il pulsante Invia.";
+
+
+  useEffect(() => {
+    if (isAudioOn) {
+      Speech.speak(textToRead); // Parla solo se isAudioOn è true
+    }
+    return () => {
+      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+    };
+  }, [isAudioOn]);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -37,11 +53,13 @@ export default function RecordingScreen({ navigation }) {
   };
 
   const handleInvia = () => {
-   //       navigation.navigate('ChatScreen');
+    onRecordingComplete(transcribedSpeech); 
+    navigation.goBack();
         
   };
 
   const startRecording = async () => {
+    Speech.stop();
     setIsRecording(true);
     await recordSpeech(
       audioRecordingRef,
@@ -166,7 +184,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
     bottom: 20,
   },
   buttonText: {

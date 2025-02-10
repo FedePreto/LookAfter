@@ -19,7 +19,7 @@ export default function PreviewConfirmation({ route, navigation }) {
   const [accessCount, setAccessCount] = useState(newAccessCount); // Initial access count
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
-  const textToRead = "Questa è un'anteprima dell'immagine che hai scattato, per favore assicurati che tutto sia chiaro e riconoscibile prima di procedere.";
+  const textToRead = "Questa è un'anteprima dell'immagine che hai scattato, per favore assicurati che tutto sia chiaro e riconoscibile prima di procedere, poi tocca su Procedi ";
   const [fadeAnim] = useState(new Animated.Value(0));
 
   const __retakePicture = () => {

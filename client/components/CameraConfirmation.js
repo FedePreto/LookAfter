@@ -26,7 +26,7 @@ export default function CameraConfirmation() {
     const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
 
     const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-    const textToRead = "Quando ti senti pronto, tocca il pulsante Scatta Foto.";
+    const textToRead = "Quando ti senti pronto, fammi una foto premendo il pulsante Scatta Foto.";
     const [fadeAnim] = useState(new Animated.Value(0));
     const [dropdownVisible, setDropdownVisible] = useState(false);
     

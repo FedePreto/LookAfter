@@ -28,7 +28,7 @@ export default function CameraScreen() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const textToRead = "Quando ti senti pronto, tocca il pulsante Scatta Foto.";
+  const textToRead = "Quando ti senti pronto, inquadra l'ambiente che ti circonda e tocca il pulsante Scatta Foto.";
 
   const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
 

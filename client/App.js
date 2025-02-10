@@ -40,7 +40,7 @@ function MainPage({ navigation }) {
   const fontsLoaded = useCustomFonts();
 
   const { isAudioOn, activeScreen, setActiveScreen } = useContext(AudioContext);
-  const textToRead = "Ciao e benvenuto su Look After. Per favore, tocca il pulsante Scatta foto per procedere.";
+  const textToRead = "Ciao e benvenuto su Look After. Per favore, tocca il pulsante Inizia per procedere.";
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [buttonAnim] = useState(new Animated.Value(1));
@@ -130,7 +130,7 @@ function MainPage({ navigation }) {
           />
         <Text style={styles.title}>Look After</Text>
         <TouchableOpacity style={styles.button} onPress={handlePress}>
-            <Text style={styles.buttonText}>Scatta Foto</Text>
+            <Text style={styles.buttonText}>Inizia</Text>
           </TouchableOpacity>
         <Text style={styles.description}>
          VIVI LO SPAZIO,

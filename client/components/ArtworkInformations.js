@@ -66,7 +66,7 @@ export default function ArtworkInformations({ navigation, route }) {
     );
   }
 
-  const textToRead = `${artwork.description.join(' ')}`;
+  const textToRead = `${artwork.description.join(' ')} Se vuoi farmi delle domande, premi sul pulsante di chat.`;
 
   const [fadeAnim] = useState(new Animated.Value(0));
 
