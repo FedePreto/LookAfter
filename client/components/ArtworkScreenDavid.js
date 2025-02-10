@@ -11,7 +11,7 @@ const { width, height } = Dimensions.get('window');
 
 const artworkDetails = {
   david: {
-    title: "David",
+    title: "Il David",
     image: require('../assets/david.png'),
     nextScreen: 'monalisa',
     backScreen: null,
@@ -19,7 +19,7 @@ const artworkDetails = {
     number: 1,
   },
   monalisa: {
-    title: "Monalisa",
+    title: "La Monalisa",
     image: require('../assets/monalisa.png'),
     nextScreen: null,
     backScreen: 'david',
@@ -34,7 +34,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `Sono il ${artwork.title}, opera d'arte ${artwork.number} su 2.`;
+  const textToRead = `Sono ${artwork.title}, opera d'arte ${artwork.number} su 2.`;
   const [fadeAnim] = useState(new Animated.Value(0));
 
   
