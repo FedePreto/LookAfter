@@ -26,7 +26,7 @@ export default function CameraConfirmation() {
     const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
 
     const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-    const textToRead = `Whenever you feel ready touch the Take picture button`;
+    const textToRead = "Quando ti senti pronto, tocca il pulsante Scatta Foto.";
     const [fadeAnim] = useState(new Animated.Value(0));
     const [dropdownVisible, setDropdownVisible] = useState(false);
     
@@ -164,7 +164,7 @@ export default function CameraConfirmation() {
         ) : (
           <CameraView style={styles.camera} type={cameraType} ref={cameraRef}>
             <TouchableOpacity onPress={__takePicture} style={styles.takePictureButton}>
-              <Text style={styles.buttonText}>Take Picture</Text>
+              <Text style={styles.buttonText}>Scatta Foto</Text>
             </TouchableOpacity>
           </CameraView>
         )}
