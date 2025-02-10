@@ -40,7 +40,7 @@ function MainPage({ navigation }) {
   const fontsLoaded = useCustomFonts();
 
   const { isAudioOn, activeScreen, setActiveScreen } = useContext(AudioContext);
-  const textToRead = `Hello and welcome to Look After. Please touch the Scan button to proceed.`;
+  const textToRead = "Ciao e benvenuto su Look After. Per favore, tocca il pulsante Scansiona per procedere.";
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [buttonAnim] = useState(new Animated.Value(1));
@@ -133,10 +133,10 @@ function MainPage({ navigation }) {
             <Text style={styles.buttonText}>Scan</Text>
           </TouchableOpacity>
         <Text style={styles.description}>
-          FEEL THE SPACE,
+         VIVI LO SPAZIO,
         </Text>
         <Text style={styles.description}>
-        OWN YOUR PATH
+        PRENDI IN MANO IL TUO CAMMINO
         </Text>
         <Animated.View
           style={{
