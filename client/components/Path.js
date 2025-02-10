@@ -20,7 +20,7 @@ export default function PathDetails({ route, navigation }) {
       image: require('../assets/david.png'),
       description: [
         "Prosegui dritto per 2 passi per raggiungere il dipinto iconico, la Mona Lisa."  ,
-        "Poi gira a destra e fai 1 passo, finalmente raggiungendo me."
+        "Poi gira a destra e fai un passo, e sarai di fronte a me."
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -130,7 +130,7 @@ export default function PathDetails({ route, navigation }) {
         {/* Main Content */}
         <View style={styles.content}>
           <View style={styles.directionContainer}>
-            <Text style={styles.directionHeader}>Route Information</Text>
+            <Text style={styles.directionHeader}>Informazioni di percorso</Text>
             {artwork.description.map((step, index) => (
               <View key={index} style={styles.stepContainer}>
                 <View style={styles.stepIndicator}>
@@ -144,7 +144,7 @@ export default function PathDetails({ route, navigation }) {
 
         {/* Proceed Button */}
         <TouchableOpacity onPress={handleProceed} style={styles.proceedButton}>
-          <Text style={styles.buttonText}>Proceed</Text>
+          <Text style={styles.buttonText}>Prosegui</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
