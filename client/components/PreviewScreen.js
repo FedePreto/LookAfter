@@ -12,7 +12,7 @@ export default function PreviewScreen({ route, navigation }) {
   const { images } = route.params || {}; // Receive the image from CameraScreen
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `This is a preview of the picture you took, please make sure that everything is clear and recognisable before proceeding.`;
+  const textToRead = "Questa è un'anteprima della foto che hai scattato, per favore assicurati che tutto sia chiaro e riconoscibile prima di procedere.";
   const [fadeAnim] = useState(new Animated.Value(0));
   
     useEffect(() => {
