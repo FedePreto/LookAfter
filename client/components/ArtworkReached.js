@@ -19,7 +19,7 @@ export default function PathDetails({ route, navigation }) {
       name: 'David',
       image: require('../assets/david.png'),
       description: [
-        'Congratulations! you reached me',
+        'Congratulazioni! mi hai raggiunto',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -27,7 +27,7 @@ export default function PathDetails({ route, navigation }) {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        'Congratulations! you reached me',
+        'Congratulazioni! mi hai raggiunta',
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -35,7 +35,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artwork = artworkDetails[artworkKey];
 
-  const textToRead = "Congratulations! you reached me";
+  const textToRead = "Congratulazioni! mi hai ragiunto";
 
   if (!artwork) {
     return (

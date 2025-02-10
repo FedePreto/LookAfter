@@ -18,30 +18,40 @@ export default function ArtworkInformations({ navigation, route }) {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        "Greetings, I am the Mona Lisa, also known as La Gioconda. I was painted by the brilliant Leonardo da Vinci between 1503 and 1506, during the golden age of the Italian Renaissance.",
-        "I am famous for my mysterious smile, a smile that has baffled and intrigued viewers for centuries. Look closely, and you’ll notice how it changes depending on the angle and your perception.",
-        "Observe my eyes. Wherever you go, they seem to follow you, a result of Leonardo’s brilliant understanding of perspective and anatomy. My gaze captures you, inviting you into my timeless world.",
-        "Today, I reside in the Louvre Museum in Paris. Millions journey from every corner of the world just to stand before me.",
+        "Saluti, sono la Mona Lisa, conosciuta anche come La Gioconda. Sono stata dipinta dal geniale Leonardo da Vinci tra il 1503 e il 1506, durante l’età d’oro del Rinascimento italiano." ,
+
+        "Sono famosa per il mio sorriso misterioso, un'espressione che ha affascinato e incuriosito gli spettatori per secoli. Osservami attentamente e noterai come cambia a seconda dell'angolazione e della tua percezione.",  
+
+        "Guarda i miei occhi. Ovunque tu vada, sembrano seguirti, un risultato della straordinaria comprensione di Leonardo della prospettiva e dell’anatomia. Il mio sguardo ti cattura, invitandoti nel mio mondo senza tempo.",  
+
+        "Oggi risiedo al Museo del Louvre a Parigi. Milioni di persone viaggiano da ogni angolo del mondo solo per ammirarmi."
+              
       ],
     },
     david: {
       name: 'The David',
       image: require('../assets/david.png'),
       description: [
-        "Hello, I am David, the masterpiece sculpted by the legendary Michelangelo between 1501 and 1504. I stand tall, a symbol of strength, courage, and youthful determination.",
-        "I represent the biblical hero David, moments before his epic battle with Goliath. Notice the tension in my pose: my muscles are taut, my gaze focused and confident.",
-        "Step closer and observe the intricate details: the veins running through my hands, the curve of my muscles, and the determination in my expression.",
-        "I am David, a story of bravery, artistry, and the triumph of the human spirit.",
+        "Ciao, sono David, il capolavoro scolpito dal leggendario Michelangelo tra il 1501 e il 1504. Sto in piedi con fierezza, simbolo di forza, coraggio e determinazione giovanile." ,
+
+        "Rappresento l'eroe biblico Davide, pochi istanti prima della sua epica battaglia contro Golia. Nota la tensione nella mia posa: i miei muscoli sono tesi, il mio sguardo è concentrato e sicuro."  ,
+
+        "Avvicinati e osserva i dettagli intricati: le vene che scorrono lungo le mie mani, la curva dei miei muscoli e la determinazione nella mia espressione."  ,
+
+        "Sono David, una storia di coraggio, arte e trionfo dello spirito umano."
       ],
     },
     ballon_girl:{
       name: 'Balloon girl',
       image: require('../assets/balloon.png'),
       description: [
-        "A vibrant image of a young girl standing in an open field, holding a brightly colored balloon.",
-        "The balloon, a bold red or yellow, contrasts beautifully with the soft hues of a clear blue sky.",
-        "The girl, dressed in a simple yet charming outfit, gazes upward with a look of wonder and joy. ",
-        " Her hair flows gently in the breeze, and the overall scene radiates a sense of innocence and freedom.",
+        "Un'immagine vivace di una giovane ragazza in piedi in un campo aperto, mentre tiene in mano un palloncino dai colori vivaci." ,
+
+        "Il palloncino, di un rosso o giallo intenso, crea un bellissimo contrasto con le delicate sfumature di un cielo azzurro limpido.",  
+
+        "La ragazza, vestita con un abito semplice ma affascinante, guarda verso l’alto con uno sguardo di meraviglia e gioia."  ,
+
+        "I suoi capelli fluttuano dolcemente nella brezza, e l'intera scena emana un senso di innocenza e libertà."
       ],
     }
   };

@@ -12,7 +12,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
   const { artworkKey } = route.params;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const textToRead = `You didn't reach david, but you have reached balloon girl instead! Now you got two option either i can bring back you to david or get information about ballon girl`;
+  const textToRead = `Non hai raggiunto David, ma hai invece raggiunto Balloon Girl! Ora hai due opzioni: posso riportarti da David oppure darti informazioni su Balloon Girl.`;
   
     const { isAudioOn } = useContext(AudioContext); 
 

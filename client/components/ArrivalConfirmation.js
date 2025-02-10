@@ -23,7 +23,7 @@ export default function ConfirmArtwork({ route, navigation }) {
   const { artworkKey } = route.params || {};
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn } = useContext(AudioContext);
-  const textToRead = `To confirm that you have arrived to me please take a picture of me`;
+  const textToRead = `Per confermare che sei arrivato da me, scatta una mia foto.`;
   const [fadeAnim] = useState(new Animated.Value(0));
   const artwork = artworkDetails[artworkKey];
 
