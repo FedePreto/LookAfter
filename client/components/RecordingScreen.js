@@ -1,60 +1,30 @@
-import React, { useRef, useState } from "react";
-import { SafeAreaView,TouchableWithoutFeedback,View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import Icon from "react-native-vector-icons/FontAwesome"; 
+import CustomNavigationBar from "./CustomNavigationBar.js";
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { Audio } from "expo-av";
-import { Ionicons } from "@expo/vector-icons";
-import HamburgerMenu from './HamBurgerMenu';
-import theme from '../config/theme';
-import CustomNavigationBar from './CustomNavigationBar.js';
+import { transcribeSpeech } from './functions.js';
+import { recordSpeech } from './functions.js';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
-export default function RecordingScreen({ route, navigation }) {
-  const [transcription, setTranscription] = useState("");
+
+export default function RecordingScreen({ navigation }) {
+  const [transcribedSpeech, setTranscribedSpeech] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const recordingRef = useRef(null);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  // Avvia la registrazione
-  const startRecording = async () => {
-    try {
-      await Audio.requestPermissionsAsync();
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-      });
-
-      const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
-      await recording.startAsync();
-      recordingRef.current = recording;
-      setIsRecording(true);
-    } catch (error) {
-      console.error("Errore nella registrazione:", error);
-    }
-  };
-
-  // Ferma la registrazione e invia l'audio al server
-  const stopRecording = async () => {
-    try {
-      setIsRecording(false);
-      await recordingRef.current.stopAndUnloadAsync();
-      const uri = recordingRef.current.getURI();
-
-      // Carica l'audio come file e invialo al server
-      const audioFile = await fetch(uri);
-      const audioBlob = await audioFile.blob();
-      const formData = new FormData();
-      formData.append("audio", audioBlob, "recording.wav");
-
-      const response = await fetch("http://localhost:4000/speech-to-text", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-      setTranscription(data.transcription || "Nessun testo trovato.");
-    } catch (error) {
-      console.error("Errore nell'invio del file audio:", error);
-    }
-  };
+  const audioRecordingRef = useRef(new Audio.Recording());
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -62,85 +32,146 @@ export default function RecordingScreen({ route, navigation }) {
 
   const handleOutsidePress = () => {
     if (dropdownVisible) {
-      setDropdownVisible(false); // Close the menu if it's open
+      setDropdownVisible(false); 
     }
   };
-  
 
-  return (    
-      <TouchableWithoutFeedback onPress={handleOutsidePress}>
-        <View style={styles.container}>
-          <CustomNavigationBar
+  const handleInvia = () => {
+   //       navigation.navigate('ChatScreen');
+        
+  };
+
+  const startRecording = async () => {
+    setIsRecording(true);
+    await recordSpeech(
+      audioRecordingRef,
+      setIsRecording
+    );
+  };
+
+  const stopRecording = async () => {
+    setIsRecording(false);
+    setIsTranscribing(true);
+    try {
+      const speechTranscript = await transcribeSpeech(audioRecordingRef);
+      setTranscribedSpeech(speechTranscript || "");
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsTranscribing(false);
+    }
+  };
+
+  return (
+    <SafeAreaView>
+         <CustomNavigationBar
             navigation={navigation}
             isVisible={dropdownVisible} 
-          toggleDropdown={toggleDropdown}
-            showBackButton={true}
-            showAudioButton={true}
-            onReplayAudio={() => Speech.speak(textToRead)}
+              toggleDropdown={toggleDropdown}
+              showBackButton={true}
+              showAudioButton={true}
+              onReplayAudio={() => Speech.speak(textToRead)}
           />
-          
-          <Text style={styles.title}>Registrazione e Trascrizione</Text>
+      <ScrollView style={styles.mainScrollContainer}>
+        <View style={styles.mainInnerContainer}>
+       
+          <Text style={styles.title}> Trascrizione audio</Text>
+          <View style={styles.transcriptionContainer}>
+            {isTranscribing ? (
+              <ActivityIndicator size="small" color="#000" />
+            ) : (
+              <Text
+                style={{
+                  ...styles.transcribedText,
+                  color: transcribedSpeech ? "#000" : "rgb(150,150,150)",
+                }}
+              >
+                {transcribedSpeech ||
+                  "Il tuo testo trascritto apparirà qui..."}
+              </Text>
+            )}
+          </View>
           <TouchableOpacity
-            style={styles.button}
-            onPress={isRecording ? stopRecording : startRecording}
+            style={{
+              ...styles.microphoneButton,
+              opacity: isRecording || isTranscribing ? 0.5 : 1,
+            }}
+            onPressIn={startRecording}
+            onPressOut={stopRecording}
+            disabled={isRecording || isTranscribing}
           >
-            <Text style={styles.buttonText}>
-              {isRecording ? "Ferma Registrazione" : "Inizia Registrazione"}
-            </Text>
+            <Icon name="microphone" size={40} color="white" />
           </TouchableOpacity>
-          <Text style={styles.transcription}>{transcription}</Text>
+          <TouchableOpacity onPress={handleInvia} style={styles.proceedButton}>
+                  <Text style={styles.buttonText}>Invia</Text>
+          </TouchableOpacity>
         </View>
-      </TouchableWithoutFeedback>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  mainScrollContainer: {
+    padding: 20,
+    height: "100%",
+    width: "100%"
+  },
+  mainInnerContainer: {
+    gap: 50,
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    flexGrow: 1,
+  },
+  title: {
+    fontSize: 35,
+    padding: 5,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#007fbb",
+    marginTop: 90
+  },
+  transcriptionContainer: {
+    backgroundColor: "rgb(220,220,220)",
+    width: "100%",
+    height: 300,
+    padding: 20,
+    marginBottom: 20,
+    borderRadius: 5,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  transcribedText: {
+    fontSize: 20,
+    padding: 5,
+    color: "#000",
+    textAlign: "left",
+    width: "100%",
+  },
+  microphoneButton: {
+    backgroundColor: "#007fbb",
+    width: 100,
+    height: 100,
+    marginTop: 10,
+    borderRadius: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  proceedButton: {
+    backgroundColor: '#007fbb',
+    width: width * 0.92,
+    height: height * 0.08,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.background,
+    position: 'absolute',
+    bottom: 20,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    marginBottom: 20,
+  buttonText: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
   },
-  backButton: {
-    padding: 10,
-  },
-  hamburgerMenuWrapper: {
-    padding: 10,
-  },
-  title: { 
-    fontSize: 24, 
-    fontWeight: "bold", 
-    textAlign: "center", 
-    marginVertical: 20 
-  },
-  transcription: { 
-    marginTop: 20, 
-    fontSize: 18, 
-    color: "#333", 
-    textAlign: "center" 
-  },
-  button: { 
-    backgroundColor: "#007AFF", 
-    paddingVertical: 15, 
-    paddingHorizontal: 25, 
-    borderRadius: 8, 
-    shadowColor: "#000", 
-    shadowOpacity: 0.2, 
-    shadowOffset: { width: 0, height: 2 }, 
-    shadowRadius: 4, 
-    elevation: 5, 
-  },
-  buttonText: { 
-    color: "#FFF", 
-    fontWeight: "600", 
-    fontSize: 16, 
-    textAlign: "center" 
-  }
 });
