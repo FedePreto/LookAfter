@@ -6,20 +6,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import theme from '../config/theme';
 import * as Speech from 'expo-speech';
 
-export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, audio}) {
+export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, audio }) {
   const { isAudioOn, toggleAudio } = useContext(AudioContext);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     if (isAudioOn && audio) {
-      // Speech.stop(); // Stop any ongoing speech
-      Speech.speak(audio); // Speak only the current page's text
+      Speech.stop(); // Ensure old speech is stopped
+      Speech.speak(audio);
     }
-    return () => {
-      // Speech.stop(); // Stop speech when the component unmounts
-    };
-  }, [audio, isAudioOn]); // Depend on audio content instead of just isAudioOn
-  // Dipendenza: si aggiorna se cambia isAudioOn
+  }, [isAudioOn]); // Depend on `audio` and `isAudioOn`
+   // Depend on `audio` and `isAudioOn`
+    // Dipendenza: si aggiorna se cambia isAudioOn
+    
+  // };
 
   const __confirmGoHome = () => {
     setShowConfirmation(true);
@@ -33,6 +33,7 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
   const __cancelGoHome = () => {
     setShowConfirmation(false);
   };
+
   return (
     <View style={styles.container}>
       {/* Menu Button */}
@@ -45,6 +46,7 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
         <TouchableWithoutFeedback onPress={toggleDropdown}>
           <View style={styles.overlay}>
             <View style={styles.dropdown}>
+              {/* Audio Button */}
               <TouchableOpacity style={styles.dropdownItem} onPress={toggleAudio}>
                 <Text style={styles.dropdownText}>Audio</Text>
                 <Ionicons
@@ -53,6 +55,8 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
                   color="white"
                 />
               </TouchableOpacity>
+
+              {/* Home Button */}
               <TouchableOpacity style={styles.dropdownItem} onPress={__confirmGoHome}>
                 <Text style={styles.dropdownText}>Home</Text>
                 <MaterialIcons name="home" size={28} color="white" />
@@ -62,6 +66,7 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
         </TouchableWithoutFeedback>
       )}
 
+      {/* Confirmation Modal */}
       {showConfirmation && (
         <Modal transparent={true} animationType="fade" visible={showConfirmation}>
           <View style={styles.modalBackground}>
