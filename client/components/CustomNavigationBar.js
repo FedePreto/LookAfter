@@ -53,7 +53,7 @@ const CustomNavigationBar = ({
         <TouchableOpacity
               onPress={() => navigation.navigate('ChooseArtwork', { artworkKey: 'david' })}
               style={styles.otherArtworksButton}>
-              <Text style={styles.otherArtworksText}>Other Artworks</Text>
+              <Text style={styles.otherArtworksText}>Altre opere d'arte</Text>
             </TouchableOpacity>
             )}
             </View>

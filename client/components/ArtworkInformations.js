@@ -29,7 +29,7 @@ export default function ArtworkInformations({ navigation, route }) {
       ],
     },
     david: {
-      name: 'The David',
+      name: 'David',
       image: require('../assets/david.png'),
       description: [
         "Ciao, sono David, il capolavoro scolpito dal leggendario Michelangelo tra il 1501 e il 1504. Sto in piedi con fierezza, simbolo di forza, coraggio e determinazione giovanile." ,
