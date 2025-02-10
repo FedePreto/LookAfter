@@ -28,7 +28,7 @@ export default function CameraScreen() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const textToRead = `Whenever you feel ready, touch the Take Picture button.`;
+  const textToRead = "Quando ti senti pronto, tocca il pulsante Scatta Foto.";
 
   const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
 
@@ -171,7 +171,7 @@ export default function CameraScreen() {
               onPress={() => handleButtonPress(__takePicture)} 
               style={styles.takePictureButton}
             >
-              <Text style={styles.buttonText}>Take Picture</Text>
+              <Text style={styles.buttonText}>Scatta Foto</Text>
             </TouchableOpacity>
           </CameraView>
         )}
