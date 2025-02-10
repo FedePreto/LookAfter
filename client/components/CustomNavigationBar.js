@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Animated, Text } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import HamburgerMenu from './HamBurgerMenu'; 
