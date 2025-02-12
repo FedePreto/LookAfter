@@ -37,9 +37,18 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
   return (
     <View style={styles.container}>
       {/* Menu Button */}
-      <TouchableOpacity onPress={toggleDropdown} style={styles.menuButton}>
+      
+
+      <TouchableOpacity 
+        onPress={toggleDropdown} 
+        style={styles.menuButton}
+        accessible={true}
+        accessibilityLabel="Attiva menu"
+        accessibilityHint="Apre il menu di navigazione"
+      >
         <Ionicons name="menu" size={40} color="white" />
       </TouchableOpacity>
+
 
       {/* Dropdown Menu and Overlay */}
       {isVisible && (
