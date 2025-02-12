@@ -167,9 +167,14 @@ export default function ArtworkInformations({ navigation, route }) {
         {/* Chat Button */}
         <TouchableOpacity
           style={styles.chatButton}
-          onPress={() => navigation.navigate('ChatScreen', { artworkKey })}>
-          <Ionicons name="chatbubble-outline" size={40} color="white" />
-        </TouchableOpacity>
+          onPress={() => navigation.navigate('ChatScreen', { artworkKey })}
+          accessible={true}
+          accessibilityLabel="Chatta con me"
+          accessibilityRole="button"
+        >
+        <Ionicons name="chatbubble-outline" size={40} color="white" />
+      </TouchableOpacity>
+
       </View>
     //  </TouchableWithoutFeedback>
   );
