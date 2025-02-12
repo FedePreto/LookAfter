@@ -51,8 +51,8 @@ export default function CameraScreen3() {
       } else {
         Alert.alert('Access denied');
       }
-      const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
-      setHasMediaLibraryPermission(mediaLibraryPermission === 'granted');
+      // const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
+      // setHasMediaLibraryPermission(mediaLibraryPermission === 'granted');
     })();
   }, []);
 
@@ -71,14 +71,14 @@ export default function CameraScreen3() {
           quality: 1,   // Ensures highest quality (default is 1, but make sure it's set)
           base64: false // Prevents unnecessary data transformation
         });
-        const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
-        if (mediaLibraryPermission.status !== 'granted') {
-          Alert.alert(
-            'Permission Denied',
-            'Media Library access is required to save photos.'
-          );
-          return;
-        }
+        // const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
+        // if (mediaLibraryPermission.status !== 'granted') {
+        //   Alert.alert(
+        //     'Permission Denied',
+        //     'Media Library access is required to save photos.'
+        //   );
+        //   return;
+        // }
         setCapturedImage(photo);
         setPreviewVisible(true);
         // Alert.alert('Photo Saved', 'Photo saved to your device\'s gallery.');

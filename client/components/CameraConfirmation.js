@@ -38,13 +38,13 @@ export default function CameraConfirmation() {
       } else {
         Alert.alert('Access denied');
       }
-      const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
-      // setPermission(status === 'granted');
-      // const { status: mediaLibraryStatus } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-    // if (mediaLibraryStatus !== 'granted') {
-    //   Alert.alert('Sorry, we need camera roll permissions to make this work!');
-    // }
-    setHasMediaLibraryPermission(mediaLibraryPermission === 'granted')
+    //   const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
+    //   // setPermission(status === 'granted');
+    //   // const { status: mediaLibraryStatus } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+    // // if (mediaLibraryStatus !== 'granted') {
+    // //   Alert.alert('Sorry, we need camera roll permissions to make this work!');
+    // // }
+    // setHasMediaLibraryPermission(mediaLibraryPermission === 'granted')
     })();
   }, []);
 
@@ -92,14 +92,14 @@ export default function CameraConfirmation() {
       try {
         const photo = await cameraRef.current.takePictureAsync();
         console.log("Captured photo URI:", photo.uri);
-        const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
-        if(mediaLibraryPermission.status != 'granted'){
-          Alert.alert(
-            'Permission Denied',
-            'Media Library access is required to save photos.'
-          );
-          return;
-        }
+        // const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
+        // if(mediaLibraryPermission.status != 'granted'){
+        //   Alert.alert(
+        //     'Permission Denied',
+        //     'Media Library access is required to save photos.'
+        //   );
+        //   return;
+        // }
         // await MediaLibrary.saveToLibraryAsync(photo.uri);
         setCapturedImage(photo); // Store captured image
         setPreviewVisible(true); // Navigate to Preview if picture is captured
