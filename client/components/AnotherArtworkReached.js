@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#FFFFFF', // Bianco per il testo nei bottoni
-    fontSize: 13,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   buttonText2: {
     color: '#0055A4', // Bianco per il testo nei bottoni
-    fontSize: 13,
+    fontSize: 22,
     fontWeight: 'bold',
   },
 });

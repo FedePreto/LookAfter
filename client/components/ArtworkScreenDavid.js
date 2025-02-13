@@ -202,8 +202,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: theme.colors.textSecondary,
+    lineHeight: 40,
     marginTop: height * 0.1,
   },
+  
   imageContainer: {
     flex: 0.4,
     justifyContent: 'center',
