@@ -48,23 +48,26 @@ function MainPage({ navigation }) {
 
   useEffect(() => {
     setActiveScreen('App');
-
+  
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
     }).start();
-
-    if (isAudioOn && activeScreen === 'App') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
+  
+    if (fontsLoaded) {
+      if (isAudioOn && activeScreen === 'App') {
+        setTimeout(() => {
+          Speech.speak(textToRead);
+        }, 500); // Delay to ensure it executes properly
+      }
     }
-
+  
     return () => {
       Speech.stop();
     };
-  }, [textToRead, isAudioOn]);
+  }, [fontsLoaded, isAudioOn, activeScreen]);
+  
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
