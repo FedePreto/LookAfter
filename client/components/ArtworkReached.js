@@ -16,7 +16,7 @@ export default function PathDetails({ route, navigation }) {
 
   const artworkDetails = {
     david: {
-      name: 'David',
+      name: 'Il David',
       image: require('../assets/david.png'),
       description: [
         'Congratulazioni! mi hai raggiunto',

@@ -9,6 +9,7 @@ import {
   View,
   ActivityIndicator,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { Audio } from "expo-av";
 import { transcribeSpeech } from './functions.js';
@@ -80,8 +81,10 @@ export default function RecordingScreen({ navigation,route }) {
     }
   };
 
-  return (
-    <SafeAreaView>
+  return ( 
+      <TouchableWithoutFeedback onPress={handleOutsidePress}>
+        <SafeAreaView>
+        {/* <View> */}
          <CustomNavigationBar
             navigation={navigation}
             isVisible={dropdownVisible} 
@@ -125,7 +128,10 @@ export default function RecordingScreen({ navigation,route }) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+      {/* </View> */}
+      
+     </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
