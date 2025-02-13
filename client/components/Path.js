@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
   headerImage: {
     width: 140,
     height: 140,
-    resizeMode: 'contain',
     borderRadius: 50,
     borderWidth: 2,
     borderColor: '#54A8E8',
@@ -180,7 +179,8 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 5,
     top: '15%',
-    alignContent: 'center',
+    alignContent: 'contain',
+    resizeMode: 'contain',
     zIndex: 30,
   },
 

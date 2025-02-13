@@ -10,14 +10,17 @@ const { width, height } = Dimensions.get('window');
 
 const artworkDetails = {
   monalisa: {
+    name: 'Mona Lisa',
     image: require('../assets/monalisa.png'),
     nextScreen: 'CameraConfirmation',
   },
   david: {
+    name: 'Il David',
     image: require('../assets/david.png'),
     nextScreen: 'CameraConfirmation',
   },
 };
+
 
 export default function ConfirmArtwork({ route, navigation }) {
   const { artworkKey } = route.params || {};
@@ -80,7 +83,7 @@ export default function ConfirmArtwork({ route, navigation }) {
         />
         
         <View style={styles.container2}>
-          <Text style={styles.artworkTitle}>{artworkKey}</Text>
+          <Text style={styles.artworkTitle}>{artwork.name}</Text>
           <Image source={artwork.image} style={styles.headerImage} />
         </View>
 
