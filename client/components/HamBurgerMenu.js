@@ -81,14 +81,14 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
           <View style={styles.modalBackground}>
             <View style={styles.modalContainer}>
               <Text style={styles.modalText}>
-                Are you sure you want to go home? You will lose your progress.
+                Sei sicuro di voler tornare alla Home?
               </Text>
               <View style={styles.modalButtons}>
                 <TouchableOpacity style={styles.modalButton} onPress={__cancelGoHome}>
-                  <Text style={styles.modalButtonText}>Cancel</Text>
+                  <Text style={styles.modalButtonText}>Annulla</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.modalButton2} onPress={__goHome}>
-                  <Text style={styles.modalButtonText2}>Go Home</Text>
+                  <Text style={styles.modalButtonText2}>Home</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     top: 50,
     right: 10,
     backgroundColor: theme.colors.background,
-    borderColor: '#007fbb',
+    borderColor: '#0055A4',
     borderWidth: 2,  
     borderRadius: 10,
     elevation: 5,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,   // Increase vertical padding for spacing
     paddingHorizontal: 20, // Increase horizontal padding
     borderRadius: 5,
-    backgroundColor: '#007fbb', 
+    backgroundColor: '#0055A4', 
     marginVertical: 8,  // Space between buttons
     width: '100%',      // Ensure buttons take full width inside dropdown
   },
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginBottom: 25,
     textAlign: 'center',
-    color: '#007fbb',
+    color: '#0055A4',
     fontWeight: 'bold',
   },
   modalButtons: {
@@ -189,19 +189,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: '45%',
     alignItems: 'center',
-    borderColor:'#007fbb',
+    borderColor:'#0055A4',
   },
   modalButtonText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color:'#007fbb'
+    color:'#0055A4'
   },
   modalButton2: {
     padding: 10,
     borderRadius: 5,
     width: '45%',
     alignItems: 'center',
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
   },
   modalButtonText2: {
     fontSize: 20,

@@ -26,7 +26,7 @@ export default function CameraConfirmation() {
     const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
 
     const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-    const textToRead = "Quando ti senti pronto, fammi una foto premendo il pulsante Scatta Foto.";
+    const textToRead = "Quando ti senti pronto, inquadra l'ambiente che ti circonda e tocca il pulsante Scatta Foto.";
     const [fadeAnim] = useState(new Animated.Value(0));
     const [dropdownVisible, setDropdownVisible] = useState(false);
     
@@ -226,11 +226,12 @@ export default function CameraConfirmation() {
     shadowRadius: 6,
     elevation: 8,
     borderWidth: 3, // Add a white border for contrast
-    borderColor: "#FFF",
+    borderColor: "#0055A4",
     },
     buttonText: {
       fontSize: 16,
-      color: "#000",
+      color: "#0055A4", // Blue text for contrast
+      fontWeight: "bold",
     },
     header: {
       position: "absolute",

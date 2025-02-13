@@ -20,7 +20,7 @@ export default function PathDetails({ route, navigation }) {
       image: require('../assets/david.png'),
       description: [
         "Prosegui dritto per 2 passi per raggiungere il dipinto iconico, la Mona Lisa."  ,
-        "Poi gira a destra e fai un passo, e sarai di fronte a me."
+        "Poi gira a destra e fai un passo e sarai di fronte a me."
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40, // Aggiunge spazio sopra
-    color: '#007fbb',
+    color: '#0055A4',
     top: '10%', // Posiziona in alto
     width: '100%',
   },
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 0,
-    color: '#007fbb',
+    color: '#0055A4',
   },
   
   stepContainer: {
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     overflow: 'visible', // Allows text to appear fully
   }, 
   proceedButton: {
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     width: width * 0.92,
     height: height * 0.08,
     borderRadius: 15,

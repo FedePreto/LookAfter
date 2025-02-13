@@ -18,13 +18,11 @@ export default function ArtworkInformations({ navigation, route }) {
       name: 'Mona Lisa',
       image: require('../assets/monalisa.png'),
       description: [
-        "Saluti, sono la Mona Lisa, conosciuta anche come La Gioconda. Sono stata dipinta dal geniale Leonardo da Vinci tra il 1503 e il 1506, durante l’età d’oro del Rinascimento italiano." ,
+        "Saluti, sono la Mona Lisa, ma forse mi conosci come La Gioconda. Leonardo da Vinci mi ha dipinta tra il 1503 e il 1506, durante il fiorire del Rinascimento. Da allora, il mio sguardo e il mio sorriso hanno incantato il mondo intero.",
 
-        "Sono famosa per il mio sorriso misterioso, un'espressione che ha affascinato e incuriosito gli spettatori per secoli. Osservami attentamente e noterai come cambia a seconda dell'angolazione e della tua percezione.",  
+        "Il mio sorriso è un enigma: osservalo a lungo e potresti notare come cambia, sottile e sfuggente, quasi come se custodissi un segreto. I miei occhi ti seguono ovunque, non importa da dove mi guardi, perché Leonardo ha saputo dare vita alla mia espressione con incredibile maestria.",
 
-        "Guarda i miei occhi. Ovunque tu vada, sembrano seguirti, un risultato della straordinaria comprensione di Leonardo della prospettiva e dell’anatomia. Il mio sguardo ti cattura, invitandoti nel mio mondo senza tempo.",  
-
-        "Oggi risiedo al Museo del Louvre a Parigi. Milioni di persone viaggiano da ogni angolo del mondo solo per ammirarmi."
+        "Oggi abito al Louvre, tra le mura di un museo che accoglie milioni di visitatori. Ogni giorno, persone da tutto il mondo si fermano davanti a me, cercando di decifrare il mistero che porto con me da secoli."
               
       ],
     },
@@ -32,26 +30,22 @@ export default function ArtworkInformations({ navigation, route }) {
       name: 'David',
       image: require('../assets/david.png'),
       description: [
-        "Ciao, sono David, il capolavoro scolpito dal leggendario Michelangelo tra il 1501 e il 1504. Sto in piedi con fierezza, simbolo di forza, coraggio e determinazione giovanile." ,
+        "Ciao, sono David, il capolavoro di Michelangelo, scolpito tra il 1501 e il 1504. La mia figura imponente rappresenta forza e coraggio. Se potessi toccarmi, sentiresti i muscoli tesi e le vene in rilievo sulle mani, come se il sangue vi scorresse ancora.",
 
-        "Rappresento l'eroe biblico Davide, pochi istanti prima della sua epica battaglia contro Golia. Nota la tensione nella mia posa: i miei muscoli sono tesi, il mio sguardo è concentrato e sicuro."  ,
+        "Raffiguro Davide prima della battaglia contro Golìa. Il mio corpo è saldo, il busto leggermente ruotato, lo sguardo concentrato. Anche senza vederlo, puoi immaginare la determinazione nel mio volto.",
 
-        "Avvicinati e osserva i dettagli intricati: le vene che scorrono lungo le mie mani, la curva dei miei muscoli e la determinazione nella mia espressione."  ,
-
-        "Sono David, una storia di coraggio, arte e trionfo dello spirito umano."
+        "Sono più di una statua: attraverso il marmo, racconto una storia di coraggio e trionfo umano."
       ],
     },
     ballon_girl:{
       name: 'Balloon girl',
-      image: require('../assets/balloon.png'),
+      image: require('../assets/ballon.jpg'),
       description: [
-        "Un'immagine vivace di una giovane ragazza in piedi in un campo aperto, mentre tiene in mano un palloncino dai colori vivaci." ,
+        "Ciao, sono una ragazza con un palloncino tra le dita, leggera come il vento che accarezza i miei capelli. Sono in piedi in un campo aperto, respirando l’aria fresca mentre osservo il mio palloncino librarsi nel cielo limpido.",
 
-        "Il palloncino, di un rosso o giallo intenso, crea un bellissimo contrasto con le delicate sfumature di un cielo azzurro limpido.",  
+        "È rosso, o forse giallo, brillante contro l’azzurro infinito sopra di me. Lo stringo ancora un po’, sentendo la sua superficie liscia e tesa tra le mani, come se volesse sfuggire via.",
 
-        "La ragazza, vestita con un abito semplice ma affascinante, guarda verso l’alto con uno sguardo di meraviglia e gioia."  ,
-
-        "I suoi capelli fluttuano dolcemente nella brezza, e l'intera scena emana un senso di innocenza e libertà."
+        "Il mio vestito ondeggia dolcemente, e dentro di me sento una gioia semplice e pura. Sono qui, libera, con il mio sguardo rivolto verso l’alto, seguendo il volo leggero del mio palloncino."
       ],
     }
   };
@@ -202,10 +196,10 @@ const styles = StyleSheet.create({
   hamburgerMenuContainer: {
     position: 'absolute',
     right: 10, // Posiziona il menu a destra
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
   },
   otherArtworksButton: {
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
@@ -229,7 +223,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -20,
     right: 20,
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     padding: 15,
     borderRadius: 50,
     elevation: 5,
@@ -253,7 +247,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     right: 20,
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     padding: 15,
     borderRadius: 50,
     alignItems: 'center',

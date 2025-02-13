@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { View, Text, TextInput, TouchableOpacity,Animated , TouchableWithoutFeedback,ScrollView, Image, StyleSheet,Keyboard,KeyboardAvoidingView,Platform } from "react-native";
+import {Modal, View, Text, TextInput, TouchableOpacity,Animated , TouchableWithoutFeedback,ScrollView, Image, StyleSheet,Keyboard,KeyboardAvoidingView,Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; 
 import theme from '../config/theme';
 import AsyncStorage from "@react-native-async-storage/async-storage"; 
@@ -18,9 +18,17 @@ export default function ChatScreen({ route, navigation }) {
   ]);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
   const lastBotMessage = messages.filter((msg) => msg.sender === "bot").pop(); 
+  const [isRecordingInput, setIsRecordingInput] = useState(false);
 
-const textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi da riprodurre.";
+  let textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi da riprodurre.";
 
+  useEffect(() => {
+    if (isRecordingInput && input !== "") {
+      setTimeout(() => {
+        handleSend();
+      }, 500);
+    }
+  }, [input]); // Si attiva solo quando `input` cambia
   
  useEffect(() => {
      if (isAudioOn) {
@@ -70,24 +78,111 @@ const textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi 
     const updatedMessages = [...messages, userMessage];
 
     let botResponse = null;
-    if (input.toLowerCase().includes("occhi")) {
+    if (input.toLowerCase().includes("sorriso") && artworkKey === "monalisa") {
       botResponse = {
         sender: "bot",
-        text: "Gli occhi della Monna Lisa sono enigmatici e sembrano seguire l'osservatore.",
-        image: require("../assets/occhi.png"),
+        text: "Il mio sorriso! È il più grande enigma dell'arte. Forse sto per dire una battuta divertente … o forse so qualcosa che tu non sai!",
+        image: require("../assets/sorriso.jpg"),
       };
-    } else if (input.toLowerCase().includes("uomo")) {
+    } else if (input.toLowerCase().includes("parlare") && artworkKey === "monalisa") {
       botResponse = {
         sender: "bot",
-        text: "Se fosse un uomo, immagina un volto con tratti morbidi e delicati.",
-        image: require('../assets/monnaliso.png'), 
+        text: "Dopo secoli dietro a questo vetro, vorrei uscire e respirare un po’ d’aria fresca!",
       };
-    } else {
+    
+    } else if (input.toLowerCase().includes("umana") && artworkKey === "monalisa") {
+      botResponse = {
+        sender: "bot",
+        text: "Se fossi umana? Probabilmente sarei un’influencer con milioni di follower!",
+      };
+    } else if (input.toLowerCase().includes("capelli") && artworkKey === "monalisa") {
+      botResponse = {
+        sender: "bot",
+        text: "I miei capelli sono un mistero: lisci, mossi, ondulati? Nemmeno Leonardo ha mai dato una risposta chiara.",
+      };
+    }
+    else if (input.toLowerCase().includes("occhi") && artworkKey === "monalisa") {
+      botResponse = {
+        sender: "bot",
+        text: "I miei occhi sembrano custodire un segreto, seguendoti ovunque con uno sguardo enigmatico che sfida il tempo e la distanza.",
+        image: require("../assets/occhi.jpg"),
+      };
+    }
+    else if (input.toLowerCase().includes("supereroe") && artworkKey === "monalisa") {
+      botResponse = {
+        sender: "bot",
+        text: "Sicuramente sarei superman",
+        image: require("../assets/superman.jpg"),
+
+      };
+    }
+    else if (input.toLowerCase().includes("uomo") && artworkKey === "monalisa") {
+      botResponse = {
+        sender: "bot",
+        text: "Mi chiamo Monnaliso. Sì, hai capito bene. Sono l'alter ego maschile della celebre Gioconda.",
+        image: require("../assets/monnaliso.jpg"),
+
+      };
+    }
+    
+    // Ballon Girl
+    else if (input.toLowerCase().includes("vento") && artworkKey === "ballon_girl") {
+      botResponse = {
+        sender: "bot",
+        text: "Il vento accarezza i miei capelli mentre il mio palloncino si libra leggero nel cielo. Un momento di pura libertà.",
+      };
+    } else if (input.toLowerCase().includes("palloncino") && artworkKey === "ballon_girl") {
+      botResponse = {
+        sender: "bot",
+        text: "Il mio palloncino è il simbolo dei sogni che volano via… o forse semplicemente del vento che me lo ha strappato di mano!",
+        image: require("../assets/palloncino.jpg"),
+      };
+    } else if (input.toLowerCase().includes("triste") && artworkKey === "ballon_girl") {
+      botResponse = {
+        sender: "bot",
+        text: "Triste? No, non proprio. Piuttosto malinconica. I sogni a volte ci sfuggono, ma possiamo sempre rincorrerli.",
+      };
+    } else if (input.toLowerCase().includes("colore") && artworkKey === "ballon_girl") {
+      botResponse = {
+        sender: "bot",
+        text: "Rosso, giallo, blu… Il mio palloncino potrebbe essere di qualsiasi colore, proprio come i sogni di chi lo guarda.",
+      };
+    
+    }
+    
+    // David
+    else if (input.toLowerCase().includes("forte") && artworkKey === "david") {
+      botResponse = {
+        sender: "bot",
+        text: "La forza non è solo nei miei muscoli, ma anche nel mio coraggio prima della battaglia contro Golia.",
+      };
+    } else if (input.toLowerCase().includes("nudo") && artworkKey === "david") {
+      botResponse = {
+        sender: "bot",
+        text: "Eh sì, sono completamente nudo… ma con questa fisicità, perché coprirmi?",
+      };
+    
+    } else if (input.toLowerCase().includes("vestito") && artworkKey === "david") {
+      botResponse = {
+        sender: "bot",
+        text: "Se fossi vestito sicuramnte porterei uno abito elgante.",
+        image: require("../assets/elegante.jpg"),
+      };
+    } else if (input.toLowerCase().includes("muscoli") && artworkKey === "david") {
+      botResponse = {
+        sender: "bot",
+        text: "Ogni mio muscolo è scolpito nel marmo, segno della perfetta armonia tra forza e arte.",
+      };
+    }
+    
+    else {
       botResponse = { sender: "bot", text: "Non sono sicuro di capire. Puoi ripetere?" };
     }
 
     if (botResponse) {
       updatedMessages.push(botResponse);
+      Speech.speak(botResponse.text);
+      
     }
 
     setMessages(updatedMessages);
@@ -97,7 +192,9 @@ const textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi 
   };
 
   const handleMicrophonePress = () => {
+    setIsRecordingInput(true);
     Speech.stop();
+    setInput("");
     navigation.navigate("RecordingScreen", {
       onRecordingComplete: (audioText) => {
         setInput(audioText);
@@ -146,6 +243,8 @@ useEffect(() => {
 
 const [chatHeight, setChatHeight] = useState(0);
 const [inputHeight, setInputHeight] = useState(60); 
+const [selectedImage, setSelectedImage] = useState(null);
+
 
 useEffect(() => {
   const updatePadding = chatHeight > 500 ? 120 : 80; 
@@ -155,7 +254,7 @@ useEffect(() => {
 // console.log(messages.text);
 
   return (    
-      <TouchableWithoutFeedback onPress={handleOutsidePress}> 
+      
         <KeyboardAvoidingView 
           style={{ flex: 1 }} 
           behavior={Platform.OS === "ios" ? "padding" : undefined} 
@@ -191,29 +290,47 @@ useEffect(() => {
             ]}
           >
             <Text style={styles.messageText}>{message.text}</Text>
-            {message.image && <Image source={message.image} style={styles.messageImage} />}
+            {message.image && (
+              <TouchableOpacity onPress={() => setSelectedImage(message.image)}>
+                <Image source={message.image} style={styles.messageImage} />
+              </TouchableOpacity>
+            )}
+
           </View>
         ))}
       </ScrollView>
 
       <View style={styles.inputContainer}>
         <TouchableOpacity onPress={handleMicrophonePress} style={styles.microphoneButton}>
-          <Ionicons name="mic" size={24} color="#007BFF" />
+          <Ionicons name="mic" size={24} color="#0055A4" />
         </TouchableOpacity>
         <TextInput
           style={styles.input}
           placeholder="Scrivi un messaggio..."
           value={input}
-          onChangeText={setInput}
+          onChangeText={(text) => {
+            setInput(text);
+            setIsRecordingInput(false); // Se l'utente scrive a mano, disattiva il flag della registrazione
+          }}
         />
+
         <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
           <Text style={styles.sendButtonText}>Invia</Text>
         </TouchableOpacity>
       </View>
 
     </View>
+    <Modal visible={!!selectedImage} transparent={true} animationType="fade">
+      <View style={styles.modalContainer}>
+        <TouchableOpacity style={styles.closeButton} onPress={() => setSelectedImage(null)}>
+          <Text style={styles.closeText}>✖</Text>
+        </TouchableOpacity>
+        <Image source={selectedImage} style={styles.fullscreenImage} />
+      </View>
+    </Modal>
+
   </KeyboardAvoidingView>
-  </TouchableWithoutFeedback>
+
   );
 }
 
@@ -229,6 +346,36 @@ const styles = StyleSheet.create({
     top: "10%",
     width: "95%",
   },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.9)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  closeButton: {
+    position: "absolute",
+    top: 40,
+    right: 20,
+    backgroundColor: "white",
+    borderRadius: 25, // Metà della width/height per renderlo perfettamente circolare
+    borderWidth: 2, // Spessore del bordo
+    borderColor: "black", // Colore del bordo
+    justifyContent: "center", // Centra il contenuto verticalmente
+    alignItems: "center", // Centra il contenuto orizzontalmente
+    width: 50, // Deve essere uguale all’altezza per mantenere la forma circolare
+    height: 50, 
+  },
+  closeText: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "black",
+    textAlign: "center",
+  },
+  fullscreenImage: {
+    width: "90%",
+    height: "70%",
+    resizeMode: "contain",
+  },  
   message: { 
     marginBottom: 12, 
     padding: 12, 
@@ -256,10 +403,12 @@ const styles = StyleSheet.create({
   },
   messageImage: { 
     marginTop: 8, 
-    width: 230, 
-    height: 150, 
+    width: "100%",  // Occupa tutto lo spazio disponibile
+    height: undefined, // Permette il ridimensionamento dinamico
+    aspectRatio: 1, // Mantiene il rapporto originale (puoi rimuoverlo se vuoi adattarlo liberamente)
     borderRadius: 12, 
-    alignSelf: "center"
+    alignSelf: "center",
+    resizeMode: "contain" // Assicura che l'immagine non venga tagliata
   },
   inputContainer: { 
     flexDirection: "row", 
@@ -279,7 +428,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9", 
   },
   sendButton: { 
-    backgroundColor: "#007BFF", 
+    backgroundColor: "#0055A4", 
     borderRadius: 24, 
     paddingVertical: 10, 
     paddingHorizontal: 16, 

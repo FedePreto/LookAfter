@@ -19,7 +19,7 @@ export default function PreviewConfirmation({ route, navigation }) {
   const [accessCount, setAccessCount] = useState(newAccessCount); // Initial access count
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
-  const textToRead = "Questa è un'anteprima dell'immagine che hai scattato, per favore assicurati che tutto sia chiaro e riconoscibile prima di procedere, poi tocca su Procedi ";
+  const textToRead = "Questa è un'anteprima della foto che hai scattato. Se non desideri rifare la foto premi su procedi.";
   const [fadeAnim] = useState(new Animated.Value(0));
 
   const __retakePicture = () => {
@@ -97,7 +97,7 @@ export default function PreviewConfirmation({ route, navigation }) {
                 onReplayAudio={() => Speech.speak(textToRead)}
                 />
 <View style={styles.titleContainer}>
-      <Text style={styles.text}>L'immagine risulta essere chiara?</Text>          
+      <Text style={styles.text}>Anteprima immagine</Text>          
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView
@@ -163,16 +163,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: width,
-    height: height * 0.5, // 40% dell'altezza dello schermo
-    borderRadius: 15,
-    shadowColor: '#000', // Subtle shadow for depth
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5, // Android shadow
-    borderWidth: 1,
-    borderColor: '#ddd', // Grigio chiaro per il bordo delle immagini
+    marginTop: 30, 
+    width: "100%",  // Occupa tutto lo spazio disponibile
+    height: undefined, // Permette il ridimensionamento dinamico
+    aspectRatio: 1, // Mantiene il rapporto originale (puoi rimuoverlo se vuoi adattarlo liberamente)
+    borderRadius: 12, 
+    alignSelf: "center",
+    resizeMode: "contain" // Assicura che l'immagine non venga tagliata
   },
   noImagesText: {
     fontSize: 18,
@@ -187,7 +184,7 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   button: {
-    backgroundColor: '#007fbb', // blu per i bottoni
+    backgroundColor: '#0055A4', // blu per i bottoni
     paddingVertical:15,
     borderRadius: 15,
     width: width * 0.46,
@@ -213,7 +210,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   textButton2: {
-    color: '#007fbb', // Bianco per il testo nei bottoni
+    color: '#0055A4', // Bianco per il testo nei bottoni
     fontSize: 22,
     fontWeight: 'bold',
   },

@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40,
-    color: '#007fbb',
+    color: '#0055A4',
     top: '10%',
     width: '100%',
   },
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
-    color: '#007fbb',
+    color: '#0055A4',
   },
   stepText: {
     fontSize: 20,
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   proceedButton: {
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     width: width * 0.92,
     height: height * 0.08,
     borderRadius: 15,

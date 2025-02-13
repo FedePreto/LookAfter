@@ -27,7 +27,7 @@ export default function ArtworkInformationsBalloon({ navigation, route }) {
       {/* Header Section */}
       <View style={styles.header}>
         <Image
-          source={require('../assets/balloon.png')} // Replace with actual image URI
+          source={require('../assets/ballon.jpg')} // Replace with actual image URI
           style={styles.headerImage}
         />
         <View style={styles.headerIcons}>

@@ -28,7 +28,7 @@ export default function CameraScreen3() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const textToRead = "Quando ti senti pronto, tocca il pulsante Scatta Foto.";
+  const textToRead = "Quando ti senti pronto, inquadra l'ambiente che ti circonda e tocca il pulsante Scatta Foto.";
 
   const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
 
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 40,
     alignSelf: "center",
-    backgroundColor: "#E8F0FF", 
+    backgroundColor: "#000", 
     borderRadius: 70,
     width: 90,
     height: 90,
@@ -248,11 +248,11 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 8,
     borderWidth: 3,
-    borderColor: "#007fbb", // Blue border for contrast
+    borderColor: "#0055A4", // Blue border for contrast
   },
   buttonText: {
     fontSize: 16,
-    color: "#007BFF", // Blue text for contrast
+    color: "#0055A4", // Blue text for contrast
     fontWeight: "bold",
   },
   camera: {

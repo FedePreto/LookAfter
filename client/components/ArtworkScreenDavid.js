@@ -34,7 +34,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-  const textToRead = `Piacere, sono ${artwork.title}, l'opera d'arte ${artwork.number} su 2. Premi Scegli per raggiungermi`;
+  const textToRead = `Piacere, sono ${artwork.title}, l'opera d'arte ${artwork.number} di 2. Premi Sceglimi per raggiungermi oppure usa i pulsanti Precedente e Successivo per navigare tra le altre opere.`;
   const [fadeAnim] = useState(new Animated.Value(0));
 
   
@@ -156,7 +156,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 
         <View style={styles.buttonsWrapper}>
         <TouchableOpacity onPress={handleChoose} style={styles.chooseButton}>
-          <Text style={styles.chooseButtonText}>Scegli</Text>
+          <Text style={styles.chooseButtonText}>Sceglimi</Text>
         </TouchableOpacity>
 
         {/* Pulsanti */}
@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   artworkImage: {
+    marginTop: 25,
     width: width * 0.9,
     height: width * 0.9,
     resizeMode: 'contain',
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   },
   
   chooseButton: {
-    backgroundColor: '#28a745', // Green
+    backgroundColor: '#000000', // Green
     width: width * 0.92, // Set width to match Previous/Next buttons
     height: height * 0.08,
     // width: '100%',
@@ -283,10 +284,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: height * 0.03,
+    marginTop: height * 0.06,
   },
   enabledButton: {
-    backgroundColor: '#007fbb', // Blu
+    backgroundColor: '#0055A4', // Blu
   },
   disabledButton: {
     backgroundColor: '#A9A9A9', // Grigio disabilitato

@@ -131,12 +131,12 @@ export default function RecordingScreen({ navigation,route }) {
 
 const styles = StyleSheet.create({
   mainScrollContainer: {
-    padding: 20,
+    padding: 15,
     height: "100%",
     width: "100%"
   },
   mainInnerContainer: {
-    gap: 50,
+    gap: 40,
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
     padding: 5,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#007fbb",
-    marginTop: 90
+    color: "#0055A4",
+    marginTop: 70
   },
   transcriptionContainer: {
     backgroundColor: "rgb(220,220,220)",
@@ -169,16 +169,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   microphoneButton: {
-    backgroundColor: "#007fbb",
+    backgroundColor: "#0055A4",
     width: 100,
     height: 100,
-    marginTop: 10,
+    marginTop: 5,
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
   proceedButton: {
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     width: width * 0.92,
     height: height * 0.08,
     borderRadius: 15,

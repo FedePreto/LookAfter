@@ -248,11 +248,11 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 8,
     borderWidth: 3,
-    borderColor: "#007fbb", // Blue border for contrast
+    borderColor: "#0055A4", // Blue border for contrast
   },
   buttonText: {
     fontSize: 16,
-    color: "#007BFF", // Blue text for contrast
+    color: "#0055A4", // Blue text for contrast
     fontWeight: "bold",
   },
   camera: {

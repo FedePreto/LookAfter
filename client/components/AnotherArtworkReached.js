@@ -68,7 +68,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
       {/* Header Section */}
       <View style={styles.header}>
         <Image
-          source={require('../assets/balloon.png')}
+          source={require('../assets/ballon.jpg')}
           style={styles.headerImage}
         />
       </View>
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
-    color: '#007fbb',
+    color: '#0055A4',
   },
   buttonLeft: {
     backgroundColor: '#FFFFFF', // blu per i bottoni
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
   buttonRight: {
-    backgroundColor: '#007fbb', // blu per i bottoni
+    backgroundColor: '#0055A4', // blu per i bottoni
     paddingVertical:15,
     borderRadius: 15,
     width: width * 0.46,
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonText2: {
-    color: '#007fbb', // Bianco per il testo nei bottoni
+    color: '#0055A4', // Bianco per il testo nei bottoni
     fontSize: 13,
     fontWeight: 'bold',
   },

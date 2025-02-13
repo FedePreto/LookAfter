@@ -5,7 +5,7 @@ const theme = {
       primary: '#007BFF', // Colore primario
       background: '#E8F0FF', // Sfondo
       textPrimary: '#000000', // Testo principale
-      textSecondary: '#007fbb', // Testo secondario
+      textSecondary: '#0055A4', // Testo secondario
       danger: '#e74c3c', // Colore per errori
     },
     fonts: {

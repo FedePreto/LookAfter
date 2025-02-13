@@ -186,7 +186,7 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
   },
   loadingContainer: {
     flex: 1,
@@ -228,9 +228,9 @@ const styles = StyleSheet.create({
     top:100
   },
   button: {
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     borderWidth: 2,
-    borderColor: '#007fbb',
+    borderColor: '#0055A4',
     paddingVertical: 30, // Increase vertical padding for a taller button
     paddingHorizontal: 80, // Increase horizontal padding for a wider button
     borderRadius: 30, // Slightly bigger border radius for a rounder appearance

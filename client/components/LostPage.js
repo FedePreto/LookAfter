@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       textAlign: 'center',
       marginBottom: 10,
-      color: '#007fbb',
+      color: '#0055A4',
     },
     headerImage: {
       width: 300,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     proceedButton: {
-      backgroundColor: '#007fbb',
+      backgroundColor: '#0055A4',
     width: width * 0.92,
     height: height * 0.08,
     borderRadius: 15,

@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     top: 0, // Position the header at the top
     zIndex: 1000,
     height: 60,
-    backgroundColor: '#007fbb', // Header background color (consistent blue)
+    backgroundColor: '#0055A4', // Header background color (consistent blue)
     // Remove shadow and elevation to ensure a uniform color
     shadowColor: 'transparent', // Prevent shadows if not needed
     shadowOffset: { width: 0, height: 0 }, // Reset shadow offset
@@ -122,12 +122,12 @@ const styles = StyleSheet.create({
     height: 36,
   },
   otherArtworksButton: {
-    backgroundColor: '#007fbb',
+    backgroundColor: '#0055A4',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
     borderWidth: 2,        // Set the border width to your desired thickness
-    borderColor: '#007fbb', // Set the border color to white
+    borderColor: '#0055A4', // Set the border color to white
   },
   
   otherArtworksText: {
