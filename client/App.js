@@ -136,11 +136,11 @@ function MainPage({ navigation }) {
             <Text style={styles.buttonText}>Inizia</Text>
           </TouchableOpacity>
         <Text style={styles.description}>
-         VIVI LO SPAZIO,
+         VIVI LO SPAZIO, PRENDI IN MANO IL TUO CAMMINO
         </Text>
-        <Text style={styles.description}>
+        {/* <Text style={styles.description}>
         PRENDI IN MANO IL TUO CAMMINO
-        </Text>
+        </Text> */}
         <Animated.View
           style={{
             transform: [
@@ -227,9 +227,11 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.primary,
     color: theme.colors.textSecondary, 
     textAlign: 'center',
-    // marginBottom: 20,
-    top:100
-  },
+    marginBottom: 20,
+    top: 100,
+    paddingHorizontal: 20, // Adjust the value as needed
+},
+
   button: {
     backgroundColor: '#0055A4',
     borderWidth: 2,

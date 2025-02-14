@@ -27,7 +27,7 @@ export default function ArtworkInformations({ navigation, route }) {
       ],
     },
     david: {
-      name: 'David',
+      name: 'Il David',
       image: require('../assets/david.png'),
       description: [
         "Ciao, sono David, il capolavoro di Michelangelo, scolpito tra il 1501 e il 1504. La mia figura imponente rappresenta forza e coraggio. Se potessi toccarmi, sentiresti i muscoli tesi e le vene in rilievo sulle mani, come se il sangue vi scorresse ancora.",
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 30,
     color: '#555',
-    lineHeight: 28,
+    lineHeight: 30,
     textAlign: 'left',
     marginBottom: 15,
     paddingHorizontal: 10, 

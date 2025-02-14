@@ -168,16 +168,16 @@ const styles = StyleSheet.create({
   
  
   headerImage: {
-    width: 140,
-    height: 140,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: '#54A8E8',
-    shadowColor: '#54A8E8',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5,
+    width: 160,
+    height: 160,
+    // borderRadius: 50,
+    // borderWidth: 2,
+    borderColor: 'transparent',
+    shadowColor: 'transparent',
+    // shadowOffset: { width: 0, height: 4 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 6,
+    // elevation: 5,
     top: '15%',
     alignContent: 'contain',
     resizeMode: 'contain',
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 0,
+    bottom:20,
   },
 
   directionContainer: {

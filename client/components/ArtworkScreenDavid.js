@@ -228,11 +228,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: theme.colors.textSecondary,
     marginTop: height * 0.1,
+    top:15,
   },
   artworkSubtitle: {
     fontSize: 20,
     textAlign: 'center',
     color: theme.colors.textSecondary,
+    top: 15,
   },
   buttonsWrapper: {
     // position: 'absolute',

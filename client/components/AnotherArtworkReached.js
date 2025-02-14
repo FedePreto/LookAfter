@@ -87,10 +87,10 @@ export default function AnotherArtworkReached({ navigation, route }) {
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleProceedMonalisa} style={styles.buttonLeft}>
-          <Text style={styles.buttonText2}>Portami da {artworkKey}</Text>
+          <Text style={styles.buttonText2 } numberOfLines={2} >Portami da {artworkKey}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProceed} style={styles.buttonRight}>
-          <Text style={styles.buttonText}>Conoscimi meglio</Text>
+          <Text style={styles.buttonText} numberOfLines={2} >Conoscimi meglio</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    bottom:10,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -174,13 +175,18 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
   buttonText: {
-    color: '#FFFFFF', // Bianco per il testo nei bottoni
-    fontSize: 22,
+    color: '#FFFFFF',
+    fontSize: 18,
     fontWeight: 'bold',
-  },
-  buttonText2: {
-    color: '#0055A4', // Bianco per il testo nei bottoni
-    fontSize: 22,
+    textAlign: 'center', // Ensures text stays centered
+    flexWrap: 'wrap', // Allows text to wrap inside the button
+},
+buttonText2: {
+    color: '#0055A4',
+    fontSize: 18,
     fontWeight: 'bold',
-  },
+    textAlign: 'center',
+    flexWrap: 'wrap',
+},
+
 });
