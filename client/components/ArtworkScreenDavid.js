@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import { Dimensions } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler'; // Import PanGestureHandler
 import CustomNavigationBar from './CustomNavigationBar.js';
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,6 +30,7 @@ const artworkDetails = {
 };
 
 export default function ChooseArtworkScreen({ route, navigation }) {
+    const fontsLoaded = useCustomFonts();
   const { artworkKey } = route.params || {}; // Indica quale opera visualizzare
   const artwork = artworkDetails[artworkKey];
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -38,23 +40,32 @@ export default function ChooseArtworkScreen({ route, navigation }) {
   const [fadeAnim] = useState(new Animated.Value(0));
 
   
-    useEffect(() => {
-          if (isAudioOn) {
-            Speech.speak(textToRead); // Parla solo se isAudioOn è true
-          }
+    useFocusEffect(
+        useCallback(() => {
+          setActiveScreen('ArtworkSCreenDavid'); // Update the active screen
           
+          if (fontsLoaded && isAudioOn) {
+            Speech.stop(); // Stop any ongoing speech
+            
+            setTimeout(() => {
+              console.log("Speaking:", textToRead); // Debugging: Check if this runs
+              
+              Speech.speak(textToRead, {
+                language: 'it-IT', // Ensure Italian is selected if needed
+                pitch: 1.0, // Normal pitch
+                rate: 0.9, // Adjust speed if needed
+                onStart: () => console.log("Speech started"),
+                onDone: () => console.log("Speech finished"),
+                onError: (error) => console.error("Speech error:", error),
+              });
+            }, 500); // Delay to ensure smooth playback
+          }
+      
           return () => {
-            Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+            Speech.stop(); // Stop speech when leaving the screen
           };
-        }, [isAudioOn, textToRead]); // Dipendenza: si aggiorna se cambia isAudioOn
-    
-        useEffect(() => {
-            Animated.timing(fadeAnim, {
-              toValue: 1,
-              duration: 2000,
-              useNativeDriver: true,
-            }).start();
-          }, []);
+        }, [fontsLoaded, isAudioOn, textToRead])
+      );
     
 
   // useEffect(() => {
@@ -133,7 +144,14 @@ export default function ChooseArtworkScreen({ route, navigation }) {
           toggleDropdown={toggleDropdown}
           showBackButton={false}
           showAudioButton={true}
-          onReplayAudio={() => Speech.speak(textToRead)}
+          onReplayAudio={() => Speech.speak(textToRead, {
+                                  language: 'it-IT', // Ensure Italian is selected if needed
+                                  pitch: 1.0, // Normal pitch
+                                  rate: 0.9, // Adjust speed if needed
+                                  onStart: () => console.log("Speech started"),
+                                  onDone: () => console.log("Speech finished"),
+                                  onError: (error) => console.error("Speech error:", error),
+                                })}
         />
 
         {/* Titolo */}

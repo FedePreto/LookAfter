@@ -1,37 +1,48 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, Animated, SafeAreaView } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
 import { Dimensions } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
 export default function PreviewScreen({ route, navigation }) {
+   const fontsLoaded = useCustomFonts();
   const { images } = route.params || {}; // Receive the image from CameraScreen
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const textToRead = "Questa è un'anteprima della foto che hai scattato. Se non desideri rifare la foto premi su procedi.";
   const [fadeAnim] = useState(new Animated.Value(0));
   
-    useEffect(() => {
-      if (isAudioOn) {
-        Speech.speak(textToRead); // Parla solo se isAudioOn è true
-      }
+    useFocusEffect(
+        useCallback(() => {
+          setActiveScreen('PreviewScreen'); // Update the active screen
+          
+          if (fontsLoaded && isAudioOn) {
+            Speech.stop(); // Stop any ongoing speech
+            
+            setTimeout(() => {
+              console.log("Speaking:", textToRead); // Debugging: Check if this runs
+              
+              Speech.speak(textToRead, {
+                language: 'it-IT', // Ensure Italian is selected if needed
+                pitch: 1.0, // Normal pitch
+                rate: 0.9, // Adjust speed if needed
+                onStart: () => console.log("Speech started"),
+                onDone: () => console.log("Speech finished"),
+                onError: (error) => console.error("Speech error:", error),
+              });
+            }, 500); // Delay to ensure smooth playback
+          }
       
-      return () => {
-        Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-      };
-    }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
-
-    useEffect(() => {
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 2000,
-          useNativeDriver: true,
-        }).start();
-      }, []);
+          return () => {
+            Speech.stop(); // Stop speech when leaving the screen
+          };
+        }, [fontsLoaded, isAudioOn, textToRead])
+      );
 
   // useEffect(() => {
   //   setActiveScreen('Preview');
@@ -85,7 +96,14 @@ export default function PreviewScreen({ route, navigation }) {
           toggleDropdown={toggleDropdown}
           showBackButton={false}
           showAudioButton={true}
-          onReplayAudio={() => Speech.speak(textToRead)}
+          onReplayAudio={() => Speech.speak(textToRead, {
+                                  language: 'it-IT', // Ensure Italian is selected if needed
+                                  pitch: 1.0, // Normal pitch
+                                  rate: 0.9, // Adjust speed if needed
+                                  onStart: () => console.log("Speech started"),
+                                  onDone: () => console.log("Speech finished"),
+                                  onError: (error) => console.error("Speech error:", error),
+                                })}
         />
         <View style={styles.titleContainer}>
           <Text style={styles.text}>Anteprima foto</Text>

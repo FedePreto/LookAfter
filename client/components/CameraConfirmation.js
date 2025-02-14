@@ -1,17 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image, Platform, Animated,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { Camera,CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
 import * as MediaLibrary from 'expo-media-library';
-import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native'; // Importa useRoute
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import HamburgerMenu from './HamBurgerMenu';
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
 
 export default function CameraConfirmation() {
+  const fontsLoaded = useCustomFonts();
     const [startCamera, setStartCamera] = useState(false);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [capturedImage, setCapturedImage] = useState(null);
@@ -48,15 +49,32 @@ export default function CameraConfirmation() {
     })();
   }, []);
 
-  useEffect(() => {
-        if (isAudioOn) {
-          Speech.speak(textToRead); // Parla solo se isAudioOn è true
-        }
+  useFocusEffect(
+      useCallback(() => {
+        setActiveScreen('App'); // Update the active screen
         
+        if (fontsLoaded && isAudioOn) {
+          Speech.stop(); // Stop any ongoing speech
+          
+          setTimeout(() => {
+            console.log("Speaking:", textToRead); // Debugging: Check if this runs
+            
+            Speech.speak(textToRead, {
+              language: 'it-IT', // Ensure Italian is selected if needed
+              pitch: 1.0, // Normal pitch
+              rate: 0.9, // Adjust speed if needed
+              onStart: () => console.log("Speech started"),
+              onDone: () => console.log("Speech finished"),
+              onError: (error) => console.error("Speech error:", error),
+            });
+          }, 500); // Delay to ensure smooth playback
+        }
+    
         return () => {
-          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+          Speech.stop(); // Stop speech when leaving the screen
         };
-      }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+      }, [fontsLoaded, isAudioOn, textToRead])
+    ); // Dipendenza: si aggiorna se cambia isAudioOn
   
       useEffect(() => {
           Animated.timing(fadeAnim, {
@@ -133,7 +151,14 @@ export default function CameraConfirmation() {
             toggleDropdown={toggleDropdown}
             showBackButton={false}
             showAudioButton={true}
-            onReplayAudio={() => Speech.speak(textToRead)}
+            onReplayAudio={() => Speech.speak(textToRead, {
+                                    language: 'it-IT', // Ensure Italian is selected if needed
+                                    pitch: 1.0, // Normal pitch
+                                    rate: 0.9, // Adjust speed if needed
+                                    onStart: () => console.log("Speech started"),
+                                    onDone: () => console.log("Speech finished"),
+                                    onError: (error) => console.error("Speech error:", error),
+                                  })}
             />
           
         {Platform.OS === 'web' ? (

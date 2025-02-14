@@ -1,30 +1,49 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Animated,TouchableWithoutFeedback } from 'react-native';
 import { Dimensions } from 'react-native';
 import CustomNavigationBar from './CustomNavigationBar.js';
-import theme from '../config/theme';
+import theme ,{useCustomFonts}from '../config/theme';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
 export default function AnotherArtworkReached({ navigation, route }) {
+  const fontsLoaded = useCustomFonts();
   const { artworkKey } = route.params;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const textToRead = `Non hai raggiunto David, ma hai invece raggiunto me: Balloon Girl! Ora hai due opzioni: posso riportarti dal David oppure darti informazioni su di me.`;
   
-    const { isAudioOn } = useContext(AudioContext); 
+    const { isAudioOn, setActiveScreen } = useContext(AudioContext); 
 
-  useEffect(() => {
-        if (isAudioOn) {
-          Speech.speak(textToRead); // Parla solo se isAudioOn è true
-        }
-        
-        return () => {
-          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-        };
-      }, [isAudioOn]);
+  useFocusEffect(
+        useCallback(() => {
+          setActiveScreen('AnotherArtworkReached'); // Update the active screen
+          
+          if (fontsLoaded && isAudioOn) {
+            Speech.stop(); // Stop any ongoing speech
+            
+            setTimeout(() => {
+              console.log("Speaking:", textToRead); // Debugging: Check if this runs
+              
+              Speech.speak(textToRead, {
+                language: 'it-IT', // Ensure Italian is selected if needed
+                pitch: 1.0, // Normal pitch
+                rate: 0.9, // Adjust speed if needed
+                onStart: () => console.log("Speech started"),
+                onDone: () => console.log("Speech finished"),
+                onError: (error) => console.error("Speech error:", error),
+              });
+            }, 500); // Delay to ensure smooth playback
+          }
+      
+          return () => {
+            Speech.stop(); // Stop speech when leaving the screen
+          };
+        }, [fontsLoaded, isAudioOn, textToRead])
+      ); 
   
       useEffect(() => {
           Animated.timing(fadeAnim, {
@@ -63,13 +82,21 @@ export default function AnotherArtworkReached({ navigation, route }) {
                 toggleDropdown={toggleDropdown}
                 showBackButton={false}
                 showAudioButton={true}
-                onReplayAudio={() => Speech.speak(textToRead)}
+                onReplayAudio={() => Speech.speak(textToRead, {
+                                        language: 'it-IT', // Ensure Italian is selected if needed
+                                        pitch: 1.0, // Normal pitch
+                                        rate: 0.9, // Adjust speed if needed
+                                        onStart: () => console.log("Speech started"),
+                                        onDone: () => console.log("Speech finished"),
+                                        onError: (error) => console.error("Speech error:", error),
+                                      })}
                 />
       {/* Header Section */}
       <View style={styles.header}>
         <Image
           source={require('../assets/ballon.jpg')}
           style={styles.headerImage}
+          resizeMode="contain"
         />
       </View>
 

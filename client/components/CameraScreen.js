@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback, Alert, Platform, Animated, Vibration, SafeAreaView } from 'react-native';
 import { Camera, CameraView, CameraType } from 'expo-camera';
 import Webcam from 'react-webcam';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import * as MediaLibrary from 'expo-media-library';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
@@ -14,6 +14,8 @@ import theme, { useCustomFonts } from '../config/theme';
 
 
 export default function CameraScreen() {
+  const fontsLoaded = useCustomFonts();
+
   const [startCamera, setStartCamera] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -28,19 +30,40 @@ export default function CameraScreen() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  
+
   const textToRead = "Quando ti senti pronto, inquadra l'ambiente che ti circonda e tocca il pulsante Scatta Foto.";
 
-  const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
-
-  useEffect(() => {
-    if (isAudioOn) {
-      Speech.speak(textToRead); // Parla solo se isAudioOn è true
-    }
-    
-    return () => {
-      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-    };
-  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+  const { isAudioOn,setActiveScreen } = useContext(AudioContext); // Prende lo stato audio globale
+  console.log("audio icon status in camerascreen ", isAudioOn)
+  useFocusEffect(
+    useCallback(() => {
+      setActiveScreen('CameraScreen'); // Update the active screen
+      
+      
+      if (fontsLoaded && isAudioOn) {
+        Speech.stop(); // Stop any ongoing speech
+        
+        setTimeout(() => {
+          console.log("Speaking:", textToRead); // Debugging: Check if this runs
+          
+          Speech.speak(textToRead, {
+            language: 'it-IT', // Ensure Italian is selected if needed
+            pitch: 1.0, // Normal pitch
+            rate: 0.9, // Adjust speed if needed
+            onStart: () => console.log("Speech started"),
+            onDone: () => console.log("Speech finished"),
+            onError: (error) => console.error("Speech error:", error),
+          });
+        }, 500); // Delay to ensure smooth playback
+      }
+  
+      return () => {
+        Speech.stop(); // Stop speech when leaving the screen
+      };
+    }, [fontsLoaded, isAudioOn, textToRead])
+  );
+   // Dipendenza: si aggiorna se cambia isAudioOn
 
 
   useEffect(() => {
@@ -130,7 +153,14 @@ export default function CameraScreen() {
           toggleDropdown={toggleDropdown}
           showBackButton={false}
           showAudioButton={true}
-          onReplayAudio={() => Speech.speak(textToRead)}
+          onReplayAudio={() => Speech.speak(textToRead, {
+                                  language: 'it-IT', // Ensure Italian is selected if needed
+                                  pitch: 1.0, // Normal pitch
+                                  rate: 0.9, // Adjust speed if needed
+                                  onStart: () => console.log("Speech started"),
+                                  onDone: () => console.log("Speech finished"),
+                                  onError: (error) => console.error("Speech error:", error),
+                                })}
           />
         {Platform.OS === "web" ? (
           <View style={styles.cameraContainer}>

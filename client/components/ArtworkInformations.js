@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext , useCallback} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, ScrollView, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import HamburgerMenu from './HamBurgerMenu';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomNavigationBar from './CustomNavigationBar.js';
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
 
 export default function ArtworkInformations({ navigation, route }) {
+  const fontsLoaded = useCustomFonts();
   const { artworkKey } = route.params;
   const { isAudioOn, setIsAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -64,30 +66,38 @@ export default function ArtworkInformations({ navigation, route }) {
 
   const [fadeAnim] = useState(new Animated.Value(0));
 
-  useEffect(() => {
-    setActiveScreen('ArtworkInformations');
-
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
-
-    if (isAudioOn && activeScreen === 'ArtworkInformations') {
-      Speech.speak(textToRead);
-    } else {
-      Speech.stop();
-    }
-
-    const unsubscribe = navigation.addListener('blur', () => {
-      Speech.stop(); // Stop speech when the screen is no longer in focus
-    });
-
-    return () => {
-      Speech.stop();
-      unsubscribe();
-    };
-  }, [textToRead, isAudioOn, activeScreen]);
+  useFocusEffect(
+    useCallback(() => {
+      setActiveScreen('ArtworkInformations');
+  
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true,
+      }).start();
+  
+      Speech.stop(); // Ensure no overlapping speech
+  
+      setTimeout(() => {
+        if (isAudioOn) {
+          console.log("Speaking:", textToRead);
+          Speech.speak(textToRead, {
+            language: 'it-IT',
+            pitch: 1.0,
+            rate: 0.9,
+            onStart: () => console.log("Speech started"),
+            onDone: () => console.log("Speech finished"),
+            onError: (error) => console.error("Speech error:", error),
+          });
+        }
+      }, 500); // Add delay to avoid race conditions
+  
+      return () => {
+        Speech.stop();
+      };
+    }, [textToRead, isAudioOn])
+  );
+  
 
   const handleReplayAudio = () => {
     if (!isAudioOn && activeScreen === 'ArtworkInformations') {
@@ -117,7 +127,14 @@ export default function ArtworkInformations({ navigation, route }) {
                 toggleDropdown={toggleDropdown}
                 showBackButton={false}
                 showAudioButton={true}
-                onReplayAudio={() => Speech.speak(textToRead)}
+                onReplayAudio={() => Speech.speak(textToRead, {
+                                        language: 'it-IT', // Ensure Italian is selected if needed
+                                        pitch: 1.0, // Normal pitch
+                                        rate: 0.9, // Adjust speed if needed
+                                        onStart: () => console.log("Speech started"),
+                                        onDone: () => console.log("Speech finished"),
+                                        onError: (error) => console.error("Speech error:", error),
+                                      })}
                 showNextArtwork = {true} 
                 />
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={true}>

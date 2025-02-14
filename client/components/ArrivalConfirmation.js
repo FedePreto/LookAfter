@@ -1,10 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, TouchableOpacity, Alert, Animated } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
 import CustomNavigationBar from './CustomNavigationBar.js';
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
 import { Dimensions } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -23,21 +24,40 @@ const artworkDetails = {
 
 
 export default function ConfirmArtwork({ route, navigation }) {
+  const fontsLoaded = useCustomFonts();
   const { artworkKey } = route.params || {};
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isAudioOn } = useContext(AudioContext);
+  const { isAudioOn, setActiveScreen } = useContext(AudioContext);
   const textToRead = `Per confermare che mi hai raggiunto, premi su conferma e scattami una foto!`;
   const [fadeAnim] = useState(new Animated.Value(0));
   const artwork = artworkDetails[artworkKey];
 
-  useEffect(() => {
-    if (isAudioOn) {
-      Speech.speak(textToRead);
-    }
-    return () => {
-      Speech.stop();
-    };
-  }, [isAudioOn]);
+  useFocusEffect(
+      useCallback(() => {
+        setActiveScreen('ArrivalConfirmation'); // Update the active screen
+        
+        if (fontsLoaded && isAudioOn) {
+          Speech.stop(); // Stop any ongoing speech
+          
+          setTimeout(() => {
+            console.log("Speaking:", textToRead); // Debugging: Check if this runs
+            
+            Speech.speak(textToRead, {
+              language: 'it-IT', // Ensure Italian is selected if needed
+              pitch: 1.0, // Normal pitch
+              rate: 0.9, // Adjust speed if needed
+              onStart: () => console.log("Speech started"),
+              onDone: () => console.log("Speech finished"),
+              onError: (error) => console.error("Speech error:", error),
+            });
+          }, 500); // Delay to ensure smooth playback
+        }
+    
+        return () => {
+          Speech.stop(); // Stop speech when leaving the screen
+        };
+      }, [fontsLoaded, isAudioOn, textToRead])
+    );
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -79,7 +99,14 @@ export default function ConfirmArtwork({ route, navigation }) {
           toggleDropdown={toggleDropdown}
           showBackButton={true}
           showAudioButton={true}
-          onReplayAudio={() => Speech.speak(textToRead)}
+          onReplayAudio={() => Speech.speak(textToRead, {
+                                  language: 'it-IT', // Ensure Italian is selected if needed
+                                  pitch: 1.0, // Normal pitch
+                                  rate: 0.9, // Adjust speed if needed
+                                  onStart: () => console.log("Speech started"),
+                                  onDone: () => console.log("Speech finished"),
+                                  onError: (error) => console.error("Speech error:", error),
+                                })}
         />
         
         <View style={styles.container2}>

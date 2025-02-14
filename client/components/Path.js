@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, TouchableOpacity, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
 import { Ionicons } from '@expo/vector-icons';
 import CustomNavigationBar from './CustomNavigationBar';
-import theme from '../config/theme';
+import theme, {useCustomFonts}from '../config/theme';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 export default function PathDetails({ route, navigation }) {
+  const fontsLoaded = useCustomFonts();
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
@@ -47,15 +49,32 @@ export default function PathDetails({ route, navigation }) {
   }
 
   
-  useEffect(() => {
-        if (isAudioOn) {
-          Speech.speak(textToRead); // Parla solo se isAudioOn è true
-        }
+  useFocusEffect(
+      useCallback(() => {
+        setActiveScreen('Path'); // Update the active screen
         
+        if (fontsLoaded && isAudioOn) {
+          Speech.stop(); // Stop any ongoing speech
+          
+          setTimeout(() => {
+            console.log("Speaking:", textToRead); // Debugging: Check if this runs
+            
+            Speech.speak(textToRead, {
+              language: 'it-IT', // Ensure Italian is selected if needed
+              pitch: 1.0, // Normal pitch
+              rate: 0.9, // Adjust speed if needed
+              onStart: () => console.log("Speech started"),
+              onDone: () => console.log("Speech finished"),
+              onError: (error) => console.error("Speech error:", error),
+            });
+          }, 500); // Delay to ensure smooth playback
+        }
+    
         return () => {
-          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
+          Speech.stop(); // Stop speech when leaving the screen
         };
-      }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+      }, [fontsLoaded, isAudioOn, textToRead])
+    ); // Dipendenza: si aggiorna se cambia isAudioOn
   
       useEffect(() => {
           Animated.timing(fadeAnim, {
@@ -117,7 +136,14 @@ export default function PathDetails({ route, navigation }) {
             toggleDropdown={toggleDropdown}
             showBackButton={true}
             showAudioButton={true}
-            onReplayAudio={() => Speech.speak(textToRead)}
+            onReplayAudio={() => Speech.speak(textToRead, {
+                                    language: 'it-IT', // Ensure Italian is selected if needed
+                                    pitch: 1.0, // Normal pitch
+                                    rate: 0.9, // Adjust speed if needed
+                                    onStart: () => console.log("Speech started"),
+                                    onDone: () => console.log("Speech finished"),
+                                    onError: (error) => console.error("Speech error:", error),
+                                  })}
             />
        
        

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext,useCallback } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Animated,ScrollView,TouchableWithoutFeedback, SafeAreaView } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native'; // Importa useRoute
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native'; // Importa useRoute
 import { Dimensions } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech';
@@ -14,11 +14,12 @@ const { width, height } = Dimensions.get('window');
 let newAccessCount = 0
 
 export default function PreviewConfirmation({ route, navigation }) {
+  const fontsLoaded = useCustomFonts();
   const { images } = route.params || {}; // Receive images array from CameraScreen
   const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
   const [accessCount, setAccessCount] = useState(newAccessCount); // Initial access count
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { isAudioOn } = useContext(AudioContext); // Prende lo stato audio globale
+  const { isAudioOn , setActiveScreen} = useContext(AudioContext); // Prende lo stato audio globale
   const textToRead = "Questa è un'anteprima della foto che hai scattato. Se non desideri rifare la foto premi su procedi.";
   const [fadeAnim] = useState(new Animated.Value(0));
 
@@ -26,15 +27,32 @@ export default function PreviewConfirmation({ route, navigation }) {
     Speech.stop();
     navigation.goBack(); // Go back to CameraScreen
   };
-  useEffect(() => {
-    if (isAudioOn) {
-      Speech.speak(textToRead); // Parla solo se isAudioOn è true
-    }
+  useFocusEffect(
+      useCallback(() => {
+        setActiveScreen('PreviewConfirmation'); // Update the active screen
+        
+        if (fontsLoaded && isAudioOn) {
+          Speech.stop(); // Stop any ongoing speech
+          
+          setTimeout(() => {
+            console.log("Speaking:", textToRead); // Debugging: Check if this runs
+            
+            Speech.speak(textToRead, {
+              language: 'it-IT', // Ensure Italian is selected if needed
+              pitch: 1.0, // Normal pitch
+              rate: 0.9, // Adjust speed if needed
+              onStart: () => console.log("Speech started"),
+              onDone: () => console.log("Speech finished"),
+              onError: (error) => console.error("Speech error:", error),
+            });
+          }, 500); // Delay to ensure smooth playback
+        }
     
-    return () => {
-      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-    };
-  }, [isAudioOn]); // Dipendenza: si aggiorna se cambia isAudioOn
+        return () => {
+          Speech.stop(); // Stop speech when leaving the screen
+        };
+      }, [fontsLoaded, isAudioOn, textToRead])
+    ); // Dipendenza: si aggiorna se cambia isAudioOn
 
   useEffect(() => {
       Animated.timing(fadeAnim, {
@@ -94,7 +112,14 @@ export default function PreviewConfirmation({ route, navigation }) {
                 toggleDropdown={toggleDropdown}
                 showBackButton={false}
                 showAudioButton={true}
-                onReplayAudio={() => Speech.speak(textToRead)}
+                onReplayAudio={() => Speech.speak(textToRead, {
+                                        language: 'it-IT', // Ensure Italian is selected if needed
+                                        pitch: 1.0, // Normal pitch
+                                        rate: 0.9, // Adjust speed if needed
+                                        onStart: () => console.log("Speech started"),
+                                        onDone: () => console.log("Speech finished"),
+                                        onError: (error) => console.error("Speech error:", error),
+                                      })}
                 />
 <View style={styles.titleContainer}>
       <Text style={styles.text}>Anteprima immagine</Text>          

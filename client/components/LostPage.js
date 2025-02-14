@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image,TouchableWithoutFeedback, Alert, Platform, Animated, Vibration, SafeAreaView } from 'react-native';
 import { AudioContext } from './AudioProvider';
-import { useNavigation } from '@react-navigation/native';
-import theme from '../config/theme';
+import { useNavigation, useFocusEffect} from '@react-navigation/native';
+import theme, {useCustomFonts} from '../config/theme';
 import * as Speech from 'expo-speech';
 import CustomNavigationBar from './CustomNavigationBar.js';
 import { Dimensions } from 'react-native';
@@ -11,22 +11,40 @@ const { width, height } = Dimensions.get('window');
 
 export default function LostPage({ navigation }) {
   // const navigation = useNavigation();
+  const fontsLoaded = useCustomFonts();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
    const textToRead = "Ti sei perso, per favore fai un'altra foto dell'area attorno a te!";
   
-    const { isAudioOn } = useContext(AudioContext);
+    const { isAudioOn, setActiveScreen} = useContext(AudioContext);
 
 
-    useEffect(() => {
-        if (isAudioOn) {
-          Speech.speak(textToRead); // Parla solo se isAudioOn è true
-        }
+    useFocusEffect(
+          useCallback(() => {
+            setActiveScreen('LostPage'); // Update the active screen
+            
+            if (fontsLoaded && isAudioOn) {
+              Speech.stop(); // Stop any ongoing speech
+              
+              setTimeout(() => {
+                console.log("Speaking:", textToRead); // Debugging: Check if this runs
+                
+                Speech.speak(textToRead, {
+                  language: 'it-IT', // Ensure Italian is selected if needed
+                  pitch: 1.0, // Normal pitch
+                  rate: 0.9, // Adjust speed if needed
+                  onStart: () => console.log("Speech started"),
+                  onDone: () => console.log("Speech finished"),
+                  onError: (error) => console.error("Speech error:", error),
+                });
+              }, 500); // Delay to ensure smooth playback
+            }
         
-        return () => {
-          Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-        };
-      }, [isAudioOn]);
+            return () => {
+              Speech.stop(); // Stop speech when leaving the screen
+            };
+          }, [fontsLoaded, isAudioOn, textToRead])
+        ); 
 
       useEffect(() => {
           Animated.timing(fadeAnim, {
@@ -61,7 +79,14 @@ export default function LostPage({ navigation }) {
           toggleDropdown={toggleDropdown}
           showBackButton={false}
           showAudioButton={true}
-          onReplayAudio={() => Speech.speak(textToRead)}
+          onReplayAudio={() => Speech.speak(textToRead, {
+                                  language: 'it-IT', // Ensure Italian is selected if needed
+                                  pitch: 1.0, // Normal pitch
+                                  rate: 0.9, // Adjust speed if needed
+                                  onStart: () => console.log("Speech started"),
+                                  onDone: () => console.log("Speech finished"),
+                                  onError: (error) => console.error("Speech error:", error),
+                                })}
           />
         {/* Header Section */}
       <View style={styles.header}>

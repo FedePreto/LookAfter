@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { StyleSheet, Text, View, Image, Alert, TouchableWithoutFeedback, TouchableOpacity, Animated } from 'react-native';
 import HamburgerMenu from './HamBurgerMenu';
 import * as Speech from 'expo-speech';
 import { AudioContext } from './AudioProvider';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
 import CustomNavigationBar from './CustomNavigationBar.js';
 const { width, height } = Dimensions.get('window');
 
 export default function PathDetails({ route, navigation }) {
+  const fontsLoaded = useCustomFonts();
   const { artworkKey } = route.params || {}; // Identifica quale opera gestire
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
@@ -57,14 +59,32 @@ export default function PathDetails({ route, navigation }) {
 
   const [fadeAnim] = useState(new Animated.Value(0));
 
-  useEffect(() => {
-    if (isAudioOn) {
-      Speech.speak(textToRead); // Parla solo se isAudioOn è true
-    }
-    return () => {
-      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-    };
-  }, [isAudioOn]);
+  useFocusEffect(
+      useCallback(() => {
+        setActiveScreen('ArtworkReached'); // Update the active screen
+        
+        if (fontsLoaded && isAudioOn) {
+          Speech.stop(); // Stop any ongoing speech
+          
+          setTimeout(() => {
+            console.log("Speaking:", textToRead); // Debugging: Check if this runs
+            
+            Speech.speak(textToRead, {
+              language: 'it-IT', // Ensure Italian is selected if needed
+              pitch: 1.0, // Normal pitch
+              rate: 0.9, // Adjust speed if needed
+              onStart: () => console.log("Speech started"),
+              onDone: () => console.log("Speech finished"),
+              onError: (error) => console.error("Speech error:", error),
+            });
+          }, 500); // Delay to ensure smooth playback
+        }
+    
+        return () => {
+          Speech.stop(); // Stop speech when leaving the screen
+        };
+      }, [fontsLoaded, isAudioOn, textToRead])
+    );
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -93,7 +113,14 @@ export default function PathDetails({ route, navigation }) {
           toggleDropdown={toggleDropdown}
           showBackButton={true}
           showAudioButton={true}
-          onReplayAudio={() => Speech.speak(textToRead)}
+          onReplayAudio={() => Speech.speak(textToRead, {
+                                  language: 'it-IT', // Ensure Italian is selected if needed
+                                  pitch: 1.0, // Normal pitch
+                                  rate: 0.9, // Adjust speed if needed
+                                  onStart: () => console.log("Speech started"),
+                                  onDone: () => console.log("Speech finished"),
+                                  onError: (error) => console.error("Speech error:", error),
+                                })}
         />
       
         <View style ={styles.container2}>
@@ -136,19 +163,19 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   headerImage: {
-    width: 140,
-    height: 140,
-    resizeMode: 'contain',
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: '#54A8E8',
-    shadowColor: '#54A8E8',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 5,
+    width: 160,
+    height: 160,
+    // borderRadius: 50,
+    // borderWidth: 2,
+    borderColor: 'transparent',
+    shadowColor: 'transparent',
+    // shadowOffset: { width: 0, height: 4 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 6,
+    // elevation: 5,
     top: '15%',
-    alignContent: 'center',
+    alignContent: 'contain',
+    resizeMode: 'contain',
     zIndex: 30,
   },
   artworkTitle: {

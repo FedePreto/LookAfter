@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useContext} from "react";
+import { useEffect, useRef, useState, useContext, useCallback} from "react";
 import Icon from "react-native-vector-icons/FontAwesome"; 
 import CustomNavigationBar from "./CustomNavigationBar.js";
 import {
@@ -17,11 +17,14 @@ import { recordSpeech } from './functions.js';
 import { Dimensions } from 'react-native';
 import { AudioContext } from './AudioProvider';
 import * as Speech from 'expo-speech'; 
+import theme, {useCustomFonts}from '../config/theme';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window');
 
 
 
 export default function RecordingScreen({ navigation,route }) {
+  const fontsLoaded = useCustomFonts();
   const [transcribedSpeech, setTranscribedSpeech] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
@@ -34,14 +37,32 @@ export default function RecordingScreen({ navigation,route }) {
   const textToRead = "Tieni premuto il pulsante del microfono per iniziare la registrazione. Rilascia il pulsante per terminare la registrazione. Per inviare il testo trascritto premi il pulsante Invia.";
 
 
-  useEffect(() => {
-    if (isAudioOn) {
-      Speech.speak(textToRead); // Parla solo se isAudioOn è true
-    }
-    return () => {
-      Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-    };
-  }, [isAudioOn]);
+  useFocusEffect(
+        useCallback(() => {
+          setActiveScreen('Path'); // Update the active screen
+          
+          if (fontsLoaded && isAudioOn) {
+            Speech.stop(); // Stop any ongoing speech
+            
+            setTimeout(() => {
+              console.log("Speaking:", textToRead); // Debugging: Check if this runs
+              
+              Speech.speak(textToRead, {
+                language: 'it-IT', // Ensure Italian is selected if needed
+                pitch: 1.0, // Normal pitch
+                rate: 0.9, // Adjust speed if needed
+                onStart: () => console.log("Speech started"),
+                onDone: () => console.log("Speech finished"),
+                onError: (error) => console.error("Speech error:", error),
+              });
+            }, 500); // Delay to ensure smooth playback
+          }
+      
+          return () => {
+            Speech.stop(); // Stop speech when leaving the screen
+          };
+        }, [fontsLoaded, isAudioOn, textToRead])
+      );
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -91,7 +112,14 @@ export default function RecordingScreen({ navigation,route }) {
               toggleDropdown={toggleDropdown}
               showBackButton={true}
               showAudioButton={true}
-              onReplayAudio={() => Speech.speak(textToRead)}
+              onReplayAudio={() => Speech.speak(textToRead, {
+                            language: 'it-IT', // Ensure Italian is selected if needed
+                            pitch: 1.0, // Normal pitch
+                            rate: 0.9, // Adjust speed if needed
+                            onStart: () => console.log("Speech started"),
+                            onDone: () => console.log("Speech finished"),
+                            onError: (error) => console.error("Speech error:", error),
+                          })}
           />
       <ScrollView style={styles.mainScrollContainer}>
         <View style={styles.mainInnerContainer}>

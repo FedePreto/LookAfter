@@ -15,6 +15,9 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
       Speech.stop(); // Ensure old speech is stopped
       Speech.speak(audio);
     }
+    return () => {
+      Speech.stop();
+    };
   }, [isAudioOn]); // Depend on `audio` and `isAudioOn`
    // Depend on `audio` and `isAudioOn`
     // Dipendenza: si aggiorna se cambia isAudioOn
@@ -56,14 +59,20 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
           <View style={styles.overlay}>
             <View style={styles.dropdown}>
               {/* Audio Button */}
-              <TouchableOpacity style={styles.dropdownItem} onPress={toggleAudio}>
-                <Text style={styles.dropdownText}>Audio</Text>
-                <Ionicons
-                  name={isAudioOn ? 'volume-high' : 'volume-mute'}
-                  size={28}
-                  color="white"
-                />
-              </TouchableOpacity>
+              <TouchableOpacity
+  style={styles.dropdownItem}
+  onPress={toggleAudio}
+  accessible={true}
+  accessibilityLabel={`Audio is ${isAudioOn ? 'on' : 'off'}`}
+  accessibilityHint="Toggles audio on or off"
+>
+  <Text style={styles.dropdownText}>Audio</Text>
+  <Ionicons
+    name={isAudioOn ? 'volume-high' : 'volume-mute'}
+    size={28}
+    color="white"
+  />
+</TouchableOpacity>
 
               {/* Home Button */}
               <TouchableOpacity style={styles.dropdownItem} onPress={__confirmGoHome}>

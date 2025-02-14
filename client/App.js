@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useCallback, useState, useContext } from 'react';
 import { 
+  useFocusEffect,
   NavigationContainer 
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -47,26 +48,44 @@ function MainPage({ navigation }) {
   const [positionAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    setActiveScreen('App');
-  
+    setActiveScreen('App'); // Ensure active screen is set
+    
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
     }).start();
+  }, []); // This ensures the animation runs only once
   
-    if (fontsLoaded) {
-      if (isAudioOn && activeScreen === 'App') {
+  useFocusEffect(
+    useCallback(() => {
+      setActiveScreen('App'); // Update the active screen
+      
+      if (fontsLoaded && isAudioOn) {
+        Speech.stop(); // Stop any ongoing speech
+        
         setTimeout(() => {
-          Speech.speak(textToRead);
-        }, 500); // Delay to ensure it executes properly
+          console.log("Speaking:", textToRead); // Debugging: Check if this runs
+          
+          Speech.speak(textToRead, {
+            language: 'it-IT', // Ensure Italian is selected if needed
+            pitch: 1.0, // Normal pitch
+            rate: 0.9, // Adjust speed if needed
+            onStart: () => console.log("Speech started"),
+            onDone: () => console.log("Speech finished"),
+            onError: (error) => console.error("Speech error:", error),
+          });
+        }, 500); // Delay to ensure smooth playback
       }
-    }
   
-    return () => {
-      Speech.stop();
-    };
-  }, [fontsLoaded, isAudioOn, activeScreen]);
+      return () => {
+        Speech.stop(); // Stop speech when leaving the screen
+      };
+    }, [fontsLoaded, isAudioOn, textToRead])
+  );
+  
+  
+  
   
 
   const toggleDropdown = () => {
@@ -129,7 +148,14 @@ function MainPage({ navigation }) {
           toggleDropdown={toggleDropdown}
           showBackButton={false}
           showAudioButton={true}
-          onReplayAudio={() => Speech.speak(textToRead)}
+          onReplayAudio={() => Speech.speak(textToRead, {
+                        language: 'it-IT', // Ensure Italian is selected if needed
+                        pitch: 1.0, // Normal pitch
+                        rate: 0.9, // Adjust speed if needed
+                        onStart: () => console.log("Speech started"),
+                        onDone: () => console.log("Speech finished"),
+                        onError: (error) => console.error("Speech error:", error),
+                      })}
           />
         <Text style={styles.title}>Look After</Text>
         <TouchableOpacity style={styles.button} onPress={handlePress}>
