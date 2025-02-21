@@ -27,7 +27,8 @@ export default function CameraConfirmation() {
     const { artworkKey } = route.params || {}; // Estrai artworkKey dai parametri
 
     const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext);
-    const textToRead = "Quando ti senti pronto, inquadra l'ambiente che ti circonda e tocca il pulsante Scatta Foto.";
+    const textToRead = "Quando ti senti pronto, inquadrami e tocca il pulsante Scatta Foto per farmi una foto.";
+    
     const [fadeAnim] = useState(new Animated.Value(0));
     const [dropdownVisible, setDropdownVisible] = useState(false);
     
@@ -236,7 +237,7 @@ export default function CameraConfirmation() {
       alignItems: "center",
     },
     takePictureButton: {
-      position: "absolute",
+    position: "absolute",
     bottom: 40,
     alignSelf: "center",
     backgroundColor: "#E8F0FF",

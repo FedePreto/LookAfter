@@ -35,7 +35,6 @@ export default function CameraScreen() {
   const textToRead = "Quando ti senti pronto, inquadra l'ambiente che ti circonda e tocca il pulsante Scatta Foto.";
 
   const { isAudioOn,setActiveScreen } = useContext(AudioContext); // Prende lo stato audio globale
-  console.log("audio icon status in camerascreen ", isAudioOn)
   useFocusEffect(
     useCallback(() => {
       setActiveScreen('CameraScreen'); // Update the active screen

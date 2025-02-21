@@ -26,7 +26,7 @@ export default function PathDetails({ route, navigation }) {
       nextScreen: 'ConfirmArtwork',
     },
     monalisa: {
-      name: 'Mona Lisa',
+      name: 'La Monalisa',
       image: require('../assets/monalisa.png'),
       description: [
         'Congratulazioni! mi hai raggiunta',

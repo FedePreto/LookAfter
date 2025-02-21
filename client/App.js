@@ -65,15 +65,15 @@ function MainPage({ navigation }) {
         Speech.stop(); // Stop any ongoing speech
         
         setTimeout(() => {
-          console.log("Speaking:", textToRead); // Debugging: Check if this runs
+          // console.log("Speaking:", textToRead); // Debugging: Check if this runs
           
           Speech.speak(textToRead, {
             language: 'it-IT', // Ensure Italian is selected if needed
             pitch: 1.0, // Normal pitch
             rate: 0.9, // Adjust speed if needed
-            onStart: () => console.log("Speech started"),
-            onDone: () => console.log("Speech finished"),
-            onError: (error) => console.error("Speech error:", error),
+            // onStart: () => console.log("Speech started"),
+            // onDone: () => console.log("Speech finished"),
+            // onError: (error) => console.error("Speech error:", error),
           });
         }, 500); // Delay to ensure smooth playback
       }
@@ -152,9 +152,9 @@ function MainPage({ navigation }) {
                         language: 'it-IT', // Ensure Italian is selected if needed
                         pitch: 1.0, // Normal pitch
                         rate: 0.9, // Adjust speed if needed
-                        onStart: () => console.log("Speech started"),
-                        onDone: () => console.log("Speech finished"),
-                        onError: (error) => console.error("Speech error:", error),
+                        // onStart: () => console.log("Speech started"),
+                        // onDone: () => console.log("Speech finished"),
+                        // onError: (error) => console.error("Speech error:", error),
                       })}
           />
         <Text style={styles.title}>Look After</Text>

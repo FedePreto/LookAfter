@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext, useCallback} from "react";
 import {Modal, View, Text, TextInput, TouchableOpacity,Animated , TouchableWithoutFeedback,ScrollView, Image, StyleSheet,Keyboard,KeyboardAvoidingView,Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; 
-import theme from '../config/theme';
+import theme, {useCustomFonts} from '../config/theme';
 import AsyncStorage from "@react-native-async-storage/async-storage"; 
 import CustomNavigationBar from "./CustomNavigationBar.js";
 import * as Speech from 'expo-speech'; 
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { AudioContext } from './AudioProvider';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 export default function ChatScreen({ route, navigation }) {
+  const fontsLoaded = useCustomFonts();
   const { artworkKey } = route.params;
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [input, setInput] = useState("");
@@ -22,6 +24,16 @@ export default function ChatScreen({ route, navigation }) {
 
   let textToRead = lastBotMessage ? lastBotMessage.text : "Non ci sono messaggi da riprodurre.";
 
+  const imageMap = {
+    "sorriso.jpg": require("../assets/sorriso.jpg"),
+    "occhi.jpg": require("../assets/occhi.jpg"),
+    "superman.jpg": require("../assets/superman.jpg"),
+    "monnaliso.jpg": require("../assets/monnaliso.jpg"),
+    "palloncino.jpg": require("../assets/palloncino.jpg"),
+    "elegante.jpg": require("../assets/elegante.jpg"),
+    // Add other images here
+  };
+
   useEffect(() => {
     if (isRecordingInput && input !== "") {
       setTimeout(() => {
@@ -30,14 +42,32 @@ export default function ChatScreen({ route, navigation }) {
     }
   }, [input]); // Si attiva solo quando `input` cambia
   
- useEffect(() => {
-     if (isAudioOn) {
-       Speech.speak(textToRead); // Parla solo se isAudioOn è true
-     }
-     return () => {
-       Speech.stop(); // Ferma la riproduzione quando si esce dalla schermata
-     };
-   }, [isAudioOn]);
+  useFocusEffect(
+       useCallback(() => {
+         setActiveScreen('Path'); // Update the active screen
+         
+         if (fontsLoaded && isAudioOn) {
+           Speech.stop(); // Stop any ongoing speech
+           
+           setTimeout(() => {
+             console.log("Speaking:", textToRead); // Debugging: Check if this runs
+             
+             Speech.speak(textToRead, {
+               language: 'it-IT', // Ensure Italian is selected if needed
+               pitch: 1.0, // Normal pitch
+               rate: 0.9, // Adjust speed if needed
+               onStart: () => console.log("Speech started"),
+               onDone: () => console.log("Speech finished"),
+               onError: (error) => console.error("Speech error:", error),
+             });
+           }, 500); // Delay to ensure smooth playback
+         }
+     
+         return () => {
+           Speech.stop(); // Stop speech when leaving the screen
+         };
+       }, [fontsLoaded, isAudioOn, textToRead])
+     );
  
    useEffect(() => {
      Animated.timing(fadeAnim, {
@@ -46,6 +76,7 @@ export default function ChatScreen({ route, navigation }) {
        useNativeDriver: true,
      }).start();
    }, []);
+
   const loadMessages = async () => {
     try {
       const storedMessages = await AsyncStorage.getItem(`chatMessages_${artworkKey}`);
@@ -82,7 +113,7 @@ export default function ChatScreen({ route, navigation }) {
       botResponse = {
         sender: "bot",
         text: "Il mio sorriso! È il più grande enigma dell'arte. Forse sto per dire una battuta divertente … o forse so qualcosa che tu non sai!",
-        image: require("../assets/sorriso.jpg"),
+        image: "sorriso.jpg",
       };
     } else if (input.toLowerCase().includes("parlare") && artworkKey === "monalisa") {
       botResponse = {
@@ -105,14 +136,14 @@ export default function ChatScreen({ route, navigation }) {
       botResponse = {
         sender: "bot",
         text: "I miei occhi sembrano custodire un segreto, seguendoti ovunque con uno sguardo enigmatico che sfida il tempo e la distanza.",
-        image: require("../assets/occhi.jpg"),
+        image: "occhi.jpg",
       };
     }
     else if (input.toLowerCase().includes("supereroe") && artworkKey === "monalisa") {
       botResponse = {
         sender: "bot",
         text: "Sicuramente sarei superman",
-        image: require("../assets/superman.jpg"),
+        image: "superman.jpg",
 
       };
     }
@@ -120,7 +151,7 @@ export default function ChatScreen({ route, navigation }) {
       botResponse = {
         sender: "bot",
         text: "Mi chiamo Monnaliso. Sì, hai capito bene. Sono l'alter ego maschile della celebre Gioconda.",
-        image: require("../assets/monnaliso.jpg"),
+        image: "monnaliso.jpg",
 
       };
     }
@@ -135,7 +166,7 @@ export default function ChatScreen({ route, navigation }) {
       botResponse = {
         sender: "bot",
         text: "Il mio palloncino è il simbolo dei sogni che volano via… o forse semplicemente del vento che me lo ha strappato di mano!",
-        image: require("../assets/palloncino.jpg"),
+        image: "palloncino.jpg",
       };
     } else if (input.toLowerCase().includes("triste") && artworkKey === "ballon_girl") {
       botResponse = {
@@ -165,8 +196,8 @@ export default function ChatScreen({ route, navigation }) {
     } else if (input.toLowerCase().includes("vestito") && artworkKey === "david") {
       botResponse = {
         sender: "bot",
-        text: "Se fossi vestito sicuramnte porterei uno abito elgante.",
-        image: require("../assets/elegante.jpg"),
+        text: "Se fossi vestito sicuramente porterei un abito elegante.",
+        image: "elegante.jpg",
       };
     } else if (input.toLowerCase().includes("muscoli") && artworkKey === "david") {
       botResponse = {
@@ -181,7 +212,14 @@ export default function ChatScreen({ route, navigation }) {
 
     if (botResponse) {
       updatedMessages.push(botResponse);
-      Speech.speak(botResponse.text);
+      Speech.speak(botResponse.text, {
+        language: 'it-IT', // Ensure Italian is selected if needed
+        pitch: 1.0, // Normal pitch
+        rate: 0.9, // Adjust speed if needed
+        // onStart: () => console.log("Speech started"),
+        // onDone: () => console.log("Speech finished"),
+        // onError: (error) => console.error("Speech error:", error),
+      });
       
     }
 
@@ -298,8 +336,9 @@ useEffect(() => {
           >
             <Text style={styles.messageText}>{message.text}</Text>
             {message.image && (
-              <TouchableOpacity onPress={() => setSelectedImage(message.image)}>
-                <Image source={message.image} style={styles.messageImage} />
+              <TouchableOpacity onPress={() => setSelectedImage(imageMap[message.image])}>
+                <Image source={imageMap[message.image]} 
+                style={styles.messageImage} />
               </TouchableOpacity>
             )}
 

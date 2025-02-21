@@ -90,7 +90,7 @@ export default function HamburgerMenu({ navigation, isVisible, toggleDropdown, a
           <View style={styles.modalBackground}>
             <View style={styles.modalContainer}>
               <Text style={styles.modalText}>
-                Sei sicuro di voler tornare alla Home?
+                Sei sicuro di voler tornare alla Home? Perderai i tuoi progressi.
               </Text>
               <View style={styles.modalButtons}>
                 <TouchableOpacity style={styles.modalButton} onPress={__cancelGoHome}>

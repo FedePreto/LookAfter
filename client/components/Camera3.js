@@ -29,7 +29,7 @@ export default function CameraScreen3() {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  const textToRead = "Quando ti senti pronto, inquadra l'ambiente che ti circonda e tocca il pulsante Scatta Foto.";
+  const textToRead = "Quando ti senti pronto, inquadrami e tocca il pulsante Scatta Foto per farmi una foto.";
 
   const { isAudioOn, setActiveScreen } = useContext(AudioContext); // Prende lo stato audio globale
 
@@ -259,21 +259,21 @@ const styles = StyleSheet.create({
   },
   takePictureButton: {
     position: "absolute",
-    bottom: 40,
-    alignSelf: "center",
-    backgroundColor: "#000", 
-    borderRadius: 70,
-    width: 90,
-    height: 90,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 8,
-    borderWidth: 3,
-    borderColor: "#0055A4", // Blue border for contrast
+  bottom: 40,
+  alignSelf: "center",
+  backgroundColor: "#E8F0FF",
+  borderRadius: 70,
+  width: 90,
+  height: 90,
+  alignItems: "center",
+  justifyContent: "center",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 3 },
+  shadowOpacity: 0.3,
+  shadowRadius: 6,
+  elevation: 8,
+  borderWidth: 3, // Add a white border for contrast
+  borderColor: "#0055A4",
   },
   buttonText: {
     fontSize: 16,

@@ -11,7 +11,7 @@ const { width, height } = Dimensions.get('window');
 
 const artworkDetails = {
   monalisa: {
-    name: 'Mona Lisa',
+    name: 'La Monalisa',
     image: require('../assets/monalisa.png'),
     nextScreen: 'CameraConfirmation',
   },
@@ -119,7 +119,7 @@ export default function ConfirmArtwork({ route, navigation }) {
           <View style={styles.directionContainer}>
             <Text style={styles.directionHeader}>Mi hai raggiunto?</Text>
             <Text style={styles.stepText}>
-              Per confermare che mi abbia raggiunto, scattami una foto!
+            Per confermare che mi hai raggiunto, premi su conferma e scattami una foto.
             </Text>
           </View>
         </View>

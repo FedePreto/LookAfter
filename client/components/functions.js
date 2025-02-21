@@ -111,7 +111,7 @@ export const transcribeSpeech = async (audioRecordingRef) => {
 
 
     //------------------------------------------------------
-    const rootOrigin = "192.168.244.169"; //insert here your local IP address
+    const rootOrigin = "192.168.100.60"; //insert here your local IP address
     const serverUrl = `http://${rootOrigin}:4000/speech-to-text`;
     //------------------------------------------------------
     

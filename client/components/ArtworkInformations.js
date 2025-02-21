@@ -17,10 +17,10 @@ export default function ArtworkInformations({ navigation, route }) {
 
   const artworkMap = {
     monalisa: {
-      name: 'Mona Lisa',
+      name: 'La Monalisa',
       image: require('../assets/monalisa.png'),
       description: [
-        "Saluti, sono la Mona Lisa, ma forse mi conosci come La Gioconda. Leonardo da Vinci mi ha dipinta tra il 1503 e il 1506, durante il fiorire del Rinascimento. Da allora, il mio sguardo e il mio sorriso hanno incantato il mondo intero.",
+        "Saluti, sono la Monalisa, ma forse mi conosci come La Gioconda. Leonardo da Vinci mi ha dipinta tra il 1503 e il 1506, durante il fiorire del Rinascimento. Da allora, il mio sguardo e il mio sorriso hanno incantato il mondo intero.",
 
         "Il mio sorriso è un enigma: osservalo a lungo e potresti notare come cambia, sottile e sfuggente, quasi come se custodissi un segreto. I miei occhi ti seguono ovunque, non importa da dove mi guardi, perché Leonardo ha saputo dare vita alla mia espressione con incredibile maestria.",
 
@@ -32,7 +32,7 @@ export default function ArtworkInformations({ navigation, route }) {
       name: 'Il David',
       image: require('../assets/david.png'),
       description: [
-        "Ciao, sono David, il capolavoro di Michelangelo, scolpito tra il 1501 e il 1504. La mia figura imponente rappresenta forza e coraggio. Se potessi toccarmi, sentiresti i muscoli tesi e le vene in rilievo sulle mani, come se il sangue vi scorresse ancora.",
+        "Ciao, sono il David, il capolavoro di Michelangelo, scolpito tra il 1501 e il 1504. La mia figura imponente rappresenta forza e coraggio. Se potessi toccarmi, sentiresti i muscoli tesi e le vene in rilievo sulle mani, come se il sangue vi scorresse ancora.",
 
         "Raffiguro Davide prima della battaglia contro Golìa. Il mio corpo è saldo, il busto leggermente ruotato, lo sguardo concentrato. Anche senza vederlo, puoi immaginare la determinazione nel mio volto.",
 
@@ -40,7 +40,7 @@ export default function ArtworkInformations({ navigation, route }) {
       ],
     },
     ballon_girl:{
-      name: 'Balloon girl',
+      name: 'Balloon Girl',
       image: require('../assets/ballon.jpg'),
       description: [
         "Ciao, sono una ragazza con un palloncino tra le dita, leggera come il vento che accarezza i miei capelli. Sono in piedi in un campo aperto, respirando l’aria fresca mentre osservo il mio palloncino librarsi nel cielo limpido.",

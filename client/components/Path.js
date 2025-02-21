@@ -21,13 +21,13 @@ export default function PathDetails({ route, navigation }) {
       name: 'Il David',
       image: require('../assets/david.png'),
       description: [
-        "Prosegui dritto per 2 passi per raggiungere il dipinto iconico, la Mona Lisa."  ,
+        "Prosegui dritto per 2 passi per raggiungere il dipinto iconico, la Monalisa."  ,
         "Poi gira a destra e fai un passo e sarai di fronte a me."
       ],
       nextScreen: 'ConfirmArtwork',
     },
     monalisa: {
-      name: 'Mona Lisa',
+      name: 'La Monalisa',
       image: require('../assets/monalisa.png'),
       description: [
         'Prosegui dritto per 2 passi e mi avrai raggiunta.',
@@ -48,8 +48,7 @@ export default function PathDetails({ route, navigation }) {
     );
   }
 
-  
-  useFocusEffect(
+   useFocusEffect(
       useCallback(() => {
         setActiveScreen('Path'); // Update the active screen
         
@@ -57,15 +56,15 @@ export default function PathDetails({ route, navigation }) {
           Speech.stop(); // Stop any ongoing speech
           
           setTimeout(() => {
-            console.log("Speaking:", textToRead); // Debugging: Check if this runs
+            // console.log("Speaking:", textToRead); // Debugging: Check if this runs
             
             Speech.speak(textToRead, {
               language: 'it-IT', // Ensure Italian is selected if needed
               pitch: 1.0, // Normal pitch
               rate: 0.9, // Adjust speed if needed
-              onStart: () => console.log("Speech started"),
-              onDone: () => console.log("Speech finished"),
-              onError: (error) => console.error("Speech error:", error),
+              // onStart: () => console.log("Speech started"),
+              // onDone: () => console.log("Speech finished"),
+              // onError: (error) => console.error("Speech error:", error),
             });
           }, 500); // Delay to ensure smooth playback
         }
@@ -74,7 +73,10 @@ export default function PathDetails({ route, navigation }) {
           Speech.stop(); // Stop speech when leaving the screen
         };
       }, [fontsLoaded, isAudioOn, textToRead])
-    ); // Dipendenza: si aggiorna se cambia isAudioOn
+    );
+    
+  
+  // Dipendenza: si aggiorna se cambia isAudioOn
   
       useEffect(() => {
           Animated.timing(fadeAnim, {

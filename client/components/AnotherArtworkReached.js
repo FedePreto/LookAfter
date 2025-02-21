@@ -14,8 +14,21 @@ export default function AnotherArtworkReached({ navigation, route }) {
   const { artworkKey } = route.params;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const textToRead = `Non hai raggiunto David, ma hai invece raggiunto me: Balloon Girl! Ora hai due opzioni: posso riportarti dal David oppure darti informazioni su di me.`;
+  const textToRead = `Non hai raggiunto David, ma hai invece raggiunto me: Sono la Balloon Girl! Ora hai due opzioni: posso riportarti dal David oppure darti informazioni su di me.`;
   
+  const artworkDetails = {
+    monalisa: {
+      name: 'La Monalisa',
+      image: require('../assets/monalisa.png'),
+      nextScreen: 'CameraConfirmation',
+    },
+    david: {
+      name: 'Il David',
+      image: require('../assets/david.png'),
+      nextScreen: 'CameraConfirmation',
+    },
+  };
+  const artwork = artworkDetails[artworkKey];
     const { isAudioOn, setActiveScreen } = useContext(AudioContext); 
 
   useFocusEffect(
@@ -103,9 +116,9 @@ export default function AnotherArtworkReached({ navigation, route }) {
       {/* Main Content */}
       <View style={styles.content}>
         <View style={styles.directionContainer}>
-          <Text style={styles.directionHeader}>Hai raggiunto Baloon girl</Text>
+          <Text style={styles.directionHeader}>Hai raggiunto Baloon Girl</Text>
           <Text style={styles.description}>
-          Non hai raggiunto {artworkKey}, Ma ti trovi di fronte me, balloon girl di Banksy!
+          Non hai raggiunto {artwork.name}, ma ti trovi di fronte a me, La Ballon Girl di Bansky!
         </Text>
         </View>
         
@@ -114,7 +127,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={handleProceedMonalisa} style={styles.buttonLeft}>
-          <Text style={styles.buttonText2 } numberOfLines={2} >Portami da {artworkKey}</Text>
+          <Text style={styles.buttonText2 } numberOfLines={2} >Portami da {artwork.name}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleProceed} style={styles.buttonRight}>
           <Text style={styles.buttonText} numberOfLines={2} >Conoscimi meglio</Text>
@@ -207,6 +220,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center', // Ensures text stays centered
     flexWrap: 'wrap', // Allows text to wrap inside the button
+    top:2,
 },
 buttonText2: {
     color: '#0055A4',
@@ -214,6 +228,7 @@ buttonText2: {
     fontWeight: 'bold',
     textAlign: 'center',
     flexWrap: 'wrap',
+    top:2,
 },
 
 });
