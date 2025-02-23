@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center', // Ensures text stays centered
     flexWrap: 'wrap', // Allows text to wrap inside the button
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
 },
 buttonText2: {
     color: '#0055A4',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
     flexWrap: 'wrap',
