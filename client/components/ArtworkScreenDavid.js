@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     top: -width * 0.15,
   },
   title: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
     color: theme.colors.textSecondary,
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   artworkTitle: {
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
     color: theme.colors.textSecondary,
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     top:15,
   },
   artworkSubtitle: {
-    fontSize: 20,
+    fontSize: 30,
     textAlign: 'center',
     color: theme.colors.textSecondary,
     top: 15,

@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     zIndex: 30,
   },
   artworkTitle: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40,
@@ -194,13 +194,13 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   description: {
-    fontSize: 20,
+    fontSize: 24,
     color: '#555',
     textAlign: 'center',
     marginBottom: 20,
   },
   directionHeader: {
-    fontSize: 28,
+    fontSize: 34,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,

@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     description: {
-        fontSize: 20,
+        fontSize: 24,
         color: '#333',
         textAlign: 'center', // Center-align the text horizontally
         marginBottom: 20, // Adds space above the button
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
       width: '90%',
     },
     directionHeader: {
-      fontSize: 28,
+      fontSize: 34,
       fontWeight: 'bold',
       textAlign: 'center',
       marginBottom: 10,

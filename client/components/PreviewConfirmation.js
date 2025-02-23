@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
     color: theme.colors.textSecondary,

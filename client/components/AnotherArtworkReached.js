@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   description: {
-    fontSize: 20,
+    fontSize: 24,
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,

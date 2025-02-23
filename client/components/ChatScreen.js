@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0, 
   },
   messageText: { 
-    fontSize: 16, 
+    fontSize: 24, 
     color: "#333", 
   },
   messageImage: { 
@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
     borderColor: "#E0E0E0", 
     borderRadius: 24, 
     padding: 10, 
-    fontSize: 16, 
+    fontSize: 20, 
     backgroundColor: "#F9F9F9", 
   },
   sendButton: { 
@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   sendButtonText: { 
     color: "#FFFFFF", 
     fontWeight: "bold", 
-    fontSize: 16 
+    fontSize: 20 
   },
   microphoneButton: { 
     justifyContent: "center", 

@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   },
 
   artworkTitle: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40, // Aggiunge spazio sopra
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   
 
   directionHeader: {
-    fontSize: 28,
+    fontSize: 34,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 0,
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   stepText: {
-    fontSize: 20,
+    fontSize: 24,
     color: '#555',
     flexWrap: 'wrap',
     width: '100%',

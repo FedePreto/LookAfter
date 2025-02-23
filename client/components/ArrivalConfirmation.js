@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   
   artworkTitle: {
-    fontSize: 36,
+    fontSize: 40,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40,
@@ -191,14 +191,14 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   directionHeader: {
-    fontSize: 28,
+    fontSize: 34,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10,
     color: '#0055A4',
   },
   stepText: {
-    fontSize: 20,
+    fontSize: 24,
     color: '#555',
     textAlign: 'center',
     lineHeight: 24,
