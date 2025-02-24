@@ -53,7 +53,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
               Speech.speak(textToRead, {
                 language: 'it-IT', // Ensure Italian is selected if needed
                 pitch: 1.0, // Normal pitch
-                rate: 0.9, // Adjust speed if needed
+                rate: 1.3, // Adjust speed if needed
                 onStart: () => console.log("Speech started"),
                 onDone: () => console.log("Speech finished"),
                 onError: (error) => console.error("Speech error:", error),
@@ -111,7 +111,8 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 
   const handleChoose = () => {
     Speech.stop();
-    navigation.navigate('PathDetails', { artworkKey: artwork.artworkKey }); // Passa il parametro
+    let val = 0;
+    navigation.navigate('PathDetails',{ artworkKey: artwork.artworkKey, val});
   };
 
   const toggleDropdown = () => {
@@ -147,7 +148,7 @@ export default function ChooseArtworkScreen({ route, navigation }) {
           onReplayAudio={() => Speech.speak(textToRead, {
                                   language: 'it-IT', // Ensure Italian is selected if needed
                                   pitch: 1.0, // Normal pitch
-                                  rate: 0.9, // Adjust speed if needed
+                                  rate: 1.3, // Adjust speed if needed
                                   onStart: () => console.log("Speech started"),
                                   onDone: () => console.log("Speech finished"),
                                   onError: (error) => console.error("Speech error:", error),
@@ -161,9 +162,11 @@ export default function ChooseArtworkScreen({ route, navigation }) {
 
         {/* Gesture Handler */}
         <PanGestureHandler onGestureEvent={onGestureEvent}>
-          <View style={styles.imageContainer}>
+        <TouchableOpacity onPress={handleChoose} style={styles.imageContainer} >
+          <View >
             <Image source={artwork.image} style={styles.artworkImage} />
           </View>
+        </TouchableOpacity>
         </PanGestureHandler>
 
         {/* Informazioni sull'opera */}

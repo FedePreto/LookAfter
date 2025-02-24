@@ -44,7 +44,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
               Speech.speak(textToRead, {
                 language: 'it-IT', // Ensure Italian is selected if needed
                 pitch: 1.0, // Normal pitch
-                rate: 0.9, // Adjust speed if needed
+                rate: 1.3, // Adjust speed if needed
                 onStart: () => console.log("Speech started"),
                 onDone: () => console.log("Speech finished"),
                 onError: (error) => console.error("Speech error:", error),
@@ -77,7 +77,10 @@ export default function AnotherArtworkReached({ navigation, route }) {
 
   const handleProceedMonalisa = () => {
     Speech.stop();
-    navigation.navigate('PathDetails',{artworkKey});
+    let val = 1;
+    console.log("valore0")
+    console.log(val)
+    navigation.navigate('PathDetails',{artworkKey, val});
   };
 
   const handleOutsidePress = () => {
@@ -98,7 +101,7 @@ export default function AnotherArtworkReached({ navigation, route }) {
                 onReplayAudio={() => Speech.speak(textToRead, {
                                         language: 'it-IT', // Ensure Italian is selected if needed
                                         pitch: 1.0, // Normal pitch
-                                        rate: 0.9, // Adjust speed if needed
+                                        rate: 1.3, // Adjust speed if needed
                                         onStart: () => console.log("Speech started"),
                                         onDone: () => console.log("Speech finished"),
                                         onError: (error) => console.error("Speech error:", error),
@@ -179,7 +182,7 @@ const styles = StyleSheet.create({
   directionContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
-    padding: 20,
+    padding: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,

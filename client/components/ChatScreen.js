@@ -55,7 +55,7 @@ export default function ChatScreen({ route, navigation }) {
              Speech.speak(textToRead, {
                language: 'it-IT', // Ensure Italian is selected if needed
                pitch: 1.0, // Normal pitch
-               rate: 0.9, // Adjust speed if needed
+               rate: 1.3, // Adjust speed if needed
                onStart: () => console.log("Speech started"),
                onDone: () => console.log("Speech finished"),
                onError: (error) => console.error("Speech error:", error),
@@ -115,7 +115,7 @@ export default function ChatScreen({ route, navigation }) {
         text: "Il mio sorriso! È il più grande enigma dell'arte. Forse sto per dire una battuta divertente … o forse so qualcosa che tu non sai!",
         image: "sorriso.jpg",
       };
-    } else if (input.toLowerCase().includes("parlare") && artworkKey === "monalisa") {
+    } else if (input.toLowerCase().includes("fare") && artworkKey === "monalisa") {
       botResponse = {
         sender: "bot",
         text: "Dopo secoli dietro a questo vetro, vorrei uscire e respirare un po’ d’aria fresca!",
@@ -135,7 +135,7 @@ export default function ChatScreen({ route, navigation }) {
     else if (input.toLowerCase().includes("occhi") && artworkKey === "monalisa") {
       botResponse = {
         sender: "bot",
-        text: "I miei occhi sembrano custodire un segreto, seguendoti ovunque con uno sguardo enigmatico che sfida il tempo e la distanza.",
+        text: "I miei occhi, di colore castano, sembrano custodire un segreto, seguendoti ovunque con uno sguardo enigmatico che sfida il tempo e la distanza.",
         image: "occhi.jpg",
       };
     }
@@ -215,7 +215,7 @@ export default function ChatScreen({ route, navigation }) {
       Speech.speak(botResponse.text, {
         language: 'it-IT', // Ensure Italian is selected if needed
         pitch: 1.0, // Normal pitch
-        rate: 0.9, // Adjust speed if needed
+        rate: 1.3, // Adjust speed if needed
         // onStart: () => console.log("Speech started"),
         // onDone: () => console.log("Speech finished"),
         // onError: (error) => console.error("Speech error:", error),
@@ -308,7 +308,7 @@ useEffect(() => {
             onReplayAudio={() => Speech.speak(textToRead, {
                                     language: 'it-IT', // Ensure Italian is selected if needed
                                     pitch: 1.0, // Normal pitch
-                                    rate: 0.9, // Adjust speed if needed
+                                    rate: 1.3, // Adjust speed if needed
                                     onStart: () => console.log("Speech started"),
                                     onDone: () => console.log("Speech finished"),
                                     onError: (error) => console.error("Speech error:", error),

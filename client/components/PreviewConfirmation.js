@@ -20,7 +20,7 @@ export default function PreviewConfirmation({ route, navigation }) {
   const [accessCount, setAccessCount] = useState(newAccessCount); // Initial access count
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn , setActiveScreen} = useContext(AudioContext); // Prende lo stato audio globale
-  const textToRead = "Questa è un'anteprima della foto che hai scattato. Se non desideri rifare la foto premi su procedi.";
+  const textToRead = "Questa è un'anteprima della foto che hai scattato. Se non vuoi rifare la foto premi su procedi.";
   const [fadeAnim] = useState(new Animated.Value(0));
 
   const __retakePicture = () => {
@@ -40,7 +40,7 @@ export default function PreviewConfirmation({ route, navigation }) {
             Speech.speak(textToRead, {
               language: 'it-IT', // Ensure Italian is selected if needed
               pitch: 1.0, // Normal pitch
-              rate: 0.9, // Adjust speed if needed
+              rate: 1.3, // Adjust speed if needed
               onStart: () => console.log("Speech started"),
               onDone: () => console.log("Speech finished"),
               onError: (error) => console.error("Speech error:", error),
@@ -115,14 +115,14 @@ export default function PreviewConfirmation({ route, navigation }) {
                 onReplayAudio={() => Speech.speak(textToRead, {
                                         language: 'it-IT', // Ensure Italian is selected if needed
                                         pitch: 1.0, // Normal pitch
-                                        rate: 0.9, // Adjust speed if needed
+                                        rate: 1.3, // Adjust speed if needed
                                         onStart: () => console.log("Speech started"),
                                         onDone: () => console.log("Speech finished"),
                                         onError: (error) => console.error("Speech error:", error),
                                       })}
                 />
 <View style={styles.titleContainer}>
-      <Text style={styles.text}>Anteprima immagine</Text>          
+      <Text style={styles.text}>Anteprima foto</Text>          
       {isMultipleImages ? (
         // Multiple Images - Display in a horizontal scroll
         <ScrollView

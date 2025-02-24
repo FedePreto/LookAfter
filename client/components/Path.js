@@ -12,7 +12,8 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 export default function PathDetails({ route, navigation }) {
   const fontsLoaded = useCustomFonts();
-  const { artworkKey } = route.params || {}; // Identifica quale opera gestire
+  const { artworkKey, val } = route.params || {}; // Identifica quale opera gestire
+  
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const { isAudioOn, setActiveScreen, activeScreen } = useContext(AudioContext); // Stato audio scelto dal menù
 
@@ -21,8 +22,16 @@ export default function PathDetails({ route, navigation }) {
       name: 'Il David',
       image: require('../assets/david.png'),
       description: [
-        "Prosegui dritto per 2 passi per raggiungere il dipinto iconico, la Monalisa."  ,
-        "Poi gira a destra e fai un passo e sarai di fronte a me."
+        "Girati di 90 gradi a destra",
+        "Prosegui dritto per un passo."
+      ],description2: [
+        "Girati di 180 gradi",
+        "Fai due passi dritto."
+      ],description3: [
+        "Girati di 90 gradi a destra, ",
+        "Dritto per due passi,",
+        "Girati di 90 gradi a sinistra e fai due passi dritto, ",
+        "Girati di 90 gradi e mi avrai raggiunto."
       ],
       nextScreen: 'ConfirmArtwork',
     },
@@ -31,14 +40,38 @@ export default function PathDetails({ route, navigation }) {
       image: require('../assets/monalisa.png'),
       description: [
         'Prosegui dritto per 2 passi e mi avrai raggiunta.',
+      ],description2: [
+        "Girati di 180 gradi",
+        "Fai due passi dritto."
+      ],description3: [
+        "Girati di 90 gradi a destra, ",
+        "Dritto per due passi,",
+        "Girati di 90 gradi a sinistra e fai due passi dritto, ",
+        "Girati di 90 gradi e mi avrai raggiunto."
       ],
       nextScreen: 'ConfirmArtwork',
     },
   };
 
   const artwork = artworkDetails[artworkKey];
+  //const val = val;
+  // console.log("valore path")
+  // console.log(val)
+  // console.log(artwork)
 
-  const textToRead = `Sono ${artwork?.name}, grazie per avermi scelto. Adesso ti indicherò come raggiungermi. ${artwork?.description.join(' ')} Una volta fatto, premi su Prosegui.`;
+  //const textToRead = `Sono ${artwork?.name}, grazie per avermi scelto. Adesso ti indicherò come raggiungermi. ${artwork?.description.join(' ')} Una volta fatto, premi su Prosegui.`;
+  let descriptionToRead = undefined
+  if(val===0 || val === undefined){
+    descriptionToRead= artwork?.description;
+  }
+  else if (val === 1) {
+    descriptionToRead = artwork?.description2;
+  } else if (val === 2) {
+    descriptionToRead = artwork?.description3;
+  }
+  
+  const textToRead = `Sono ${artwork?.name}, grazie per avermi scelto. Adesso ti indicherò come raggiungermi. ${descriptionToRead?.join(' ')} Una volta fatto, premi su Prosegui.`;
+
 
   if (!artwork) {
     return (
@@ -61,7 +94,7 @@ export default function PathDetails({ route, navigation }) {
             Speech.speak(textToRead, {
               language: 'it-IT', // Ensure Italian is selected if needed
               pitch: 1.0, // Normal pitch
-              rate: 0.9, // Adjust speed if needed
+              rate: 1.3, // Adjust speed if needed
               // onStart: () => console.log("Speech started"),
               // onDone: () => console.log("Speech finished"),
               // onError: (error) => console.error("Speech error:", error),
@@ -141,7 +174,7 @@ export default function PathDetails({ route, navigation }) {
             onReplayAudio={() => Speech.speak(textToRead, {
                                     language: 'it-IT', // Ensure Italian is selected if needed
                                     pitch: 1.0, // Normal pitch
-                                    rate: 0.9, // Adjust speed if needed
+                                    rate: 1.3, // Adjust speed if needed
                                     onStart: () => console.log("Speech started"),
                                     onDone: () => console.log("Speech finished"),
                                     onError: (error) => console.error("Speech error:", error),
@@ -159,7 +192,7 @@ export default function PathDetails({ route, navigation }) {
         <View style={styles.content}>
           <View style={styles.directionContainer}>
             <Text style={styles.directionHeader}>Informazioni di percorso</Text>
-            {artwork.description.map((step, index) => (
+            {descriptionToRead.map((step, index) => (
               <View key={index} style={styles.stepContainer}>
                 <View style={styles.stepIndicator}>
                   <Text style={styles.stepNumber}>{index + 1}</Text>
@@ -219,18 +252,7 @@ const styles = StyleSheet.create({
     bottom:20,
   },
 
-  directionContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 15,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 6,
-    width: '76%',
-  },
-
+  
   artworkTitle: {
     fontSize: 40,
     fontWeight: 'bold',
@@ -242,12 +264,26 @@ const styles = StyleSheet.create({
   },
   
 
+  directionContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 15,
+    paddingVertical: 40, // Keeps top and bottom padding
+    paddingHorizontal: 40,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6,
+    width: '76%',
+    
+  },
   directionHeader: {
     fontSize: 34,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 0,
+    marginBottom: 10,
     color: '#0055A4',
+    bottom: 10,
   },
   
   stepContainer: {

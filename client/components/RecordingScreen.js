@@ -50,7 +50,7 @@ export default function RecordingScreen({ navigation,route }) {
               Speech.speak(textToRead, {
                 language: 'it-IT', // Ensure Italian is selected if needed
                 pitch: 1.0, // Normal pitch
-                rate: 0.9, // Adjust speed if needed
+                rate: 1.3, // Adjust speed if needed
                 onStart: () => console.log("Speech started"),
                 onDone: () => console.log("Speech finished"),
                 onError: (error) => console.error("Speech error:", error),
@@ -115,7 +115,7 @@ export default function RecordingScreen({ navigation,route }) {
               onReplayAudio={() => Speech.speak(textToRead, {
                             language: 'it-IT', // Ensure Italian is selected if needed
                             pitch: 1.0, // Normal pitch
-                            rate: 0.9, // Adjust speed if needed
+                            rate: 1.3, // Adjust speed if needed
                             onStart: () => console.log("Speech started"),
                             onDone: () => console.log("Speech finished"),
                             onError: (error) => console.error("Speech error:", error),

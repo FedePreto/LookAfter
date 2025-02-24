@@ -72,7 +72,7 @@ export default function PathDetails({ route, navigation }) {
             Speech.speak(textToRead, {
               language: 'it-IT', // Ensure Italian is selected if needed
               pitch: 1.0, // Normal pitch
-              rate: 0.9, // Adjust speed if needed
+              rate: 1.3, // Adjust speed if needed
               onStart: () => console.log("Speech started"),
               onDone: () => console.log("Speech finished"),
               onError: (error) => console.error("Speech error:", error),
@@ -116,7 +116,7 @@ export default function PathDetails({ route, navigation }) {
           onReplayAudio={() => Speech.speak(textToRead, {
                                   language: 'it-IT', // Ensure Italian is selected if needed
                                   pitch: 1.0, // Normal pitch
-                                  rate: 0.9, // Adjust speed if needed
+                                  rate: 1.3, // Adjust speed if needed
                                   onStart: () => console.log("Speech started"),
                                   onDone: () => console.log("Speech finished"),
                                   onError: (error) => console.error("Speech error:", error),
@@ -215,13 +215,15 @@ const styles = StyleSheet.create({
   directionContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
-    padding: 20,
+    paddingVertical: 40, // Keeps top and bottom padding
+    paddingHorizontal: 40,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 6,
     width: '90%',
+    
   },
   proceedButton: {
     backgroundColor: '#0055A4',

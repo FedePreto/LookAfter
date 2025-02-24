@@ -45,7 +45,7 @@ export default function ConfirmArtwork({ route, navigation }) {
             Speech.speak(textToRead, {
               language: 'it-IT', // Ensure Italian is selected if needed
               pitch: 1.0, // Normal pitch
-              rate: 0.9, // Adjust speed if needed
+              rate: 1.3, // Adjust speed if needed
               onStart: () => console.log("Speech started"),
               onDone: () => console.log("Speech finished"),
               onError: (error) => console.error("Speech error:", error),
@@ -102,7 +102,7 @@ export default function ConfirmArtwork({ route, navigation }) {
           onReplayAudio={() => Speech.speak(textToRead, {
                                   language: 'it-IT', // Ensure Italian is selected if needed
                                   pitch: 1.0, // Normal pitch
-                                  rate: 0.9, // Adjust speed if needed
+                                  rate: 1.3, // Adjust speed if needed
                                   onStart: () => console.log("Speech started"),
                                   onDone: () => console.log("Speech finished"),
                                   onError: (error) => console.error("Speech error:", error),
@@ -189,6 +189,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 6,
     width: '90%',
+    
   },
   directionHeader: {
     fontSize: 34,
@@ -196,6 +197,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     color: '#0055A4',
+    bottom: 10,
   },
   stepText: {
     fontSize: 24,
